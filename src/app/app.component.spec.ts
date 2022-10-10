@@ -20,7 +20,7 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'Rock Scissors Paper Online Game'`, () => {
+  it(`returns 'Rock Scissors Paper Online Game' as title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('Rock Scissors Paper Online Game');
