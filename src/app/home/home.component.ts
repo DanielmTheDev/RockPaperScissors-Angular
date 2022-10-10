@@ -5,7 +5,7 @@ import { RoomCreationModalComponent } from "./room-creation-modal/room-creation-
 const WIDTH = '300px';
 
 @Component({
-  selector: 'home',
+  selector: 'home-page',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

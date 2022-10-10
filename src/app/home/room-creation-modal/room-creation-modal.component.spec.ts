@@ -1,9 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RoomCreationModalComponent } from './room-creation-modal.component';
-import { MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
-import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
-import { of } from "rxjs";
+import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";

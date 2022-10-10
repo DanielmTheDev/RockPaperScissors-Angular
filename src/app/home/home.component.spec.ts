@@ -1,9 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HomeComponent } from './home.component';
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { RoomCreationModalComponent } from "./room-creation-modal/room-creation-modal.component";
-import { OverlayModule } from "@angular/cdk/overlay";
 import { of } from "rxjs";
 
 describe('HomeComponent', () => {
