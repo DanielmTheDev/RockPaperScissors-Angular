@@ -28,6 +28,6 @@ describe('HomeComponent', () => {
   it('opens the dialog with configuration', () => {
     component.openDialog();
 
-    expect(dialogSpy).toHaveBeenCalledWith(RoomCreationModalComponent, { width: "300px" });
+    expect(dialogSpy).toHaveBeenCalledWith(RoomCreationModalComponent, { width: "20rem" });
   });
 });
