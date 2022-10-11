@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { RoomCreationModalComponent } from "./room-creation-modal/room-creation-modal.component";
 
-const WIDTH = '300px';
+const WIDTH = '20rem';
 
 @Component({
   selector: 'home-page',
