@@ -4,10 +4,10 @@
 
 .form-container form {
   margin-bottom: 2rem;
-}
 
-.form-container form > * {
-  margin: .5rem 0;
+  > * {
+    margin: .5rem 0;
+  }
 }
 
 .form-container .mat-radio-button {
