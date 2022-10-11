@@ -13,8 +13,8 @@
     </mat-form-field>
 
     <mat-form-field *ngIf="formGroup.value.numberOfPlayers === 1" appearance="legacy">
-      <mat-label>Game iterations</mat-label>
-      <input matInput type="number" min="1" formControlName="iterations">
+      <mat-label>Score</mat-label>
+      <input matInput type="number" min="1" formControlName="score">
     </mat-form-field>
 
     <div *ngIf="formGroup.value.numberOfPlayers > 1">

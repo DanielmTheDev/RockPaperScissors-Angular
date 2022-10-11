@@ -12,7 +12,7 @@ export class RoomCreationModalComponent {
   formGroup: FormGroup = this.formBuilder.group({
     'name': [''],
     'numberOfPlayers': [1, Validators.min(1)],
-    'iterations': [1, Validators.min(1)],
+    'score': [1, Validators.min(1)],
     'typeOfGame': [GameType.Winner]
   });
 
