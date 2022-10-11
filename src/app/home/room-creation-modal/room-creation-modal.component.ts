@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from "@angular/material/dialog";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { GameType } from "../models/game-type";
+import { MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GameType } from '../models/game-type';
+import { Router } from '@angular/router';
+import constants from '../../constants';
 
 @Component({
   selector: 'room-creation-modal',
@@ -19,12 +21,16 @@ export class RoomCreationModalComponent {
   gameType = GameType;
 
   constructor(
-    public dialogRef: MatDialogRef<RoomCreationModalComponent>,
+    private dialogRef: MatDialogRef<RoomCreationModalComponent>,
+    private router: Router,
     private formBuilder: FormBuilder) {}
 
   cancel(): void {
     this.dialogRef.close();
   }
 
-  create(): void { }
+  create(): void {
+    this.router.navigate([constants.routing.room, this.formGroup.value.name]).then();
+    this.dialogRef.close();
+  }
 }
