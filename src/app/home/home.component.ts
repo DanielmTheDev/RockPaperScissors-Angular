@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { RoomCreationModalComponent } from "./room-creation-modal/room-creation-modal.component";
-
-const WIDTH = '20rem';
+import constants from '../constants';
 
 @Component({
   selector: 'home-page',
@@ -15,7 +14,7 @@ export class HomeComponent {
 
   openDialog(): void {
     this.dialog.open(RoomCreationModalComponent, {
-      width: WIDTH
+      width: constants.dialogWidth
     });
   }
 }
