@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "rockpaperscissors-de233": {
+      "hosting": {
+        "rsp-angular": [
+          "rockpaperscissors-de233"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "rockpaperscissors-de233"
+  }
+}
