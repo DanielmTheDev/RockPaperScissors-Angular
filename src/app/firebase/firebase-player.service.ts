@@ -16,7 +16,7 @@ export class FirebasePlayerService {
     return this.playerCollection.valueChanges();
   }
 
-  addPlayer(player: Player): Promise<DocumentReference<Player>> {
-    return this.playerCollection.add(player);
+  add(player: Player): Promise<string> {
+    return this.playerCollection.add(player).then(playerReference => playerReference.id);
   }
 }
