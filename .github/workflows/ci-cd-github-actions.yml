@@ -1,4 +1,4 @@
-name: RSP CI/CD
+name: RPS CI/CD
 
 on: [push]
 
