@@ -5,4 +5,10 @@
   <div>Room: {{player.room}}</div>
 </div>
 
+<ul>
+  <li class="text" *ngFor="let item of allPlayers$ | async">
+    {{item | json}}
+  </li>
+</ul>
+
 <button (click)="leaveRoom()">Leave room</button>

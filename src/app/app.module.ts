@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeModule } from "./home/home.module";
+import { HomeModule } from './home/home.module';
 import { RoomModule } from './room/room.module';
+import { FirebaseModule } from './firebase/firebase/firebase.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,9 +14,9 @@ import { RoomModule } from './room/room.module';
     RoomModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FirebaseModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
