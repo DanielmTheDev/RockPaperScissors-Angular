@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeModule } from './home/home.module';
 import { RoomModule } from './room/room.module';
-import { FirebaseModule } from './firebase/firebase/firebase.module';
+import { FirebaseModule } from './firebase/firebase.module';
 
 @NgModule({
   declarations: [AppComponent],
