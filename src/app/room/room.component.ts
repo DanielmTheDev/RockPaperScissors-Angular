@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from './models/player';
 import constants from '../constants';
 import { PlayerCreationModalComponent } from './player-creation-modal/player-creation-modal.component';
+import { FirebasePlayerService } from '../firebase/firebase-player.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'room',
@@ -12,15 +14,18 @@ import { PlayerCreationModalComponent } from './player-creation-modal/player-cre
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
-  player: Player | undefined;
+  player = {} as Player;
+  allPlayers$: Observable<Player[]> = of([]);
 
   constructor(
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    public playerService: FirebasePlayerService) {}
 
   ngOnInit(): void {
+    this.allPlayers$ = this.playerService.valueChanges();
     const serializedPlayer = localStorage.getItem(constants.playerKey);
     if (serializedPlayer) {
       this.player = JSON.parse(serializedPlayer);
@@ -42,13 +47,18 @@ export class RoomComponent implements OnInit {
     dialogRef.afterClosed().subscribe(name => this.persistPlayer(name));
   }
 
-  // this persistence would probably be better with ngrx
   private persistPlayer(name: string): void {
-    this.player = {
+    this.player = this.initializeBasicPlayer(name);
+    this.playerService.addPlayer(this.player).then(playerReference => {
+      this.player.id = playerReference.id;
+      localStorage.setItem(constants.playerKey, JSON.stringify(this.player));
+    });
+  }
+
+  private initializeBasicPlayer(name: string) {
+    return {
       name: name,
-      id: 'random-id',
-      room: this.route.snapshot.params['id']
+      room: this.route.snapshot.params[constants.routeParams.id]
     } as Player;
-    localStorage.setItem(constants.playerKey, JSON.stringify(this.player));
   }
 }
