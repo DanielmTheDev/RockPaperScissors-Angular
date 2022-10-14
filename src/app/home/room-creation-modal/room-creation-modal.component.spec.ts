@@ -1,44 +1,26 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RoomCreationModalComponent } from './room-creation-modal.component';
-import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
-import { ReactiveFormsModule } from "@angular/forms";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FirebaseRoomService } from 'src/app/firebase/firebase-room.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FirebaseRoomService } from '../../firebase/firebase-room.service';
 
 describe('RoomCreationModalComponent', () => {
   let component: RoomCreationModalComponent;
-  let dialogSpy: jasmine.Spy;
-  let fixture: ComponentFixture<RoomCreationModalComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ RoomCreationModalComponent ],
-      imports: [
-        ReactiveFormsModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        BrowserAnimationsModule,
-        MatInputModule
-      ],
-      providers: [
-        { provide: MatDialogRef, useValue:  { close: () => { } } },
-        { provide: FirebaseRoomService, useValue:  { add: () => new Promise((resolve) => resolve(4)) } }
-      ]
-    })
-    .compileComponents();
+  let formBuilder: FormBuilder;
+  let dialogRef: MatDialogRef<RoomCreationModalComponent>;
+  let router: Router;
+  let firebaseRoomService: FirebaseRoomService;
 
-    fixture = TestBed.createComponent(RoomCreationModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(() => {
+    formBuilder = { group: (_: any) => {} } as FormBuilder;
+    router = { navigate: _ => {} } as Router;
+    firebaseRoomService = {} as FirebaseRoomService;
 
-    dialogSpy = spyOn(TestBed.get(MatDialogRef<RoomCreationModalComponent>), 'close');
+    component = new RoomCreationModalComponent(dialogRef, router, formBuilder, firebaseRoomService);
   });
 
-  it('closes the dialog on cancellation', () => {
-    component.cancel()
-
-    expect(dialogSpy).toHaveBeenCalled();
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 });
