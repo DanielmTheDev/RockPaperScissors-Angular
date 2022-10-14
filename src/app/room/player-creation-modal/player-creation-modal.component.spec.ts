@@ -1,23 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlayerCreationModalComponent } from './player-creation-modal.component';
 import { FormBuilder } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('PlayerCreationModalComponent', () => {
   let component: PlayerCreationModalComponent;
-  let fixture: ComponentFixture<PlayerCreationModalComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [PlayerCreationModalComponent],
-      providers: [FormBuilder, { provide: MatDialogRef, useValue: {} }],
-      imports: [MatDialogModule]
-    })
-      .compileComponents();
+  let formBuilder: FormBuilder;
+  let dialogRef: MatDialogRef<PlayerCreationModalComponent>;
 
-    fixture = TestBed.createComponent(PlayerCreationModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(() => {
+    formBuilder = { group: (_: any) => {} } as FormBuilder;
+
+    component = new PlayerCreationModalComponent(formBuilder, dialogRef);
   });
 
   it('should create', () => {
