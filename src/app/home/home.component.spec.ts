@@ -1,33 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
-import { MatDialog, MatDialogModule } from "@angular/material/dialog";
-import { RoomCreationModalComponent } from "./room-creation-modal/room-creation-modal.component";
-import { of } from "rxjs";
+import { MatDialog } from '@angular/material/dialog';
+import { RoomCreationModalComponent } from './room-creation-modal/room-creation-modal.component';
+import { of } from 'rxjs';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
+
   let dialogSpy: jasmine.Spy;
-  let dialogRefSpyObj = jasmine.createSpyObj({ afterClosed : of({}), close: null });
-  dialogRefSpyObj.componentInstance = { body: '' }
-  let fixture: ComponentFixture<HomeComponent>;
+  let dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
+  dialogRefSpyObj.componentInstance = { body: '' };
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ HomeComponent ],
-      imports: [ MatDialogModule ]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    const dialog = { open: (_1, _2) => {} } as MatDialog;
+    dialogSpy = spyOn(dialog, 'open').and.returnValue(dialogRefSpyObj);
 
-    fixture = TestBed.createComponent(HomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-
-    dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
+    component = new HomeComponent(dialog);
   });
 
   it('opens the dialog with configuration', () => {
     component.openDialog();
 
-    expect(dialogSpy).toHaveBeenCalledWith(RoomCreationModalComponent, { width: "20rem" });
+    expect(dialogSpy).toHaveBeenCalledWith(RoomCreationModalComponent, { width: '20rem' });
   });
 });

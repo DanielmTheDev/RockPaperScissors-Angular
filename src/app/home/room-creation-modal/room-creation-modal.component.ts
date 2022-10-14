@@ -33,7 +33,7 @@ export class RoomCreationModalComponent {
   }
 
   create(): void {
-    this.firebaseRoomService.add(this.formGroup.value as RoomCreationRequest).then(roomId => {
+    this.firebaseRoomService.add(this.formGroup.value as RoomCreationRequest).subscribe(roomId => {
       this.router.navigate([constants.routing.room, roomId]).then();
     })
     this.dialogRef.close();
