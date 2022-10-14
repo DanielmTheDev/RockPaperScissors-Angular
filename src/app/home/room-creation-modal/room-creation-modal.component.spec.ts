@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FirebaseRoomService } from 'src/app/firebase/firebase-room.service';
 
 describe('RoomCreationModalComponent', () => {
   let component: RoomCreationModalComponent;
@@ -21,10 +22,10 @@ describe('RoomCreationModalComponent', () => {
         BrowserAnimationsModule,
         MatInputModule
       ],
-      providers: [ {
-        provide: MatDialogRef,
-        useValue:  { close: () => { } }
-      }]
+      providers: [
+        { provide: MatDialogRef, useValue:  { close: () => { } } },
+        { provide: FirebaseRoomService, useValue:  { add: () => new Promise((resolve) => resolve(4)) } }
+      ]
     })
     .compileComponents();
 
