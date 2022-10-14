@@ -50,7 +50,7 @@ export class RoomComponent implements OnInit {
   private persistPlayer(name: string): void {
     this.player = this.initializeBasicPlayer(name);
     this.playerService.add(this.player).then(playerId => {
-      this.player.id = playerId
+      this.player.id = playerId;
       localStorage.setItem(constants.playerKey, JSON.stringify(this.player));
     });
   }

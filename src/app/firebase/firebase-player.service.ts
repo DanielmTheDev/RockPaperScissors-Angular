@@ -17,6 +17,8 @@ export class FirebasePlayerService {
   }
 
   add(player: Player): Promise<string> {
-    return this.playerCollection.add(player).then(playerReference => playerReference.id);
+    return this.playerCollection
+      .add(player)
+      .then(playerReference => playerReference.id);
   }
 }

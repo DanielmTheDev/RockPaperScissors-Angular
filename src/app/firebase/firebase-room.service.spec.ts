@@ -7,7 +7,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { RoomCreationModalComponent } from '../home/room-creation-modal/room-creation-modal.component';
 
-describe('ServicesService', () => {
+describe('FirebaseRoom Service', () => {
   let service: FirebaseRoomService;
 
   beforeEach(() => {
