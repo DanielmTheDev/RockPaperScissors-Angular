@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Rock Scissors Paper Online Game';
+  title = 'Rock Paper Scissors Online Game';
 }
