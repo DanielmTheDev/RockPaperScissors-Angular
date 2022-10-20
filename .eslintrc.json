@@ -53,13 +53,51 @@
         "func-call-spacing": 2,
         "semi": 1,
         "no-extra-semi": 1,
-        "no-multiple-empty-lines": [2, { "max": 2 }],
-        "brace-style": [2, "1tbs", { "allowSingleLine": true }],
-        "quote-props": [2, "consistent"],
-        "quotes": [2, "single"],
-        "curly": [2, "multi-or-nest", "consistent"],
-        "no-trailing-spaces": [2, { "skipBlankLines": true }],
-        "object-curly-spacing": [2, "always"]}
+        "no-multiple-empty-lines": [
+          2,
+          {
+            "max": 2
+          }
+        ],
+        "brace-style": [
+          2,
+          "1tbs",
+          {
+            "allowSingleLine": true
+          }
+        ],
+        "quote-props": [
+          2,
+          "consistent"
+        ],
+        "quotes": [
+          2,
+          "single"
+        ],
+        "curly": [
+          2,
+          "multi-or-nest",
+          "consistent"
+        ],
+        "no-trailing-spaces": [
+          2,
+          {
+            "skipBlankLines": true
+          }
+        ],
+        "object-curly-spacing": [
+          2,
+          "always"
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@ngrx/recommended-requiring-type-checking"
+      ]
     }
   ]
 }
