@@ -1,5 +1,4 @@
 ﻿import { Player } from '../player-creation/models/player';
-import { Room } from '../room/models/room';
 import { createSelector } from '@ngrx/store';
 
 export const selectPlayer = createSelector(
@@ -8,5 +7,4 @@ export const selectPlayer = createSelector(
 
 export interface State {
   player: Player;
-  room: Room;
 }
