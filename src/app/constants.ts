@@ -1,5 +1,5 @@
 ﻿export default {
-  playerKey: 'rps_player',
+  playerKey: 'player',
   dialogWidth: '20rem',
   routing: {
     room: 'room'

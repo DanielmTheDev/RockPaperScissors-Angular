@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { reducers } from './store';
+import { rehydrationMetaReducer } from './store/rehydration';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,7 @@ import { reducers } from './store';
     AppRoutingModule,
     BrowserAnimationsModule,
     FirebaseModule,
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot(reducers, { metaReducers: [rehydrationMetaReducer] }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   bootstrap: [AppComponent]

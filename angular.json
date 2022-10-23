@@ -16,6 +16,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ],
             "outputPath": "dist/rsp-angular",
             "index": "src/index.html",
             "main": "src/main.ts",
