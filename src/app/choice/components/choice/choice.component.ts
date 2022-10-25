@@ -1,5 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { Choice } from '../../models/choice';
+import { FirebasePlayerService } from '../../../firebase/firebase-player.service';
 
 @Component({
   selector: 'choice',
@@ -9,7 +10,9 @@ import { Choice } from '../../models/choice';
 export class ChoiceComponent {
   choiceEnum = Choice;
 
-  choose(_: Choice) {
-    // add choice to firestore
+  constructor(private playerService: FirebasePlayerService) {}
+
+  choose(choice: Choice) {
+    this.playerService.addChoiceForCurrentPlayer(choice).subscribe();
   }
 }

@@ -1,5 +1,5 @@
 ﻿export enum Choice {
-  Rock,
-  Paper,
-  Scissors
+  Rock = 'Rock',
+  Paper = 'Paper',
+  Scissors = 'Scissors'
 }

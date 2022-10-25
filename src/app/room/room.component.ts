@@ -8,6 +8,7 @@ import { Player } from '../player-creation/models/player';
 import { PlayerCreationService } from '../player-creation/services/player-creation.service';
 import { Store } from '@ngrx/store';
 import { removePlayer, selectPlayer } from '../store';
+import { StorePlayer } from '../store/models/store-player';
 
 @Component({
   selector: 'room',
@@ -16,7 +17,8 @@ import { removePlayer, selectPlayer } from '../store';
 })
 export class RoomComponent implements OnInit {
   allPlayers$: Observable<Player[]> = of([]);
-  storePlayer$: Observable<Player>;
+  storePlayer$: Observable<StorePlayer>;
+  firebasePlayer$: Observable<Player | undefined> | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,16 +27,19 @@ export class RoomComponent implements OnInit {
     private firebasePlayerService: FirebasePlayerService,
     private route: ActivatedRoute,
     private store: Store) {
-      this.storePlayer$ = store.select(selectPlayer);
+    this.storePlayer$ = store.select(selectPlayer);
+    this.firebasePlayerService.getCurrentPlayerDocument().subscribe(player => {
+      this.firebasePlayer$ = player.valueChanges();
+    });
   }
 
   ngOnInit(): void {
     this.allPlayers$ = this.firebasePlayerService.valueChanges();
     this.storePlayer$.pipe(take(1)).subscribe(player => {
-      if(!player.name) {
+      if (!player.name) {
         this.playerCreationService.createPlayer(this.route.snapshot.params[constants.routeParams.id]);
       }
-    })
+    });
   }
 
   leaveRoom(): void {

@@ -1,10 +1,10 @@
 ﻿import { ActionReducerMap, createReducer, on } from '@ngrx/store';
-import { Player } from '../player-creation/models/player';
 import { removePlayer, setPlayer, State } from './index';
+import { StorePlayer } from './models/store-player';
 
 export const reducers: ActionReducerMap<State> = {
   player: createReducer(
-    {} as Player,
-    on(setPlayer, (player, props): Player => props.player),
-    on(removePlayer, (): Player => ({} as Player))),
+    {} as StorePlayer,
+    on(setPlayer, (player, props): StorePlayer => props.player),
+    on(removePlayer, (): StorePlayer => ({} as StorePlayer))),
 };
