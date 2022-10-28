@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { FirebasePlayerService } from '../firebase/firebase-player.service';
 import { PlayerCreationService } from '../player-creation/services/player-creation.service';
+import { Store } from '@ngrx/store';
 
 describe('RoomComponent', () => {
   let component: RoomComponent;
@@ -12,6 +13,7 @@ describe('RoomComponent', () => {
   let route: ActivatedRoute;
   let playerService: FirebasePlayerService;
   let playerCreationService: PlayerCreationService;
+  let store: Store;
 
   beforeEach(() => {
     formBuilder = {} as FormBuilder;
@@ -19,8 +21,9 @@ describe('RoomComponent', () => {
     route = {} as ActivatedRoute;
     playerService = {} as FirebasePlayerService;
     playerCreationService = {} as PlayerCreationService;
+    store = { select: (_: string) => {} } as Store;
 
-    component = new RoomComponent(formBuilder, router, playerCreationService, playerService, route);
+    component = new RoomComponent(formBuilder, router, playerCreationService, playerService, route, store);
   });
 
   it('should create', () => {

@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GameType } from '../models/game-type';
 import { Router } from '@angular/router';
-import { RoomCreationRequest } from "../models/room-creation-request";
+import { RoomCreationRequest } from '../models/room-creation-request';
 import constants from 'src/app/constants';
 import { FirebaseRoomService } from 'src/app/firebase/firebase-room.service';
 
@@ -35,7 +35,7 @@ export class RoomCreationModalComponent {
   create(): void {
     this.firebaseRoomService.add(this.formGroup.value as RoomCreationRequest).subscribe(roomId => {
       this.router.navigate([constants.routing.room, roomId]).then();
-    })
+    });
     this.dialogRef.close();
   }
 }

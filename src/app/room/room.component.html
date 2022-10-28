@@ -1,9 +1,11 @@
-<div>{{player ? 'Player information:' : 'No player selected'}}</div>
-<div *ngIf="player">
-  <div>Name: {{player.name}}</div>
-  <div>Id: {{player.id}}</div>
-  <div>Room: {{player.room}}</div>
-</div>
+<ng-container *ngIf="storePlayer$ | async as player">
+  <div>{{player ? 'Player information:' : 'No player selected'}}</div>
+  <div *ngIf="player">
+    <div>Name: {{player.name}}</div>
+    <div>Id: {{player.id}}</div>
+    <div>Room: {{player.room}}</div>
+  </div>
+</ng-container>
 
 <ul>
   <li class="text" *ngFor="let item of allPlayers$ | async">
