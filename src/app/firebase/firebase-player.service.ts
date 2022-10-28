@@ -7,12 +7,12 @@ import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { Choice } from '../choice/models/choice';
 import { Store } from '@ngrx/store';
 import { selectPlayer } from '../store';
-import { StorePlayer } from '../store/models/store-player';
+import { CurrentPlayer } from '../store/models/current-player';
 
 @Injectable()
 export class FirebasePlayerService {
   private readonly playerCollection: AngularFirestoreCollection<Player>;
-  private readonly player$: Observable<StorePlayer>;
+  private readonly player$: Observable<CurrentPlayer>;
 
   constructor(private firestore: AngularFirestore, private store: Store) {
     this.playerCollection = this.firestore.collection<Player>(constants.firebase.collections.players);

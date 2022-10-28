@@ -1,7 +1,6 @@
-<ng-container *ngIf="storePlayer$ | async as storePlayer">
+<ng-container *ngIf="currentPlayer$ | async as storePlayer">
   <div>Store Player information:</div>
   <div *ngIf="storePlayer">
-    <div>Name: {{storePlayer.name}}</div>
     <div>Id: {{storePlayer.id}}</div>
   </div>
 </ng-container>
