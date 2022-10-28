@@ -4,20 +4,18 @@
     <div>Id: {{storePlayer.id}}</div>
   </div>
 </ng-container>
+
 <ng-container *ngIf="firebasePlayer$ | async as firebasePlayer">
   <div>Firebase Player information:</div>
   <div>
+    <div>Name: {{firebasePlayer.name}}</div>
     <span>Choices: </span>
     <span *ngFor="let choice of firebasePlayer.choices"> {{choice}}</span>
   </div>
 </ng-container>
 
 <choice></choice>
+<opponents-component></opponents-component>
 
-<ul>
-  <li class="text" *ngFor="let item of allPlayers$ | async">
-    {{item | json}}
-  </li>
-</ul>
 
 <button (click)="leaveRoom()">Leave room</button>

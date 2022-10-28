@@ -1,10 +1,10 @@
 import { RoomComponent } from './room.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { FirebasePlayerService } from '../firebase/firebase-player.service';
 import { PlayerCreationService } from '../player-creation/services/player-creation.service';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
+import { FirebasePlayerService } from '../firebase/services/firebase-player.service';
 
 describe('RoomComponent', () => {
   let component: RoomComponent;

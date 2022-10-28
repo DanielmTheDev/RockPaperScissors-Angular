@@ -1,0 +1,7 @@
+<ng-container *ngIf="opponents">
+  <div>Opponents:</div>
+  <div *ngFor="let player of opponents">
+    <div>Name: {{player.name}}</div>
+    <div>Choices: {{player.choices}}</div>
+  </div>
+</ng-container>

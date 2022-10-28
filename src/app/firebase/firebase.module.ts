@@ -5,9 +5,10 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getFunctions, provideFunctions } from '@angular/fire/functions';
-import { FirebaseRoomService } from "./firebase-room.service";
-import { FirebasePlayerService } from './firebase-player.service';
 import { environment } from 'src/environments/environment';
+import { FirebasePlayerService } from './services/firebase-player.service';
+import { FirebaseRoomService } from './services/firebase-room.service';
+import { FirebaseOpponentService } from './services/firebase-opponent.service';
 
 @NgModule({
   declarations: [],
@@ -21,8 +22,9 @@ import { environment } from 'src/environments/environment';
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     FirebasePlayerService,
-    FirebaseRoomService
+    FirebaseRoomService,
+    FirebaseOpponentService
   ],
   exports: []
 })
-export class FirebaseModule { }
+export class FirebaseModule {}

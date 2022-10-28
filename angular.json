@@ -17,7 +17,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "lodash"
+              "lodash",
+              "deepmerge"
             ],
             "outputPath": "dist/rsp-angular",
             "index": "src/index.html",

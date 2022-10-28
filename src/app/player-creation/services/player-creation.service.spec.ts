@@ -1,7 +1,7 @@
 import { PlayerCreationService } from './player-creation.service';
 import { MatDialog } from '@angular/material/dialog';
-import { FirebasePlayerService } from '../../firebase/firebase-player.service';
 import { Store } from '@ngrx/store';
+import { FirebasePlayerService } from '../../firebase/services/firebase-player.service';
 
 describe('PlayerCreationService', () => {
   let service: PlayerCreationService;

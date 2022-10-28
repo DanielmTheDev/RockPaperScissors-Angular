@@ -1,5 +1,5 @@
-﻿import { ChoiceComponent } from './choice.component';
-import { FirebasePlayerService } from '../../../firebase/firebase-player.service';
+﻿import { FirebasePlayerService } from 'src/app/firebase/services/firebase-player.service';
+import { ChoiceComponent } from './choice.component';
 
 describe('ChoiceComponent', () => {
   let component: ChoiceComponent;

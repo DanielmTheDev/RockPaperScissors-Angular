@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FirebasePlayerService } from 'src/app/firebase/firebase-player.service';
 import { Player } from '../models/player';
 import { PlayerCreationModalComponent } from '../player-creation-modal/player-creation-modal.component';
 import constants from '../../constants';
 import { Store } from '@ngrx/store';
 import { setPlayer } from '../../store';
+import { FirebasePlayerService } from '../../firebase/services/firebase-player.service';
 
 @Injectable()
 export class PlayerCreationService {
