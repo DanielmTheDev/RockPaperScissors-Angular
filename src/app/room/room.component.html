@@ -1,9 +1,14 @@
-<ng-container *ngIf="storePlayer$ | async as player">
-  <div>{{player ? 'Player information:' : 'No player selected'}}</div>
-  <div *ngIf="player">
-    <div>Name: {{player.name}}</div>
-    <div>Id: {{player.id}}</div>
-    <div>Room: {{player.room}}</div>
+<ng-container *ngIf="currentPlayer$ | async as storePlayer">
+  <div>Store Player information:</div>
+  <div *ngIf="storePlayer">
+    <div>Id: {{storePlayer.id}}</div>
+  </div>
+</ng-container>
+<ng-container *ngIf="firebasePlayer$ | async as firebasePlayer">
+  <div>Firebase Player information:</div>
+  <div>
+    <span>Choices: </span>
+    <span *ngFor="let choice of firebasePlayer.choices"> {{choice}}</span>
   </div>
 </ng-container>
 

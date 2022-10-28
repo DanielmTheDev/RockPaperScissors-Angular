@@ -1,10 +1,10 @@
-﻿import { Player } from '../player-creation/models/player';
-import { createSelector } from '@ngrx/store';
+﻿import { createSelector } from '@ngrx/store';
+import { CurrentPlayer } from './models/current-player';
 
 export const selectPlayer = createSelector(
-  (state: object): Player => (state as State).player,
-  (player: Player): Player => player);
+  (state: object): CurrentPlayer => (state as State).player,
+  (player: CurrentPlayer): CurrentPlayer => player);
 
 export interface State {
-  player: Player;
+  player: CurrentPlayer;
 }
