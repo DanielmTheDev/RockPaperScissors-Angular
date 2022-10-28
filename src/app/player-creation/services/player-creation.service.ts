@@ -28,7 +28,6 @@ export class PlayerCreationService {
     this.playerService.add(player)
       .subscribe(playerId => {
         player.id = playerId;
-        localStorage.setItem(constants.playerKey, JSON.stringify(player));
         this.store.dispatch(setPlayer({ player: player }));
       });
   }
