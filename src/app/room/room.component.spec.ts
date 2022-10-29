@@ -5,6 +5,7 @@ import { PlayerCreationService } from '../player-creation/services/player-creati
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { FirebasePlayerService } from '../firebase/services/firebase-player.service';
+import constants from '../constants';
 
 describe('RoomComponent', () => {
   let component: RoomComponent;
@@ -19,16 +20,22 @@ describe('RoomComponent', () => {
   beforeEach(() => {
     formBuilder = {} as FormBuilder;
     router = {} as Router;
-    route = {} as ActivatedRoute;
+    route = { snapshot: { params: {} } } as ActivatedRoute;
     const document = { valueChanges: () => of({}) };
     playerService = { getCurrentPlayerDocument: () => of(document) } as FirebasePlayerService;
-    playerCreationService = {} as PlayerCreationService;
-    store = { select: (_: string) => {} } as Store;
+    playerCreationService = { createPlayer: _ => {} } as PlayerCreationService;
+    store = { select: (_: string) => of({}) } as Store;
 
     component = new RoomComponent(formBuilder, router, playerCreationService, playerService, route, store);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('creates new player OnInit if there is none in the store', () => {
+    spyOn(store, 'select').and.returnValue(of({}));
+    spyOn(playerCreationService, 'createPlayer');
+    route.snapshot.params[constants.routeParams.id] = 'roomId';
+
+    component.ngOnInit();
+
+    expect(playerCreationService.createPlayer).toHaveBeenCalledWith('roomId');
   });
 });
