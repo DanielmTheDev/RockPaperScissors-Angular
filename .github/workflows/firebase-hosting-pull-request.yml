@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: ls
       - run: cat ./src/environments/environment.ts
       - uses: DamianReeves/write-file-action@master
         with:
