@@ -8,6 +8,10 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
+      - uses: Radioh/action-content-overwrite@v1
+        with:
+          filePath: "./src/environments/environment.ts"
+          content: ${{ secrets.FIREBASE_CONFIG }}
       - uses: actions/checkout@v2
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
