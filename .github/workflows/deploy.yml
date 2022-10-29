@@ -3,7 +3,7 @@ name: RPS Deploy
 on:
   push:
     branches:
-      - feature/deploy
+      - main
 
 jobs:
   build:
@@ -26,6 +26,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - run: npm ci
       - run: npm run build
       - uses: w9jds/firebase-action@master
         with:
