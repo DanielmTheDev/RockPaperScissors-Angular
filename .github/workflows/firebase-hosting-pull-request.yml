@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: ./src/environments/environment.ts
+      - run: cat ./src/environments/environment.ts
       - uses: DamianReeves/write-file-action@master
         with:
           path: ./src/environments/environment.ts
           contents: |
             ${{ secrets.FIREBASE_CONFIG }}
           write-mode: overwrite
-      - run: ./src/environments/environment.ts
+      - run: cat ./src/environments/environment.ts
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
