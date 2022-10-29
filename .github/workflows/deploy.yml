@@ -3,7 +3,7 @@ name: RPS Deploy
 on:
   push:
     branches:
-      - main
+      - feature/deploy
 
 jobs:
   build:
