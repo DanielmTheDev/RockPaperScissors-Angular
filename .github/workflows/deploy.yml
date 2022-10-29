@@ -1,6 +1,9 @@
-name: RPS CI/CD
+name: RPS Deploy
 
-on: [push]
+on:
+  push:
+    branches:
+      - feature/deploy
 
 jobs:
   build:
@@ -23,9 +26,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run lint
-      - run: npm test -- --watch=false --browsers=ChromeHeadless
       - run: npm run build
       - uses: w9jds/firebase-action@master
         with:
