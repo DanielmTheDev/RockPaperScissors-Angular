@@ -1,4 +1,4 @@
-import { GameType } from "./game-type";
+import { GameType } from './game-type';
 
 export interface RoomCreationRequest {
   name: string;
