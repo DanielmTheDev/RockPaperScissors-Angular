@@ -4,11 +4,6 @@
   routing: {
     room: 'room'
   },
-  firebase: {
-    collections: {
-      players: 'players'
-    }
-  },
   routeParams: {
     id: 'id'
   }

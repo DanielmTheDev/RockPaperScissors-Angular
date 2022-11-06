@@ -1,6 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { Choice } from '../../models/choice';
-import { FirebasePlayerService } from '../../../firebase/firebase-player.service';
+import { FirebasePlayerService } from '../../../firebase/services/firebase-player.service';
 
 @Component({
   selector: 'choice',
@@ -13,6 +13,6 @@ export class ChoiceComponent {
   constructor(private playerService: FirebasePlayerService) {}
 
   choose(choice: Choice) {
-    this.playerService.addChoiceForCurrentPlayer(choice).subscribe();
+    this.playerService.addChoice(choice).subscribe();
   }
 }

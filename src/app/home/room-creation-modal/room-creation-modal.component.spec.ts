@@ -2,7 +2,7 @@ import { RoomCreationModalComponent } from './room-creation-modal.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FirebaseRoomService } from '../../firebase/firebase-room.service';
+import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
 
 describe('RoomCreationModalComponent', () => {
   let component: RoomCreationModalComponent;

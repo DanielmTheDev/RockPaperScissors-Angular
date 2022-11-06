@@ -5,7 +5,7 @@ import { GameType } from '../models/game-type';
 import { Router } from '@angular/router';
 import { RoomCreationRequest } from '../models/room-creation-request';
 import constants from 'src/app/constants';
-import { FirebaseRoomService } from 'src/app/firebase/firebase-room.service';
+import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
 
 @Component({
   selector: 'room-creation-modal',
