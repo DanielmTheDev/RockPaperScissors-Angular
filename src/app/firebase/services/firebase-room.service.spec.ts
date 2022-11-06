@@ -1,17 +1,20 @@
 import { FirebaseRoomService } from './firebase-room.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
+import { RoomCreationRequest } from '../../home/models/room-creation-request';
 
 describe('FirebaseRoom Service', () => {
   let service: FirebaseRoomService;
   let firestore: AngularFirestore;
 
   beforeEach(() => {
-    firestore = {} as AngularFirestore;
-
+    firestore = { collection: _ => {} } as AngularFirestore;
     service = new FirebaseRoomService(firestore);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('adds room to firebase', () => {
+    const collection = { add: _ => Promise.resolve({ id: 'roomId' } as DocumentReference<RoomCreationRequest>) } as AngularFirestoreCollection<RoomCreationRequest>;
+    spyOn(firestore, 'collection').and.returnValue(collection);
+
+    service.add({} as RoomCreationRequest).subscribe(id => expect(id).toEqual('roomId'));
   });
 });
