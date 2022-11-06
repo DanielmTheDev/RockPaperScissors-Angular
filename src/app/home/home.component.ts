@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { RoomCreationModalComponent } from './room-creation-modal/room-creation-modal.component';
 import constants from '../constants';
+import { RoomCreationModalComponent } from '../room-creation/room-creation-modal/room-creation-modal.component';
 
 @Component({
   selector: 'home-page',

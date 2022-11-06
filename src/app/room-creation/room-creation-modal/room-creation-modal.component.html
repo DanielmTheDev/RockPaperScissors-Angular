@@ -12,12 +12,12 @@
       <mat-hint>Don't count yourself</mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="$any(formGroup.value.numberOfPlayers === 1)" appearance="legacy">
+    <mat-form-field *ngIf="formGroup.get('numberOfPlayers')?.value === 1" appearance="legacy">
       <mat-label>Score</mat-label>
       <input matInput type="number" min="1" formControlName="score">
     </mat-form-field>
 
-    <div *ngIf="$any(formGroup.value.numberOfPlayers > 1)">
+    <div *ngIf="formGroup.get('numberOfPlayers')?.value > 1">
       <label>You want: </label>
       <mat-radio-group formControlName="typeOfGame">
         <mat-radio-button [value]="gameType.Winner">Winner</mat-radio-button>

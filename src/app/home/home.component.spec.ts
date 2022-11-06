@@ -1,7 +1,7 @@
 import { HomeComponent } from './home.component';
 import { MatDialog } from '@angular/material/dialog';
-import { RoomCreationModalComponent } from './room-creation-modal/room-creation-modal.component';
 import { of } from 'rxjs';
+import { RoomCreationModalComponent } from '../room-creation/room-creation-modal/room-creation-modal.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

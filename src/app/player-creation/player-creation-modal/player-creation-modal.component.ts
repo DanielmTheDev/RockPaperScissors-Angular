@@ -9,7 +9,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class PlayerCreationModalComponent {
   formGroup = this.formBuilder.group({
-    'name': ['', Validators.required],
+    name: ['', Validators.required],
   });
 
   constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<PlayerCreationModalComponent>) { }
