@@ -5,6 +5,8 @@ import { PlayerCreationService } from '../player-creation/services/player-creati
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { FirebasePlayerService } from '../firebase/services/firebase-player.service';
+import constants from '../constants';
+import { removePlayer } from '../store';
 
 describe('RoomComponent', () => {
   let component: RoomComponent;
@@ -18,17 +20,44 @@ describe('RoomComponent', () => {
 
   beforeEach(() => {
     formBuilder = {} as FormBuilder;
-    router = {} as Router;
-    route = {} as ActivatedRoute;
+    router = { navigate: _ => {} } as Router;
+    route = { snapshot: { params: {} } } as ActivatedRoute;
     const document = { valueChanges: () => of({}) };
     playerService = { getCurrentPlayerDocument: () => of(document) } as FirebasePlayerService;
-    playerCreationService = {} as PlayerCreationService;
-    store = { select: (_: string) => {} } as Store;
+    playerCreationService = { createPlayer: _ => {} } as PlayerCreationService;
+    store = {
+      select: (_: string) => of({}),
+      dispatch: _ => {}
+    } as Store;
 
     component = new RoomComponent(formBuilder, router, playerCreationService, playerService, route, store);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('creates new player OnInit if there is none in the store', () => {
+    spyOn(store, 'select').and.returnValue(of({}));
+    spyOn(playerCreationService, 'createPlayer');
+    route.snapshot.params[constants.routeParams.id] = 'roomId';
+
+    component.ngOnInit();
+
+    expect(playerCreationService.createPlayer).toHaveBeenCalledWith('roomId');
+  });
+
+  it('dispatches removePlayer to store when leaving room', () => {
+    spyOn(store, 'dispatch');
+    spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
+
+    component.leaveRoom();
+
+    expect(store.dispatch).toHaveBeenCalledWith(removePlayer());
+  });
+
+  it('navigates to root when leaving room', () => {
+    spyOn(store, 'dispatch');
+    spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
+
+    component.leaveRoom();
+
+    expect(router.navigate).toHaveBeenCalledWith(['']);
   });
 });

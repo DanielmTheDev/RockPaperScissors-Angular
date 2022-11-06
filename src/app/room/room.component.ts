@@ -41,7 +41,6 @@ export class RoomComponent implements OnInit {
   }
 
   leaveRoom(): void {
-    localStorage.removeItem(constants.playerKey);
     this.store.dispatch(removePlayer());
     this.router.navigate(['']).then();
   }
