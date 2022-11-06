@@ -7,6 +7,8 @@ import { of } from 'rxjs';
 import { FirebasePlayerService } from '../firebase/services/firebase-player.service';
 import constants from '../constants';
 import { removePlayer } from '../store';
+import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { Player } from '../player-creation/models/player';
 
 describe('RoomComponent', () => {
   let component: RoomComponent;
@@ -22,7 +24,7 @@ describe('RoomComponent', () => {
     formBuilder = {} as FormBuilder;
     router = { navigate: _ => {} } as Router;
     route = { snapshot: { params: {} } } as ActivatedRoute;
-    const document = { valueChanges: () => of({}) };
+    const document = { valueChanges: () => of({}) } as AngularFirestoreDocument<Player>;
     playerService = { getCurrentPlayerDocument: () => of(document) } as FirebasePlayerService;
     playerCreationService = { createPlayer: _ => {} } as PlayerCreationService;
     store = {

@@ -15,6 +15,6 @@ export class PlayerCreationModalComponent {
   constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<PlayerCreationModalComponent>) { }
 
   create(): void {
-    this.dialogRef.close(this.formGroup.value.name)
+    this.dialogRef.close(this.formGroup.value.name);
   }
 }

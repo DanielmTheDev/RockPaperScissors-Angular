@@ -12,7 +12,7 @@ export class ChoiceComponent {
 
   constructor(private playerService: FirebasePlayerService) {}
 
-  choose(choice: Choice) {
+  choose(choice: Choice): void {
     this.playerService.addChoice(choice).subscribe();
   }
 }

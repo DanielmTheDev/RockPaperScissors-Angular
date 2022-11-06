@@ -11,7 +11,7 @@ describe('FirebaseOpponentService', () => {
   beforeEach(() => {
     store = { select: (_: any) => of({}) } as Store;
     firestore = {} as AngularFirestore;
-    service = new FirebaseOpponentService(firestore, store)
+    service = new FirebaseOpponentService(firestore, store);
   });
 
   it('should be created', () => {

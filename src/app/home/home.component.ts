@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MatDialog } from "@angular/material/dialog";
-import { RoomCreationModalComponent } from "./room-creation-modal/room-creation-modal.component";
+import { MatDialog } from '@angular/material/dialog';
+import { RoomCreationModalComponent } from './room-creation-modal/room-creation-modal.component';
 import constants from '../constants';
 
 @Component({
