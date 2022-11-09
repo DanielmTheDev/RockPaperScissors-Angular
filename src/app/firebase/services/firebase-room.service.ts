@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { Observable } from 'rxjs';
-import { RoomCreationRequest } from '../../home/models/room-creation-request';
 import firebaseConstants from '../firebaseConstants';
+import { RoomCreationRequest } from '../../room-creation/models/room-creation-request';
 
 @Injectable()
 export class FirebaseRoomService {

@@ -1,6 +1,6 @@
 import { FirebaseRoomService } from './firebase-room.service';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
-import { RoomCreationRequest } from '../../home/models/room-creation-request';
+import { RoomCreationRequest } from '../../room-creation/models/room-creation-request';
 
 describe('FirebaseRoom Service', () => {
   let service: FirebaseRoomService;

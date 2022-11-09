@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GameType } from '../models/game-type';
 import { Router } from '@angular/router';
 import { RoomCreationRequest } from '../models/room-creation-request';
 import constants from 'src/app/constants';
 import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
+import { GameType } from '../models/game-type';
 
 @Component({
   selector: 'room-creation-modal',
@@ -14,10 +14,10 @@ import { FirebaseRoomService } from '../../firebase/services/firebase-room.servi
 })
 export class RoomCreationModalComponent {
   formGroup: FormGroup = this.formBuilder.group({
-    'name': [''],
-    'numberOfPlayers': [1, Validators.min(1)],
-    'score': [1, Validators.min(1)],
-    'typeOfGame': [GameType.Winner]
+    name: [''],
+    numberOfPlayers: [1, Validators.min(1)],
+    score: [1, Validators.min(1)],
+    typeOfGame: [GameType.Winner]
   });
 
   gameType = GameType;
