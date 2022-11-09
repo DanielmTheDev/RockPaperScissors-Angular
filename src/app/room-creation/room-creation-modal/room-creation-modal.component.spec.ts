@@ -1,11 +1,12 @@
 import { RoomCreationModalComponent } from './room-creation-modal.component';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
 import { of } from 'rxjs';
 import { RoomCreationRequest } from '../models/room-creation-request';
 import constants from '../../constants';
+import { RandomNamesProvider } from '../services/random-names-provider.service';
 
 describe('RoomCreationModalComponent', () => {
   let component: RoomCreationModalComponent;
@@ -13,14 +14,22 @@ describe('RoomCreationModalComponent', () => {
   let dialogRef: MatDialogRef<RoomCreationModalComponent>;
   let router: Router;
   let firebaseRoomService: FirebaseRoomService;
+  let randomNamesProvider: RandomNamesProvider;
+  let group: FormGroup;
+  let control: AbstractControl;
 
   beforeEach(() => {
-    formBuilder = { group: (_: any) => {} } as FormBuilder;
+    control = { setValue: _ => {} } as AbstractControl;
+    group = {
+      get: (_: string): any => control,
+    } as FormGroup;
+    formBuilder = { group: (_: any) => group } as FormBuilder;
     router = { navigate: _ => Promise.resolve(true) } as Router;
     firebaseRoomService = { add: _ => of({}) } as FirebaseRoomService;
     dialogRef = { close: _ => {} } as MatDialogRef<RoomCreationModalComponent>;
+    randomNamesProvider = { provide: (..._) => of('') } as RandomNamesProvider;
 
-    component = new RoomCreationModalComponent(dialogRef, router, formBuilder, firebaseRoomService);
+    component = new RoomCreationModalComponent(dialogRef, router, formBuilder, firebaseRoomService, randomNamesProvider);
   });
 
   it('adds room to firebase', () => {
@@ -42,5 +51,24 @@ describe('RoomCreationModalComponent', () => {
     component.create();
 
     expect(router.navigate).toHaveBeenCalledWith([constants.routing.room, 'roomId']);
+  });
+
+  it('sets loading property to false when random name is provided onInit', () => {
+    expect(component.isLoading).toBeTrue();
+
+    component.ngOnInit();
+
+    expect(component.isLoading).toBeFalse();
+  });
+
+  it('sets formGroups name with what is returned from service', () => {
+    spyOn(randomNamesProvider, 'provide').and.returnValue(of('ImenE'));
+    spyOn(group, 'get').and.returnValue(control);
+    spyOn(control, 'setValue');
+
+    component.ngOnInit();
+
+    expect(group.get).toHaveBeenCalledWith('name');
+    expect(control.setValue).toHaveBeenCalledWith('ImenE');
   });
 });
