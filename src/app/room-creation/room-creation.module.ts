@@ -7,6 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RandomNamesProvider } from './services/random-names-provider.service';
+import { HttpClientModule } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [RoomCreationModalComponent],
@@ -19,7 +22,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     ReactiveFormsModule,
     MatRadioModule,
-    ],
+    HttpClientModule,
+    MatProgressSpinnerModule
+  ],
+  providers: [RandomNamesProvider],
   exports: [RoomCreationModalComponent]
 })
 export class RoomCreationModule {}
