@@ -8,7 +8,11 @@ describe('PlayerCreationModalComponent', () => {
   let dialogRef: MatDialogRef<PlayerCreationModalComponent>;
 
   beforeEach(() => {
-    formBuilder = { group: (_: any) => {} } as FormBuilder;
+    formBuilder = {
+      nonNullable: {
+        group: (_: any) => {}
+      },
+    } as FormBuilder;
     dialogRef = { close: _ => {} } as MatDialogRef<PlayerCreationModalComponent>;
     component = new PlayerCreationModalComponent(formBuilder, dialogRef);
   });

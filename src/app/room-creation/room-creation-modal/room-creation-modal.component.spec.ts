@@ -1,6 +1,6 @@
 import { RoomCreationModalComponent } from './room-creation-modal.component';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
 import { of } from 'rxjs';
@@ -16,14 +16,20 @@ describe('RoomCreationModalComponent', () => {
   let firebaseRoomService: FirebaseRoomService;
   let randomNamesProvider: RandomNamesProvider;
   let group: FormGroup;
-  let control: AbstractControl;
+  let nameFormControl: FormControl<string>;
 
   beforeEach(() => {
-    control = { setValue: _ => {} } as AbstractControl;
+    nameFormControl = { setValue: _ => {}, value: '' } as FormControl<string>;
     group = {
-      get: (_: string): any => control,
-    } as FormGroup;
-    formBuilder = { group: (_: any) => group } as FormBuilder;
+      controls: {
+        name: nameFormControl
+      }
+    } as FormGroup<{ name: FormControl<string> }>;
+    formBuilder = {
+      nonNullable: {
+        group: (_: any) => group
+      },
+    } as FormBuilder;
     router = { navigate: _ => Promise.resolve(true) } as Router;
     firebaseRoomService = { add: _ => of({}) } as FirebaseRoomService;
     dialogRef = { close: _ => {} } as MatDialogRef<RoomCreationModalComponent>;
@@ -54,8 +60,6 @@ describe('RoomCreationModalComponent', () => {
   });
 
   it('sets loading property to false when random name is provided onInit', () => {
-    expect(component.isLoading).toBeTrue();
-
     component.ngOnInit();
 
     expect(component.isLoading).toBeFalse();
@@ -63,12 +67,10 @@ describe('RoomCreationModalComponent', () => {
 
   it('sets formGroups name with what is returned from service', () => {
     spyOn(randomNamesProvider, 'provide').and.returnValue(of('ImenE'));
-    spyOn(group, 'get').and.returnValue(control);
-    spyOn(control, 'setValue');
+    spyOn(nameFormControl, 'setValue');
 
     component.ngOnInit();
 
-    expect(group.get).toHaveBeenCalledWith('name');
-    expect(control.setValue).toHaveBeenCalledWith('ImenE');
+    expect(nameFormControl.setValue).toHaveBeenCalledWith('ImenE');
   });
 });
