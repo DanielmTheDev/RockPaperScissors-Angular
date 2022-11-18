@@ -28,7 +28,9 @@ describe('RandomNamesProvider', () => {
 
   it('initializes the names and does not make another call when providing them afterwards', () => {
     spyOn(httpClient, 'get').and.returnValue(of(['Pollin']));
+
     service.initialize();
+
     service.provide().subscribe(name => {
       expect(name).toBe('Pollin');
       expect(httpClient.get).toHaveBeenCalledTimes(1);
