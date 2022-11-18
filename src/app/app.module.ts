@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +11,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { reducers } from './store';
 import { rehydrationMetaReducer } from './store/rehydration';
+import { RandomNamesProvider } from './room-creation/services/random-names-provider.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,17 @@ import { rehydrationMetaReducer } from './store/rehydration';
     StoreModule.forRoot(reducers, { metaReducers: [rehydrationMetaReducer] }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
+  providers: [
+    {
+    provide: APP_INITIALIZER,
+    useFactory: initializeRandomNames,
+    deps: [RandomNamesProvider],
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+
+function initializeRandomNames(randomNamesProvider: RandomNamesProvider): () => void {
+  return () => randomNamesProvider.initialize();
+}
