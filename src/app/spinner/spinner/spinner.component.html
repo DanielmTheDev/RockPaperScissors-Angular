@@ -1,0 +1,9 @@
+<ng-container *ngIf="!loadingStatus?.isLoading; else spinner">
+  <ng-content></ng-content>
+</ng-container>
+
+<ng-template #spinner>
+  <div class="spinner-container">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+</ng-template>

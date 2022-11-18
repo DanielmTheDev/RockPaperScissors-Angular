@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SpinnerModule } from '../spinner/spinner.module';
 
 @NgModule({
   declarations: [RoomCreationModalComponent],
@@ -22,7 +22,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     MatRadioModule,
     HttpClientModule,
-    MatProgressSpinnerModule
+    SpinnerModule
   ],
   providers: [],
   exports: [RoomCreationModalComponent]
