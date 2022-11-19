@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RoomCreationRequest } from '../models/room-creation-request';
 import constants from 'src/app/constants';
 import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
 import { GameType } from '../models/game-type';
 import { RandomNamesProvider } from '../services/random-names-provider.service';
+import { LoadingStatus } from '../../spinner/models/loadingStatus';
 
 @Component({
   selector: 'room-creation-modal',
@@ -14,14 +15,14 @@ import { RandomNamesProvider } from '../services/random-names-provider.service';
   styleUrls: ['./room-creation-modal.component.scss']
 })
 export class RoomCreationModalComponent implements OnInit {
-  formGroup: FormGroup = this.formBuilder.group({
+  formGroup = this.formBuilder.nonNullable.group({
     name: [''],
     numberOfPlayers: [1, Validators.min(1)],
     score: [1, Validators.min(1)],
     typeOfGame: [GameType.Winner]
   });
   gameType = GameType;
-  isLoading = true;
+  loadingStatus: LoadingStatus = { isLoading: false };
 
   constructor(
     private dialogRef: MatDialogRef<RoomCreationModalComponent>,
@@ -46,11 +47,12 @@ export class RoomCreationModalComponent implements OnInit {
   }
 
   private setRandomRoomName(): void {
+    this.loadingStatus.isLoading = true;
     this.randomNamesProvider
-      .provide(this.formGroup.get('name')?.value)
+      .provide(this.formGroup.controls.name.value)
       .subscribe(randomName => {
-        this.formGroup.get('name')?.setValue(randomName);
-        this.isLoading = false;
+        this.formGroup.controls.name.setValue(randomName);
+        this.loadingStatus.isLoading = false;
       });
   }
 }

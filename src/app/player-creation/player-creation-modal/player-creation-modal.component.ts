@@ -8,7 +8,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./player-creation-modal.component.scss']
 })
 export class PlayerCreationModalComponent {
-  formGroup = this.formBuilder.group({
+  formGroup = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
   });
 
