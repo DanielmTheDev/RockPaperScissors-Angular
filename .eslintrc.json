@@ -2,7 +2,8 @@
   "root": true,
   "ignorePatterns": [
     "*.scss",
-    "*.ico"
+    "*.ico",
+    "*.svg"
   ],
   "overrides": [
     {
