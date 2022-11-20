@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RoomCreationRequest } from '../models/room-creation-request';
+import { Room } from '../../firebase/models/room';
 import constants from 'src/app/constants';
 import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
 import { GameType } from '../models/game-type';
@@ -40,7 +40,7 @@ export class RoomCreationModalComponent implements OnInit {
   }
 
   create(): void {
-    this.firebaseRoomService.add(this.formGroup.value as RoomCreationRequest).subscribe(roomId => {
+    this.firebaseRoomService.add(this.formGroup.value as Room).subscribe(roomId => {
       this.router.navigate([constants.routing.room, roomId]).then();
     });
     this.dialogRef.close();

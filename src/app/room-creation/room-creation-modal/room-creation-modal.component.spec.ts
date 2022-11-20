@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
 import { of } from 'rxjs';
-import { RoomCreationRequest } from '../models/room-creation-request';
+import { Room } from '../../firebase/models/room';
 import constants from '../../constants';
 import { RandomNamesProvider } from '../services/random-names-provider.service';
 
@@ -39,7 +39,7 @@ describe('RoomCreationModalComponent', () => {
   });
 
   it('adds room to firebase', () => {
-    const room = { name: 'SomeRoom' } as RoomCreationRequest;
+    const room = { name: 'SomeRoom' } as Room;
     component.formGroup = { value: room } as FormGroup;
     spyOn(firebaseRoomService, 'add').and.returnValue(of('roomId'));
 
@@ -49,7 +49,7 @@ describe('RoomCreationModalComponent', () => {
   });
 
   it('navigates to room route with roomId as parameter', () => {
-    const room = {} as RoomCreationRequest;
+    const room = {} as Room;
     component.formGroup = { value: room } as FormGroup;
     spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
     spyOn(firebaseRoomService, 'add').and.returnValue(of('roomId'));

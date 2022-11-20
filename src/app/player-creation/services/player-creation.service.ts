@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Player } from '../models/player';
+import { Player } from '../../firebase/models/player';
 import { PlayerCreationModalComponent } from '../player-creation-modal/player-creation-modal.component';
 import constants from '../../constants';
 import { Store } from '@ngrx/store';

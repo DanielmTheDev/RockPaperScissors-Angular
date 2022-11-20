@@ -8,7 +8,7 @@ import { FirebasePlayerService } from '../firebase/services/firebase-player.serv
 import constants from '../constants';
 import { removePlayer } from '../store';
 import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { Player } from '../player-creation/models/player';
+import { Player } from '../firebase/models/player';
 
 describe('RoomComponent', () => {
   let component: RoomComponent;

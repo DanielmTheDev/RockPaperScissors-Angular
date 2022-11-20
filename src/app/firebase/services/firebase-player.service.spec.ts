@@ -1,7 +1,7 @@
 import { FirebasePlayerService } from './firebase-player.service';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
 import { Store } from '@ngrx/store';
-import { Player } from '../../player-creation/models/player';
+import { Player } from '../models/player';
 import { of } from 'rxjs';
 
 describe('FirebasePlayerService', () => {
