@@ -8,16 +8,12 @@
 </ng-container>
 
 <ng-container *ngIf="firebasePlayer$ | async as firebasePlayer">
-  <div>Firebase Player information:</div>
-  <div>
-    <div>Name: {{firebasePlayer.name}}</div>
-    <span>Choices: </span>
-    <span *ngFor="let choice of firebasePlayer.choices"> {{choice}}</span>
-  </div>
+  <player [player]="firebasePlayer"></player>
 </ng-container>
-
 <choice></choice>
-<opponents-component></opponents-component>
 
+<div class="space"></div>
+<opponents></opponents>
 
-<button (click)="leaveRoom()">Leave room</button>
+<div class="space"></div>
+<button mat-raised-button (click)="leaveRoom()">Leave the room</button>

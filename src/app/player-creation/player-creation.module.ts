@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { PlayerCreationService } from './services/player-creation.service';
+import { AvatarGenerator } from './services/avatar-generator.service';
 
 @NgModule({
   declarations: [PlayerCreationModalComponent],
@@ -16,7 +17,7 @@ import { PlayerCreationService } from './services/player-creation.service';
     MatButtonModule,
     MatInputModule,
   ],
-  providers: [PlayerCreationService],
+  providers: [PlayerCreationService, AvatarGenerator],
   exports: [PlayerCreationModalComponent]
 })
 export class PlayerCreationModule {}

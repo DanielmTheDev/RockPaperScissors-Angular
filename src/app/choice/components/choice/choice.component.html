@@ -1,5 +1,11 @@
 ﻿<div class="choice-container">
-  <button class="mat" (click)="choose(choiceEnum.Rock)">Rock</button>
-  <button class="mat" (click)="choose(choiceEnum.Paper)">Paper</button>
-  <button class="mat" (click)="choose(choiceEnum.Scissors)">Scissors</button>
+  <button mat-icon-button aria-label="Rock" (click)="choose(choiceEnum.Rock)">
+    <mat-icon fontSet="fontawesome" fontIcon="fa-hand-rock-o" [class.highlight-icon]="choice === choiceEnum.Rock"></mat-icon>
+  </button>
+  <button mat-icon-button aria-label="Paper" (click)="choose(choiceEnum.Paper)">
+    <mat-icon fontSet="fontawesome" fontIcon="fa-hand-paper-o" [class.highlight-icon]="choice === choiceEnum.Paper"></mat-icon>
+  </button>
+  <button mat-icon-button aria-label="Scissors" (click)="choose(choiceEnum.Scissors)">
+    <mat-icon fontSet="fontawesome" fontIcon="fa-hand-scissors-o" [class.highlight-icon]="choice === choiceEnum.Scissors"></mat-icon>
+  </button>
 </div>

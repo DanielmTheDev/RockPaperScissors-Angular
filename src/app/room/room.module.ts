@@ -8,6 +8,8 @@ import { OpponentsModule } from '../opponents/opponents.module';
 import { CopyLinkComponent } from './copy-link/copy-link.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { PlayerModule } from '../player/player.module';
 
 @NgModule({
   declarations: [RoomComponent, CopyLinkComponent],
@@ -17,7 +19,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     PlayerCreationModule,
     OpponentsModule,
     ChoiceModule,
-    ClipboardModule
+    ClipboardModule,
+    MatButtonModule,
+    PlayerModule
   ],
   providers: [MatSnackBar],
   exports: [RoomComponent]

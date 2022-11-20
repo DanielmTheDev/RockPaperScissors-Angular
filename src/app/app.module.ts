@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { reducers } from './store';
 import { rehydrationMetaReducer } from './store/rehydration';
 import { RandomNamesProvider } from './room-creation/services/random-names-provider.service';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { RandomNamesProvider } from './room-creation/services/random-names-provi
     AppRoutingModule,
     BrowserAnimationsModule,
     FirebaseModule,
+    MatIconModule,
     StoreModule.forRoot(reducers, { metaReducers: [rehydrationMetaReducer] }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
@@ -34,7 +36,11 @@ import { RandomNamesProvider } from './room-creation/services/random-names-provi
   }],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(matIconRegistry: MatIconRegistry) {
+    matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
+  }
+}
 
 function initializeRandomNames(randomNamesProvider: RandomNamesProvider): () => void {
   return () => randomNamesProvider.initialize();
