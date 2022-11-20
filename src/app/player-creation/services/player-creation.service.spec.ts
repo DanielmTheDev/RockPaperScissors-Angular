@@ -5,7 +5,7 @@ import { FirebasePlayerService } from '../../firebase/services/firebase-player.s
 import { PlayerCreationModalComponent } from '../player-creation-modal/player-creation-modal.component';
 import { of } from 'rxjs';
 import { setPlayer } from '../../store';
-import { Player } from '../models/player';
+import { Player } from '../../firebase/models/player';
 
 describe('PlayerCreationService', () => {
   let service: PlayerCreationService;

@@ -1,6 +1,6 @@
 import { OpponentsComponent } from './opponents.component';
 import { of } from 'rxjs';
-import { Player } from '../../player-creation/models/player';
+import { Player } from '../../firebase/models/player';
 import { FirebaseOpponentService } from '../../firebase/services/firebase-opponent.service';
 import { ActivatedRoute } from '@angular/router';
 

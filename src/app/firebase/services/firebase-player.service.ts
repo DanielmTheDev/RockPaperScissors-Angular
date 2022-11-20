@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { map, Observable } from 'rxjs';
 import { CurrentPlayer } from '../../store/models/current-player';
-import { Player } from '../../player-creation/models/player';
+import { Player } from '../models/player';
 import { Store } from '@ngrx/store';
 import { selectPlayer } from '../../store';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';

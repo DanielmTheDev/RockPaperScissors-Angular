@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import constants from '../constants';
 import { Observable, take } from 'rxjs';
-import { Player } from '../player-creation/models/player';
+import { Player } from '../firebase/models/player';
 import { PlayerCreationService } from '../player-creation/services/player-creation.service';
 import { Store } from '@ngrx/store';
 import { removePlayer, selectPlayer } from '../store';

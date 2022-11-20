@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map, Observable, switchMap } from 'rxjs';
-import { Player } from '../../player-creation/models/player';
+import { Player } from '../models/player';
 import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat/app';
 import { Store } from '@ngrx/store';

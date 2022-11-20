@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Player } from '../../player-creation/models/player';
+import { Player } from '../../firebase/models/player';
 import { FirebaseOpponentService } from '../../firebase/services/firebase-opponent.service';
 import constants from '../../constants';
 import { ActivatedRoute } from '@angular/router';

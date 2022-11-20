@@ -1,6 +1,6 @@
-import { GameType } from './game-type';
+import { GameType } from '../../room-creation/models/game-type';
 
-export interface RoomCreationRequest {
+export interface Room {
   name: string;
   numberOfPlayers: number;
   score?: number;
