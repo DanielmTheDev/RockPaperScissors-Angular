@@ -9,10 +9,12 @@ import { FirebasePlayerService } from '../../../firebase/services/firebase-playe
 })
 export class ChoiceComponent {
   choiceEnum = Choice;
+  choice: Choice | undefined;
 
   constructor(private playerService: FirebasePlayerService) {}
 
   choose(choice: Choice): void {
+    this.choice = choice;
     this.playerService.addChoice(choice).subscribe();
   }
 }

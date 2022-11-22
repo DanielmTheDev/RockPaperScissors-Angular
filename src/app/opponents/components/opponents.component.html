@@ -1,7 +1,11 @@
 <ng-container *ngIf="opponents">
   <div>Opponents:</div>
   <div *ngFor="let player of opponents">
-    <div>Name: {{player.name}}</div>
-    <div>Choices: {{player.choices}}</div>
+    <player [player]="player"></player>
+    <div class="choice-container">
+      <mat-icon fontSet="fontawesome" fontIcon="fa-hand-rock-o" *ngIf="player.choices?.[0] === choiceEnum.Rock"></mat-icon>
+      <mat-icon fontSet="fontawesome" fontIcon="fa-hand-paper-o" *ngIf="player.choices?.[0] === choiceEnum.Paper"></mat-icon>
+      <mat-icon fontSet="fontawesome" fontIcon="fa-hand-scissors-o" *ngIf="player.choices?.[0] === choiceEnum.Scissors"></mat-icon>
+    </div>
   </div>
 </ng-container>
