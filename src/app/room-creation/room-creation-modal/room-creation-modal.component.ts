@@ -50,9 +50,15 @@ export class RoomCreationModalComponent implements OnInit {
     this.loadingStatus.isLoading = true;
     this.randomNamesProvider
       .provide(this.formGroup.controls.name.value)
-      .subscribe(randomName => {
-        this.formGroup.controls.name.setValue(randomName);
-        this.loadingStatus.isLoading = false;
+      .subscribe({
+        next: randomName => {
+          this.formGroup.controls.name.setValue(randomName);
+          this.loadingStatus.isLoading = false;
+        },
+        error: _error => {
+          this.formGroup.controls.name.setValue('');
+          this.loadingStatus.isLoading = false;
+        }
       });
   }
 }

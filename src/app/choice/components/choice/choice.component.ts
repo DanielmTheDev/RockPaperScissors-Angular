@@ -1,6 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import { Choice } from '../../models/choice';
-import { FirebasePlayerService } from '../../../firebase/services/firebase-player.service';
+import { FirebasePlayerInRoomService } from '../../../firebase/services/firebase-player-in-room.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'choice',
@@ -8,13 +9,14 @@ import { FirebasePlayerService } from '../../../firebase/services/firebase-playe
   styleUrls: ['./choice.component.scss']
 })
 export class ChoiceComponent {
+  private subscription: Subscription | undefined;
   choiceEnum = Choice;
   choice: Choice | undefined;
 
-  constructor(private playerService: FirebasePlayerService) {}
+  constructor(private playerInRoomService: FirebasePlayerInRoomService) {}
 
   choose(choice: Choice): void {
     this.choice = choice;
-    this.playerService.addChoice(choice).subscribe();
+    this.subscription = this.playerInRoomService.addChoice(choice).subscribe();
   }
 }

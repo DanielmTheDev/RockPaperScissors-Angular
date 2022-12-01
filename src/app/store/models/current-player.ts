@@ -1,3 +1,4 @@
 ﻿export interface CurrentPlayer {
-  id: string;
+  playerId: string;
+  playerInRoomId: string;
 }

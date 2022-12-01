@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { Observable } from 'rxjs';
-import firebaseConstants from '../firebaseConstants';
+import firebaseConstants from '../firebase-constants';
 import { Room } from '../models/room';
 
 @Injectable()

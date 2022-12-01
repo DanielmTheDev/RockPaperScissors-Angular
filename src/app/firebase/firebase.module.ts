@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { FirebasePlayerService } from './services/firebase-player.service';
 import { FirebaseRoomService } from './services/firebase-room.service';
 import { FirebaseOpponentService } from './services/firebase-opponent.service';
+import { FirebasePlayerInRoomService } from './services/firebase-player-in-room.service';
 
 @NgModule({
   declarations: [],
@@ -23,7 +24,8 @@ import { FirebaseOpponentService } from './services/firebase-opponent.service';
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     FirebasePlayerService,
     FirebaseRoomService,
-    FirebaseOpponentService
+    FirebaseOpponentService,
+    FirebasePlayerInRoomService
   ],
   exports: []
 })
