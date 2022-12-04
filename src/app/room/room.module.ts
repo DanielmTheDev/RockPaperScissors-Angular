@@ -10,19 +10,21 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { PlayerModule } from '../player/player.module';
+import { SpinnerModule } from '../spinner/spinner.module';
 
 @NgModule({
   declarations: [RoomComponent, CopyLinkComponent],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    PlayerCreationModule,
-    OpponentsModule,
-    ChoiceModule,
-    ClipboardModule,
-    MatButtonModule,
-    PlayerModule
-  ],
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        PlayerCreationModule,
+        OpponentsModule,
+        ChoiceModule,
+        ClipboardModule,
+        MatButtonModule,
+        PlayerModule,
+        SpinnerModule
+    ],
   providers: [MatSnackBar],
   exports: [RoomComponent]
 })

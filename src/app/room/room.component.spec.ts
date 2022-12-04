@@ -25,7 +25,10 @@ describe('RoomComponent', () => {
     router = { navigate: _ => {} } as Router;
     route = { snapshot: { params: {} } } as ActivatedRoute;
     const document = { valueChanges: () => of({}) } as AngularFirestoreDocument<Player>;
-    playerService = { getCurrentPlayerDocument: () => of(document) } as FirebasePlayerService;
+    playerService = {
+      getCurrentPlayerDocument: () => of(document),
+      remove: _ => of(void 0)
+    } as FirebasePlayerService;
     playerCreationService = { createPlayer: _ => {} } as PlayerCreationService;
     store = {
       select: (_: string) => of({}),

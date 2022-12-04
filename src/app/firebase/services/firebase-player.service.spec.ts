@@ -2,7 +2,6 @@ import { FirebasePlayerService } from './firebase-player.service';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
 import { Store } from '@ngrx/store';
 import { Player } from '../models/player';
-import { of } from 'rxjs';
 
 describe('FirebasePlayerService', () => {
   let service: FirebasePlayerService;
@@ -20,14 +19,5 @@ describe('FirebasePlayerService', () => {
     service = new FirebasePlayerService(firestore, store);
 
     service.add({} as Player).subscribe(id => expect(id).toEqual('playerId'));
-  });
-
-  it('returns valueChanges of collection', () => {
-    const playerCollection = [{}, {}] as Player[];
-    const collection = { valueChanges: () => of(playerCollection) } as AngularFirestoreCollection<Player>;
-    spyOn(firestore, 'collection').and.returnValue(collection);
-    service = new FirebasePlayerService(firestore, store);
-
-    service.valueChanges().subscribe(players => expect(players).toEqual(playerCollection));
   });
 });
