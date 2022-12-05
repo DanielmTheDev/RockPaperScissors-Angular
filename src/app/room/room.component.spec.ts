@@ -19,7 +19,7 @@ describe('RoomComponent', () => {
   let route: ActivatedRoute;
   let playerService: FirebasePlayerService;
   let playerCreationService: PlayerCreationService;
-  let playerInRoomService: FirebasePlayerInRoomService
+  let playerInRoomService: FirebasePlayerInRoomService;
   let store: Store;
 
   beforeEach(() => {
