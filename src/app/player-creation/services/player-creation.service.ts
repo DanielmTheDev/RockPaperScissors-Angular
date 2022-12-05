@@ -28,14 +28,6 @@ export class PlayerCreationService {
 
   private persistPlayer(name: string, roomId: string): void {
     const player = this.initializeBasicPlayer(name, roomId);
-
-    // this.playerService.add(player)
-    //   .pipe(switchMap(playerId => {
-    //     const playerInRoom = { playerId: playerId, roomId: roomId, isActive: true } as PlayerInRoom;
-    //     return this.playerInRoomService.add(playerInRoom);
-    //   }))
-    //   .subscribe(playerInRoom => this.store.dispatch(setPlayer({ playerId: playerId, playerInRoomId: playerInRoom.id })));
-
     this.playerService.add(player)
       .subscribe(playerId => {
         const playerInRoom = { playerId: playerId, roomId: roomId, isActive: true } as PlayerInRoom;
