@@ -32,7 +32,7 @@ describe('RoomComponent', () => {
       remove: _ => of(void 0)
     } as FirebasePlayerService;
     playerCreationService = { createPlayer: _ => {} } as PlayerCreationService;
-    playerInRoomService = {} as FirebasePlayerInRoomService;
+    playerInRoomService = { getCurrentPlayerInRoomDocument: () => of({}) } as FirebasePlayerInRoomService;
     store = {
       select: (_: string) => of({}),
       dispatch: _ => {}

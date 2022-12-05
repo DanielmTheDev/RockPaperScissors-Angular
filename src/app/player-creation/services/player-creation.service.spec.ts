@@ -6,6 +6,8 @@ import { PlayerCreationModalComponent } from '../player-creation-modal/player-cr
 import { of } from 'rxjs';
 import { setPlayer } from '../../store';
 import { FirebasePlayerInRoomService } from '../../firebase/services/firebase-player-in-room.service';
+import { PlayerInRoom } from '../../firebase/models/playerInRoom';
+import { DocumentReference } from '@angular/fire/compat/firestore';
 
 describe('PlayerCreationService', () => {
   let service: PlayerCreationService;
@@ -17,7 +19,7 @@ describe('PlayerCreationService', () => {
   beforeEach(() => {
     dialog = { open: (_1, _2) => {} } as MatDialog;
     firebasePlayerService = { add: _ => of({}) } as FirebasePlayerService;
-    playerInRoomService = {} as FirebasePlayerInRoomService;
+    playerInRoomService = { add: _ => of({}) } as FirebasePlayerInRoomService;
     store = { dispatch: _ => {} } as Store;
     service = new PlayerCreationService(dialog, firebasePlayerService, playerInRoomService, store);
   });
@@ -26,10 +28,11 @@ describe('PlayerCreationService', () => {
     const dialogRef = { afterClosed: () => of('daniel') } as MatDialogRef<PlayerCreationModalComponent>;
     spyOn(dialog, 'open').and.returnValue(dialogRef);
     spyOn(firebasePlayerService, 'add').and.returnValue(of('playerId'));
+    spyOn(playerInRoomService, 'add').and.returnValue(of({ id: 'playerInRoomId' } as DocumentReference<PlayerInRoom>));
     spyOn(store, 'dispatch');
 
     service.createPlayer('roomId');
 
-    expect(store.dispatch).toHaveBeenCalledWith(setPlayer({ playerId: 'playerId', playerInRoomId: 'roomId' }));
+    expect(store.dispatch).toHaveBeenCalledWith(setPlayer({ playerId: 'playerId', playerInRoomId: 'playerInRoomId' }));
   });
 });

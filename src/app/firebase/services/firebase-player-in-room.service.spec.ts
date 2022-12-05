@@ -9,8 +9,8 @@ describe('FirebasePlayerInRoomService', () => {
 
 
   beforeEach(() => {
-    firestore = {} as AngularFirestore;
-    store = {} as Store;
+    firestore = { collection: _ => {} } as AngularFirestore;
+    store = { select: (_: object) => {} } as Store;
     service = new FirebasePlayerInRoomService(firestore, store);
   });
 
