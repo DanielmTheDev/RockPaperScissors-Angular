@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, of, switchMap } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { Player } from '../models/player';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat/app';
@@ -13,11 +13,10 @@ export class FirebaseOpponentService {
   constructor(private firestore: AngularFirestore, private store: Store) { }
 
   getOpponents(roomId: string): Observable<Player[]> {
-    return this.store.select(selectPlayer).pipe(switchMap(player => {
-      return player.id
+    return this.store.select(selectPlayer).pipe(switchMap(player =>
+      player.id
         ? this.getOpponentsFromFirestore(roomId, player)
-        : of([]);
-    }));
+        : of([])));
   }
 
   private getOpponentsFromFirestore(roomId: string, player: CurrentPlayer): Observable<Player[]> {
