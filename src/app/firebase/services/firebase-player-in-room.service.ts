@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { Observable, of, switchMap, take } from 'rxjs';
 import { CurrentPlayer } from '../../store/models/current-player';
 import { Store } from '@ngrx/store';
-import FirebaseConstants from '../firebase-constants';
+import FirebaseConstants from '../constants/firebase-constants';
 import { selectPlayer } from '../../store';
 import { PlayerInRoom } from '../models/playerInRoom';
 import firebase from 'firebase/compat/app';

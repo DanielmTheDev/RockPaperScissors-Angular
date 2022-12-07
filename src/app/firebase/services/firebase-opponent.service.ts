@@ -5,7 +5,7 @@ import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/fir
 import firebase from 'firebase/compat/app';
 import { Store } from '@ngrx/store';
 import { selectPlayer } from '../../store';
-import firebaseConstants from '../firebase-constants';
+import FirebaseConstants from '../constants/firebase-constants';
 import { CurrentPlayer } from '../../store/models/current-player';
 
 @Injectable()
@@ -21,8 +21,8 @@ export class FirebaseOpponentService {
 
   private getOpponentsFromFirestore(roomId: string, player: CurrentPlayer): Observable<DocumentChangeAction<Player>[]> {
     return this.firestore
-      .collection<Player>(firebaseConstants.collections.players, ref => ref
-        .where(firebaseConstants.keys.room, '==', roomId)
+      .collection<Player>(FirebaseConstants.collections.players, ref => ref
+        .where(FirebaseConstants.keys.room, '==', roomId)
         .where(firebase.firestore.FieldPath.documentId(), '!=', player.playerId))
       .snapshotChanges();
   }

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Room } from '../../firebase/models/room';
 import constants from 'src/app/constants';
-import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
-import { GameType } from '../models/game-type';
-import { RandomNamesProvider } from '../services/random-names-provider.service';
-import { LoadingStatus } from '../../spinner/models/loadingStatus';
+import { GameType } from '../../models/game-type';
+import { LoadingStatus } from 'src/app/shared-lib/spinner/models/loadingStatus';
+import { FirebaseRoomService } from 'src/app/firebase/services/firebase-room.service';
+import { RandomNamesProvider } from '../../services/random-names-provider.service';
+import { Room } from 'src/app/firebase/models/room';
 
 @Component({
   selector: 'room-creation-modal',

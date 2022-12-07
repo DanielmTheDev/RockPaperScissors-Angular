@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Player } from '../../firebase/models/player';
-import { PlayerCreationModalComponent } from '../player-creation-modal/player-creation-modal.component';
 import constants from '../../constants';
 import { Store } from '@ngrx/store';
 import { setPlayer } from '../../store';
 import { FirebasePlayerService } from '../../firebase/services/firebase-player.service';
 import { FirebasePlayerInRoomService } from '../../firebase/services/firebase-player-in-room.service';
 import { PlayerInRoom } from '../../firebase/models/playerInRoom';
+import { PlayerCreationModalComponent } from '../components/player-creation-modal/player-creation-modal.component';
 
 @Injectable()
 export class PlayerCreationService {

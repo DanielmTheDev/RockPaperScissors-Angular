@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import constants from '../constants';
 import { finalize, map, Observable, take } from 'rxjs';
-import { Player } from '../firebase/models/player';
-import { PlayerCreationService } from '../player-creation/services/player-creation.service';
 import { Store } from '@ngrx/store';
-import { removePlayer, selectPlayer } from '../store';
-import { CurrentPlayer } from '../store/models/current-player';
-import { FirebasePlayerService } from '../firebase/services/firebase-player.service';
-import { LoadingStatus } from '../spinner/models/loadingStatus';
-import { PlayerInRoom } from '../firebase/models/playerInRoom';
-import { FirebasePlayerInRoomService } from '../firebase/services/firebase-player-in-room.service';
+import { CurrentPlayer } from 'src/app/store/models/current-player';
+import { Player } from 'src/app/firebase/models/player';
+import { LoadingStatus } from 'src/app/shared-lib/spinner/models/loadingStatus';
+import { PlayerInRoom } from 'src/app/firebase/models/playerInRoom';
+import { PlayerCreationService } from 'src/app/player-creation/services/player-creation.service';
+import { FirebasePlayerService } from 'src/app/firebase/services/firebase-player.service';
+import { FirebasePlayerInRoomService } from 'src/app/firebase/services/firebase-player-in-room.service';
+import { selectPlayer } from 'src/app/store/state';
+import constants from 'src/app/constants';
+import { removePlayer } from 'src/app/store';
 
 @Component({
   selector: 'room',
