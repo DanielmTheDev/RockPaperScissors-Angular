@@ -51,7 +51,7 @@ export class RoomComponent implements OnInit {
     this.loadingStatus.isLoading = true;
     this.currentPlayer$.pipe(take(1))
       .pipe(
-        map(player => this.firebasePlayerService.remove(player.id)),
+        map(player => this.firebasePlayerService.remove(player.playerId)),
         finalize(() => this.loadingStatus.isLoading = false))
       .subscribe(
       () => {
