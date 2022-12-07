@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { selectPlayer } from '../../store';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { Choice } from '../../choice/models/choice';
-import FirebaseConstants from '../firebaseConstants';
+import FirebaseConstants from '../firebase-constants';
 
 @Injectable()
 export class FirebasePlayerService {
@@ -39,6 +39,6 @@ export class FirebasePlayerService {
   }
 
   getCurrentPlayerDocument(): Observable<AngularFirestoreDocument<Player>> {
-    return this.player$.pipe(map(player => this.playerCollection.doc(player.id)));
+    return this.player$.pipe(map(player => this.playerCollection.doc(player.playerId)));
   }
 }

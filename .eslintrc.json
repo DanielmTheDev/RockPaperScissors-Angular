@@ -30,7 +30,7 @@
         "@typescript-eslint/func-call-spacing": 2,
         "@typescript-eslint/no-for-in-array": 2,
         "func-call-spacing": 2,
-        "semi": 1,
+        "semi": "error",
         "no-extra-semi": 1, "brace-style": [2, "1tbs", {"allowSingleLine": true}],
         "quote-props": [
           2,

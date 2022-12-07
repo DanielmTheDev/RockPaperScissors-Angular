@@ -1,13 +1,13 @@
-﻿import { FirebasePlayerService } from 'src/app/firebase/services/firebase-player.service';
-import { ChoiceComponent } from './choice.component';
+﻿import { ChoiceComponent } from './choice.component';
+import { FirebasePlayerInRoomService } from '../../../firebase/services/firebase-player-in-room.service';
 
 describe('ChoiceComponent', () => {
   let component: ChoiceComponent;
-  let playerService: FirebasePlayerService;
+  let playerInRoomService: FirebasePlayerInRoomService;
 
   beforeEach(() => {
-    playerService = {} as FirebasePlayerService;
-    component = new ChoiceComponent(playerService);
+    playerInRoomService = {} as FirebasePlayerInRoomService;
+    component = new ChoiceComponent(playerInRoomService);
   });
 
   it('should create', () => {
