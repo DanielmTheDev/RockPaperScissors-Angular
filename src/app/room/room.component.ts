@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import constants from '../constants';
-import { Observable, take } from 'rxjs';
+import { finalize, map, Observable, take } from 'rxjs';
 import { Player } from '../firebase/models/player';
 import { PlayerCreationService } from '../player-creation/services/player-creation.service';
 import { Store } from '@ngrx/store';
 import { removePlayer, selectPlayer } from '../store';
 import { CurrentPlayer } from '../store/models/current-player';
 import { FirebasePlayerService } from '../firebase/services/firebase-player.service';
+import { LoadingStatus } from '../spinner/models/loadingStatus';
 
 @Component({
   selector: 'room',
@@ -18,6 +19,7 @@ import { FirebasePlayerService } from '../firebase/services/firebase-player.serv
 export class RoomComponent implements OnInit {
   currentPlayer$: Observable<CurrentPlayer>;
   firebasePlayer$: Observable<Player | undefined> | undefined;
+  loadingStatus: LoadingStatus = { isLoading: false };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +43,16 @@ export class RoomComponent implements OnInit {
   }
 
   leaveRoom(): void {
-    this.store.dispatch(removePlayer());
-    this.router.navigate(['']).then();
+    this.loadingStatus.isLoading = true;
+    this.currentPlayer$.pipe(take(1))
+      .pipe(
+        map(player => this.firebasePlayerService.remove(player.id)),
+        finalize(() => this.loadingStatus.isLoading = false))
+      .subscribe(
+      () => {
+          this.store.dispatch(removePlayer());
+          this.router.navigate(['']).then();
+        }
+    );
   }
 }

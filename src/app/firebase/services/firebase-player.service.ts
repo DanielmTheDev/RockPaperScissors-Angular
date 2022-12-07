@@ -19,14 +19,14 @@ export class FirebasePlayerService {
     this.player$ = this.store.select(selectPlayer);
   }
 
-  valueChanges(): Observable<Player[]> {
-    return this.playerCollection.valueChanges();
-  }
-
   add(player: Player): Observable<string> {
     return fromPromise(this.playerCollection
       .add(player)
       .then(playerReference => playerReference.id));
+  }
+
+  remove(playerId: string): Observable<void> {
+    return fromPromise(this.playerCollection.doc(playerId).delete());
   }
 
   addChoice(choice: Choice): Observable<void> {

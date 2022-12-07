@@ -1,4 +1,4 @@
-<ng-container *ngIf="opponents">
+<ng-container *ngIf="opponents$ | async as opponents">
   <div>Opponents:</div>
   <div *ngFor="let player of opponents">
     <player [player]="player"></player>

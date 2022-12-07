@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, switchMap } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { Player } from '../models/player';
-import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat/app';
 import { Store } from '@ngrx/store';
 import { selectPlayer } from '../../store';
@@ -14,22 +14,16 @@ export class FirebaseOpponentService {
 
   getOpponents(roomId: string): Observable<Player[]> {
     return this.store.select(selectPlayer).pipe(switchMap(player =>
-      this.getOpponentsFromFirestore(roomId, player)
-        .pipe(map(snapshot => this.mapToPlayers(snapshot)))));
+      player.id
+        ? this.getOpponentsFromFirestore(roomId, player)
+        : of([])));
   }
 
-  private getOpponentsFromFirestore(roomId: string, player: CurrentPlayer): Observable<DocumentChangeAction<Player>[]> {
+  private getOpponentsFromFirestore(roomId: string, player: CurrentPlayer): Observable<Player[]> {
     return this.firestore
       .collection<Player>(firebaseConstants.collections.players, ref => ref
         .where(firebaseConstants.keys.room, '==', roomId)
         .where(firebase.firestore.FieldPath.documentId(), '!=', player.id))
-      .snapshotChanges();
-  }
-
-  private mapToPlayers(snapshot: DocumentChangeAction<Player>[]): Player[] {
-    return snapshot.map(item => ({
-      ...item.payload.doc.data(),
-      id: item.payload.doc.id,
-    }));
+      .valueChanges();
   }
 }

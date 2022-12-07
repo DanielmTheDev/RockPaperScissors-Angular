@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { PlayerCreationService } from './services/player-creation.service';
 import { AvatarGenerator } from './services/avatar-generator.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [PlayerCreationModalComponent],
@@ -16,6 +17,7 @@ import { AvatarGenerator } from './services/avatar-generator.service';
     ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
+    MatDialogModule,
   ],
   providers: [PlayerCreationService, AvatarGenerator],
   exports: [PlayerCreationModalComponent]

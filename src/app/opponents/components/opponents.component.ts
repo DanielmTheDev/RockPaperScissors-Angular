@@ -4,6 +4,7 @@ import { FirebaseOpponentService } from '../../firebase/services/firebase-oppone
 import constants from '../../constants';
 import { ActivatedRoute } from '@angular/router';
 import { Choice } from 'src/app/choice/models/choice';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'opponents',
@@ -11,11 +12,10 @@ import { Choice } from 'src/app/choice/models/choice';
   styleUrls: ['./opponents.component.scss']
 })
 export class OpponentsComponent {
-  opponents: Player[] | undefined;
+  opponents$: Observable<Player[]> | undefined;
   choiceEnum = Choice;
 
   constructor(private firebaseOpponentService: FirebaseOpponentService, private route: ActivatedRoute) {
-    this.firebaseOpponentService.getOpponents(this.route.snapshot.params[constants.routeParams.id])
-      .subscribe(opponents => this.opponents = opponents);
+    this.opponents$ = this.firebaseOpponentService.getOpponents(this.route.snapshot.params[constants.routeParams.id]);
   }
 }
