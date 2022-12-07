@@ -9,6 +9,7 @@ import constants from '../constants';
 import { removePlayer } from '../store';
 import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Player } from '../firebase/models/player';
+import { FirebasePlayerInRoomService } from '../firebase/services/firebase-player-in-room.service';
 
 describe('RoomComponent', () => {
   let component: RoomComponent;
@@ -18,6 +19,7 @@ describe('RoomComponent', () => {
   let route: ActivatedRoute;
   let playerService: FirebasePlayerService;
   let playerCreationService: PlayerCreationService;
+  let playerInRoomService: FirebasePlayerInRoomService;
   let store: Store;
 
   beforeEach(() => {
@@ -30,12 +32,13 @@ describe('RoomComponent', () => {
       remove: _ => of(void 0)
     } as FirebasePlayerService;
     playerCreationService = { createPlayer: _ => {} } as PlayerCreationService;
+    playerInRoomService = { getCurrentPlayerInRoomDocument: () => of({}) } as FirebasePlayerInRoomService;
     store = {
       select: (_: string) => of({}),
       dispatch: _ => {}
     } as Store;
 
-    component = new RoomComponent(formBuilder, router, playerCreationService, playerService, route, store);
+    component = new RoomComponent(formBuilder, router, playerCreationService, playerService, playerInRoomService, route, store);
   });
 
   it('creates new player OnInit if there is none in the store', () => {

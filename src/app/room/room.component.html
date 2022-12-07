@@ -1,17 +1,29 @@
 <copy-link></copy-link>
 
 <ng-container *ngIf="currentPlayer$ | async as storePlayer">
-  <div>Store Player information:</div>
+  <div><b>Store:</b></div>
   <div *ngIf="storePlayer">
-    <div>Id: {{storePlayer.id}}</div>
+    <div>Player Id: {{storePlayer.playerId}}</div>
+    <div>PlayerInRoom Id: {{storePlayer.playerInRoomId}}</div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="firebasePlayerInRoom$ | async as playerInRoom">
+  <div><b>Firebase PlayerInRoom information:</b></div>
+  <div>
+    <div>PlayerId: {{playerInRoom?.playerId}}</div>
+    <div>RoomId: {{playerInRoom?.roomId}}</div>
+    <div>IsActive: {{playerInRoom?.isActive}}</div>
+    <div>ChoiceForCurrentRound: {{playerInRoom?.choiceForCurrentRound}}</div>
   </div>
 </ng-container>
 
 <ng-container *ngIf="firebasePlayer$ | async as firebasePlayer">
   <player [player]="firebasePlayer"></player>
 </ng-container>
+
 <choice></choice>
-ˀ
+
 <div class="top-spacer">
   <opponents></opponents>
 </div>
