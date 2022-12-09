@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Player } from '../firebase/models/player';
+import { Player } from 'src/app/firebase/models/player';
 
 @Component({
   selector: 'player',

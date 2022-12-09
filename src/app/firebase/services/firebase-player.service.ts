@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { selectPlayer } from '../../store';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { Choice } from '../../choice/models/choice';
-import FirebaseConstants from '../firebase-constants';
+import FirebaseConstants from '../constants/firebase-constants';
 
 @Injectable()
 export class FirebasePlayerService {

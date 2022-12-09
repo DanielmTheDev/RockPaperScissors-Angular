@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PlayerComponent } from './player.component';
+import { PlayerComponent } from './components/player.component';
 
 @NgModule({
   declarations: [PlayerComponent],
