@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize, map, Observable, take } from 'rxjs';
+import { finalize, map, merge, Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CurrentPlayer } from 'src/app/store/models/current-player';
 import { Player } from 'src/app/firebase/models/player';
@@ -52,13 +52,11 @@ export class RoomComponent implements OnInit {
     this.loadingStatus.isLoading = true;
     this.currentPlayer$.pipe(take(1))
       .pipe(
-        map(player => this.firebasePlayerService.remove(player.playerId)),
+        map(player => merge(this.playerInRoomService.remove(player.playerInRoomId), this.firebasePlayerService.remove(player.playerId))),
         finalize(() => this.loadingStatus.isLoading = false))
-      .subscribe(
-      () => {
-          this.store.dispatch(removePlayer());
-          this.router.navigate(['']).then();
-        }
-    );
+      .subscribe(() => {
+        this.store.dispatch(removePlayer());
+        this.router.navigate(['']).then();
+      });
   }
 }

@@ -37,4 +37,8 @@ export class FirebasePlayerInRoomService {
       take(1),
       switchMap(player => fromPromise(this.playerInRoomAngularCollection.doc(player.playerInRoomId).update({ choiceForCurrentRound: choice }))));
   }
+
+  remove(playerInRoomId: string): Observable<void> {
+    return fromPromise(this.playerInRoomAngularCollection.doc(playerInRoomId).delete());
+  }
 }
