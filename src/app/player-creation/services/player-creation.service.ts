@@ -8,6 +8,8 @@ import { FirebasePlayerService } from '../../firebase/services/firebase-player.s
 import { FirebasePlayerInRoomService } from '../../firebase/services/firebase-player-in-room.service';
 import { PlayerInRoom } from '../../firebase/models/playerInRoom';
 import { PlayerCreationModalComponent } from '../components/player-creation-modal/player-creation-modal.component';
+import { map, Observable, switchMap } from 'rxjs';
+import { AvatarGenerator } from './avatar-generator.service';
 
 @Injectable()
 export class PlayerCreationService {
@@ -16,19 +18,20 @@ export class PlayerCreationService {
     private dialog: MatDialog,
     private playerService: FirebasePlayerService,
     private playerInRoomService: FirebasePlayerInRoomService,
+    private generator: AvatarGenerator,
     private store: Store) { }
 
-  createPlayer(roomId: string): void {
+  createPlayer(roomId: string): Observable<void> {
     const dialogRef = this.dialog.open(PlayerCreationModalComponent, {
       width: constants.dialogWidth,
       disableClose: true
     });
-    dialogRef.afterClosed().subscribe(name => this.persistPlayer(name, roomId));
+    return dialogRef.afterClosed().pipe(map(name => this.persistPlayer(name, roomId)));
   }
 
   private persistPlayer(name: string, roomId: string): void {
-    const player = this.initializeBasicPlayer(name, roomId);
-    this.playerService.add(player)
+    this.initializeBasicPlayer(name, roomId)
+      .pipe(switchMap(player => this.playerService.add(player)))
       .subscribe(playerId => {
         const playerInRoom = { playerId: playerId, roomId: roomId, isActive: true } as PlayerInRoom;
         this.playerInRoomService.add(playerInRoom)
@@ -36,10 +39,8 @@ export class PlayerCreationService {
       });
   }
 
-  private initializeBasicPlayer(name: string, roomId: string): Player {
-    return {
-      name: name,
-      room: roomId
-    } as Player;
+  private initializeBasicPlayer(name: string, roomId: string): Observable<Player> {
+    return this.generator.provide(name)
+      .pipe(map(avatar => { return { name: name, room: roomId, avatar: avatar } as Player; }));
   }
 }

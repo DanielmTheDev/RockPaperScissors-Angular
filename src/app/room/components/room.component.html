@@ -18,11 +18,13 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="firebasePlayer$ | async as firebasePlayer">
-  <player [player]="firebasePlayer"></player>
-</ng-container>
+<spinner [loadingStatus]="loadingStatus">
+  <ng-container *ngIf="firebasePlayer$ | async as firebasePlayer">
+    <player [player]="firebasePlayer"></player>
+  </ng-container>
 
-<choice></choice>
+  <choice></choice>
+</spinner>
 
 <div class="top-spacer">
   <opponents></opponents>
