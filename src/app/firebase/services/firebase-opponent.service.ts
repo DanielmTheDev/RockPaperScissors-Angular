@@ -14,7 +14,7 @@ export class FirebaseOpponentService {
 
   getOpponents(roomId: string): Observable<Player[]> {
     return this.store.select(selectPlayer).pipe(switchMap(player =>
-      player.playerId
+      player.id
         ? this.getOpponentsFromFirestore(roomId, player).pipe(map(snapshot => this.mapToPlayers(snapshot)))
         : of([])));
   }
@@ -23,7 +23,7 @@ export class FirebaseOpponentService {
     return this.firestore
       .collection<Player>(FirebaseConstants.collections.players, ref => ref
         .where(FirebaseConstants.keys.room, '==', roomId)
-        .where(firebase.firestore.FieldPath.documentId(), '!=', player.playerId))
+        .where(firebase.firestore.FieldPath.documentId(), '!=', player.id))
       .snapshotChanges();
   }
 

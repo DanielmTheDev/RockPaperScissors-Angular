@@ -39,6 +39,6 @@ export class FirebasePlayerService {
   }
 
   getCurrentPlayerDocument(): Observable<AngularFirestoreDocument<Player>> {
-    return this.player$.pipe(map(player => this.playerCollection.doc(player.playerId)));
+    return this.player$.pipe(map(player => this.playerCollection.doc(player.id)));
   }
 }

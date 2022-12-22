@@ -5,6 +5,6 @@ import { CurrentPlayer } from './models/current-player';
 export const reducers: ActionReducerMap<State> = {
   player: createReducer(
     {} as CurrentPlayer,
-    on(setPlayer, (player, props): CurrentPlayer => ({ playerId: props.playerId, playerInRoomId: props.playerInRoomId })),
+    on(setPlayer, (player, props): CurrentPlayer => props.player),
     on(removePlayer, (): CurrentPlayer => ({} as CurrentPlayer))),
 };
