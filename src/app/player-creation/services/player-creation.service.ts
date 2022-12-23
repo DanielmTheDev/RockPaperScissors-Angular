@@ -37,6 +37,6 @@ export class PlayerCreationService {
 
   private initializeBasicPlayer(name: string, roomId: string): Observable<Player> {
     return this.generator.provide(name)
-      .pipe(map(avatar => { return { name: name, room: roomId, avatar: avatar } as Player; }));
+      .pipe(map(avatar => ({ name: name, room: roomId, avatar: avatar } as Player)));
   }
 }

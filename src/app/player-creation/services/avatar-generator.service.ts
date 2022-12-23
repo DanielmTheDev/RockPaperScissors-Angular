@@ -8,13 +8,13 @@ export class AvatarGenerator {
 
   constructor(private httpClient: HttpClient) {}
 
-  provide(playerName: string): Observable<any> {
+  provide(playerName: string): Observable<string> {
     const HTTPOptions = {
       'headers': new HttpHeaders({
-        'Accept':'text/html'
+        'Accept': 'text/html'
       }),
       'responseType': 'text' as 'json'
     };
-    return this.httpClient.get(this.url+playerName, HTTPOptions);
+    return this.httpClient.get<string>(this.url + playerName, HTTPOptions);
   }
 }
