@@ -41,12 +41,9 @@ export class RoomComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadingStatus.isLoading = true;
     this.currentPlayer$.pipe(take(1)).subscribe(player => {
       if (!player.playerId) {
-        this.playerCreationService.createPlayer(this.route.snapshot.params[constants.routeParams.id]).subscribe(_ => this.loadingStatus.isLoading = false);
-      } else {
-        this.loadingStatus.isLoading = false;
+        this.playerCreationService.createPlayer(this.route.snapshot.params[constants.routeParams.id]);
       }
     });
   }
