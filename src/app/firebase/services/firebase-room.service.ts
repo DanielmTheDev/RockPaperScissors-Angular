@@ -10,6 +10,12 @@ export class FirebaseRoomService {
 
   constructor(private firestore: AngularFirestore) { }
 
+  roomValueChanges(roomId: string): Observable<Room | undefined> {
+    return this.firestore
+      .collection<Room>(FirebaseConstants.collections.rooms).doc(roomId)
+      .valueChanges();
+  }
+
   add(room: Room): Observable<string> {
     return fromPromise(this.firestore.collection(FirebaseConstants.collections.rooms)
       .add(room)

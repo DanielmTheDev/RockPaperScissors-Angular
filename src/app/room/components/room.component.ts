@@ -11,6 +11,8 @@ import { FirebasePlayerService } from 'src/app/firebase/services/firebase-player
 import { selectPlayer } from 'src/app/store/state';
 import constants from 'src/app/constants';
 import { removePlayer } from 'src/app/store';
+import { Room } from '../../firebase/models/room';
+import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
 
 @Component({
   selector: 'room',
@@ -20,6 +22,7 @@ import { removePlayer } from 'src/app/store';
 export class RoomComponent implements OnInit {
   currentPlayer$: Observable<CurrentPlayer>;
   firebasePlayer$: Observable<Player | undefined> | undefined;
+  room$: Observable<Room | undefined>;
   loadingStatus: LoadingStatus = { isLoading: false };
 
   constructor(
@@ -27,9 +30,11 @@ export class RoomComponent implements OnInit {
     private router: Router,
     private playerCreationService: PlayerCreationService,
     private firebasePlayerService: FirebasePlayerService,
+    private firebaseRoomService: FirebaseRoomService,
     private route: ActivatedRoute,
     private store: Store) {
     this.currentPlayer$ = store.select(selectPlayer);
+    this.room$ = this.firebaseRoomService.roomValueChanges(this.route.snapshot.params[constants.routeParams.id]);
     this.firebasePlayerService.getCurrentPlayerDocument().subscribe(player => {
       this.firebasePlayer$ = player.valueChanges();
     });

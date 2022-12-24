@@ -5,4 +5,5 @@ export interface Room {
   numberOfPlayers: number;
   score?: number;
   typeOfGame?: GameType;
+  winner: string;
 }

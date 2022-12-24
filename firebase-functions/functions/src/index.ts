@@ -1,36 +1,44 @@
-
-// The Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers.
 const functions = require('firebase-functions');
-
-// The Firebase Admin SDK to access Firestore.
 const admin = require('firebase-admin');
 admin.initializeApp();
-
-// Take the text parameter passed to this HTTP endpoint and insert it into 
-// Firestore under the path /messages/:documentId/original
-exports.addMessage = functions.https.onRequest(async (req, res) => {
-    // Grab the text parameter.
-    const original = req.query.text;
-    // Push the new message into Firestore using the Firebase Admin SDK.
-    const writeResult = await admin.firestore().collection('messages').add({original: original});
-    // Send back a message that we've successfully written the message
-    res.json({result: `Message with ID: ${writeResult.id} added.`});
-});
-
-// Listens for new messages added to /messages/:documentId/original and creates an
-// uppercase version of the message to /messages/:documentId/uppercase
-exports.makeUppercase = functions.firestore.document('/messages/{documentId}')
-    .onCreate((snap, context) => {
-        // Grab the current value of what was written to Firestore.
-        const original = snap.data().original;
-
-        // Access the parameter `{documentId}` with `context.params`
-        functions.logger.log('Uppercasing', context.params.documentId, original);
-
-        const uppercase = original.toUpperCase();
-
-        // You must return a Promise when performing asynchronous tasks inside a Functions such as
-        // writing to Firestore.
-        // Setting an 'uppercase' field in Firestore document returns a Promise.
-        return snap.ref.set({uppercase}, {merge: true});
+/*
+exports.addResultOnRoomCreation = functions.firestore.document('/rooms/{documentId}')
+    .onCreate(async (snap, context) => {
+        const roomId = context.params.documentId;
+        await admin.firestore().collection('results')
+            .add({ id: roomId, winner: 'daniel as usual!' });
     });
+*/
+
+exports.choiceUpdated = functions.firestore.document('/players/{documentId}')
+  .onUpdate((change, context) => {
+
+    const playerId = context.params.documentId;
+    admin.firestore().collection('players').doc(playerId).get()
+      .then(doc => {
+        // get the room where the player is
+        const roomId = doc.data().room;
+        console.log('The room in question ' + roomId);
+
+        // get all the players in the same room
+        admin.firestore().collection('players').where("room", "==", roomId).get()
+          .then(snapshot => {
+            const playersWithChoices = [];
+            let areAllChoicesPresent = true;
+
+            snapshot.forEach(player => {
+              if (!player.data().choices) {
+                areAllChoicesPresent = false;
+                return;
+              }
+              playersWithChoices.push(player.data());
+            });
+            console.log("should we set a result? " + areAllChoicesPresent);
+
+            if(areAllChoicesPresent) {
+              admin.firestore().collection('rooms').doc(roomId).update({ winner: 'daniel as usual!' });
+            }
+          })
+      });
+  });
+
