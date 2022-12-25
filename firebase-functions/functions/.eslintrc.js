@@ -27,7 +27,12 @@ module.exports = {
   rules: {
     'quotes': ['error', 'single'],
     'import/no-unresolved': 0,
-    'max-len': ['error', {'code': 200}],
+    'max-len': ['error', { 'code': 200 }],
     'indent': ['error', 2],
+    'object-curly-spacing': [
+      2,
+      'always',
+    ],
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 };

@@ -1,8 +1,11 @@
 import * as functions from 'firebase-functions';
+import { Change } from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { firestore } from 'firebase-admin';
+import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 
 export const choiceUpdated = functions.firestore.document('/players/{documentId}')
-  .onUpdate((change: any, context: any) => {
+  .onUpdate((change: Change<QueryDocumentSnapshot>, context: any) => {
     admin.initializeApp();
     const playerId = context.params.documentId;
     admin.firestore().collection('players').doc(playerId).get()
@@ -27,7 +30,7 @@ export const choiceUpdated = functions.firestore.document('/players/{documentId}
             console.log('should we set a result? ' + areAllChoicesPresent);
 
             if (areAllChoicesPresent) {
-              admin.firestore().collection('rooms').doc(roomId).update({winner: 'daniel as usual!'});
+              admin.firestore().collection('rooms').doc(roomId).update({ winner: 'daniel as usual!' });
             }
           });
       });
