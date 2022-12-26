@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlayerComponent } from './components/player.component';
-import { SvgIconDirective } from './directives/svg-icon.directive';
+import { SafeInnerHtmlDirective } from './directives/safe-inner-html.directive';
 
 @NgModule({
-  declarations: [PlayerComponent, SvgIconDirective],
+  declarations: [PlayerComponent, SafeInnerHtmlDirective],
   imports: [
     CommonModule
   ],
