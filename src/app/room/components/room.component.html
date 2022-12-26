@@ -19,3 +19,8 @@
 <spinner [loadingStatus]="loadingStatus">
   <button mat-raised-button (click)="leaveRoom()" class="top-spacer">Leave the room</button>
 </spinner>
+
+<ng-container *ngIf="room$ | async as room">
+  <h1>RESULT: {{room.winner}}</h1>
+</ng-container>
+
