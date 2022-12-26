@@ -5,5 +5,5 @@ export interface Player {
   name: string;
   room: string;
   avatar: string;
-  choices: Choice[];
+  choice: Choice;
 }

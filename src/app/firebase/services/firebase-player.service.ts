@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { map, Observable } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { CurrentPlayer } from '../../store/models/current-player';
 import { Player } from '../models/player';
 import { Store } from '@ngrx/store';
@@ -30,12 +30,8 @@ export class FirebasePlayerService {
   }
 
   addChoice(choice: Choice): Observable<void> {
-    return this.getCurrentPlayerDocument().pipe(map(document => {
-      document.get().subscribe(playerSnapshot => {
-        const choices = (playerSnapshot.data()?.choices || []).concat(choice);
-        return fromPromise(document.update({ choices }));
-      });
-    }));
+    return this.getCurrentPlayerDocument().pipe(
+      switchMap(document => fromPromise(document.update({ choice }))));
   }
 
   getCurrentPlayerDocument(): Observable<AngularFirestoreDocument<Player>> {
