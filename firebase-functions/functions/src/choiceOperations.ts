@@ -1,11 +1,19 @@
 ﻿import { Player } from './models/player';
 
-export function draw(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
-  return isEveryChoiceEqual(players) || isEveryChoiceDifferent(players);
-}
-
 export function hasEveryoneChosen(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
   return players.every(player => (player.data() as Player).choice);
+}
+
+export function calculateLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): string[] {
+  if (draw(players)) {
+    return [];
+  }
+  // this is just to show something. soon, all the losers will be calculated and returned here instead
+  return [players[0].id];
+}
+
+function draw(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
+  return isEveryChoiceEqual(players) || isEveryChoiceDifferent(players);
 }
 
 export function getDistinctChoices(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): string[] {

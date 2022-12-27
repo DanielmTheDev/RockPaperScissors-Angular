@@ -1,6 +1,6 @@
 ﻿import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import { draw, hasEveryoneChosen } from './choiceOperations';
+import { calculateLosers, hasEveryoneChosen } from './choiceOperations';
 
 export default functions.firestore.document('/players/{documentId}')
   .onUpdate(async (change: any, context: any) => {
@@ -27,14 +27,6 @@ async function getCurrentRoomId(context: any): Promise<string> {
   const playerId = context.params.documentId as string;
   const currentPlayer = await admin.firestore().collection('players').doc(playerId).get();
   return currentPlayer.data()?.room;
-}
-
-function calculateLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): string[] {
-  if (draw(players)) {
-    return [];
-  }
-  // this is just to show something. soon, all the losers will be calculated and returned here instead
-  return [players[0].id];
 }
 
 function resetAllChoices(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): (Promise<FirebaseFirestore.WriteResult> | undefined)[] {
