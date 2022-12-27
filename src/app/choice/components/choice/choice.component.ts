@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { Choice } from '../../models/choice';
 import { FirebasePlayerService } from '../../../firebase/services/firebase-player.service';
 
@@ -7,14 +7,16 @@ import { FirebasePlayerService } from '../../../firebase/services/firebase-playe
   templateUrl: './choice.component.html',
   styleUrls: ['./choice.component.scss']
 })
-export class ChoiceComponent {
+export class ChoiceComponent implements OnInit {
   choiceEnum = Choice;
   choice: Choice | undefined;
-
   constructor(private playerService: FirebasePlayerService) {}
 
+  ngOnInit(): void {
+    this.playerService.valueChanges().subscribe(player => this.choice = player?.choice);
+  }
+
   choose(choice: Choice): void {
-    this.choice = choice;
     this.playerService.addChoice(choice).subscribe();
   }
 }

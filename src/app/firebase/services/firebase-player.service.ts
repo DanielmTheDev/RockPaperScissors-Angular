@@ -19,6 +19,11 @@ export class FirebasePlayerService {
     this.player$ = this.store.select(selectPlayer);
   }
 
+  valueChanges(): Observable<Player | undefined> {
+    return this.getCurrentPlayerDocument()
+      .pipe(switchMap(player => player.valueChanges()));
+  }
+
   add(player: Player): Observable<string> {
     return fromPromise(this.playerCollection
       .add(player)
