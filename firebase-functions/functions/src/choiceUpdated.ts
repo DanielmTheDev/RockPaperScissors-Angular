@@ -7,7 +7,7 @@ export default functions.firestore.document('/players/{documentId}')
   .onUpdate(async (change: any, context: any) => {
     try {
       const roomId = await getCurrentRoomId(context.params.documentId as string);
-      const playersInCurrentRoom = await getActivePlayersInSameRoom(roomId);
+      const playersInCurrentRoom = await getActivePlayersInRoom(roomId);
       if (!hasEveryoneChosen(playersInCurrentRoom)) {
         return;
       }
@@ -34,7 +34,7 @@ async function determineWinner(
   }
 }
 
-async function getActivePlayersInSameRoom(roomId: string): Promise<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>[]> {
+async function getActivePlayersInRoom(roomId: string): Promise<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>[]> {
   return (await admin.firestore().collection('players').where('room', '==', roomId).get())
     .docs.filter(playerDoc => !(playerDoc.data() as Player).isObserver);
 }
