@@ -1,4 +1,4 @@
 ﻿export interface Player {
-  choice: 'Rock' | 'Paper' | 'Scissors',
-  isActive: boolean;
+  choice?: 'Rock' | 'Paper' | 'Scissors' | null,
+  isObserver?: boolean;
 }

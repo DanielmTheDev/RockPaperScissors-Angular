@@ -1,11 +1,13 @@
-﻿<div class="choice-container">
-  <button mat-icon-button aria-label="Rock" (click)="choose(choiceEnum.Rock)" [disabled]="choice && choice !== choiceEnum.Rock">
-    <mat-icon fontSet="fontawesome" fontIcon="fa-hand-rock-o" [class.highlight-icon]="choice === choiceEnum.Rock"></mat-icon>
-  </button>
-  <button mat-icon-button aria-label="Paper" (click)="choose(choiceEnum.Paper)" [disabled]="choice && choice !== choiceEnum.Paper">
-    <mat-icon fontSet="fontawesome" fontIcon="fa-hand-paper-o" [class.highlight-icon]="choice === choiceEnum.Paper"></mat-icon>
-  </button>
-  <button mat-icon-button aria-label="Scissors" (click)="choose(choiceEnum.Scissors)" [disabled]="choice && choice !== choiceEnum.Scissors">
-    <mat-icon fontSet="fontawesome" fontIcon="fa-hand-scissors-o" [class.highlight-icon]="choice === choiceEnum.Scissors"></mat-icon>
-  </button>
-</div>
+﻿<ng-container *ngIf="player$ | async as player">
+  <div class="choice-container">
+    <button mat-icon-button aria-label="Rock" (click)="choose(choiceEnum.Rock)" [disabled]="isIconDisabled(player, choiceEnum.Rock)">
+      <mat-icon fontSet="fontawesome" fontIcon="fa-hand-rock-o" [class.highlight-icon]="player.choice === choiceEnum.Rock"></mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Paper" (click)="choose(choiceEnum.Paper)" [disabled]="isIconDisabled(player, choiceEnum.Paper)">
+      <mat-icon fontSet="fontawesome" fontIcon="fa-hand-paper-o" [class.highlight-icon]="player.choice === choiceEnum.Paper"></mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Scissors" (click)="choose(choiceEnum.Scissors)" [disabled]="isIconDisabled(player, choiceEnum.Scissors)">
+      <mat-icon fontSet="fontawesome" fontIcon="fa-hand-scissors-o" [class.highlight-icon]="player.choice === choiceEnum.Scissors"></mat-icon>
+    </button>
+  </div>
+</ng-container>

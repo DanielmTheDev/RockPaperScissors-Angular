@@ -35,6 +35,7 @@ module.exports = {
     ],
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-function-return-type': 'error',
+    'operator-linebreak': ['error', 'before'],
     'linebreak-style': 'off',
     'arrow-parens': ['error', 'as-needed'],
     'require-jsdoc': 'off',

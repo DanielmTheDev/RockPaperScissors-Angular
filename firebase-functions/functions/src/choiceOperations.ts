@@ -4,19 +4,28 @@ export function hasEveryoneChosen(players: Array<FirebaseFirestore.QueryDocument
   return players.every(player => (player.data() as Player).choice);
 }
 
-export function getLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): string[] {
-  if (isDraw(players)) {
-    return [];
-  }
-  // this is just to show something. soon, all the losers will be calculated and returned here instead
-  return [players[0].id];
+export function getActiveLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>[] {
+  return isDraw(players)
+    ? []
+    : getAllLosers(players).filter(playerDoc => !(playerDoc.data() as Player).isObserver);
 }
 
 function isDraw(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
   return isEveryChoiceEqual(players) || isEveryChoiceDifferent(players);
 }
 
-export function getDistinctChoices(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): string[] {
+function getAllLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>[] {
+  const allChoices = getDistinctChoices(players);
+  if (allChoices.includes('Rock') && allChoices.includes('Scissors')) {
+    return players.filter(player => (player.data() as Player).choice === 'Scissors');
+  } else if (allChoices.includes('Rock') && allChoices.includes('Paper')) {
+    return players.filter(player => (player.data() as Player).choice === 'Rock');
+  } else {
+    return players.filter(player => (player.data() as Player).choice === 'Paper');
+  }
+}
+
+function getDistinctChoices(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): ('Rock' | 'Paper' | 'Scissors' | null | undefined)[] {
   return players
     .map(playerDoc => (playerDoc.data() as Player).choice)
     .filter((value, index, array) => array.indexOf(value) === index);
