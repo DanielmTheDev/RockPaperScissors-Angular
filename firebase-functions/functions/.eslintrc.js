@@ -34,7 +34,9 @@ module.exports = {
       'always',
     ],
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'error',
     'linebreak-style': 'off',
     'arrow-parens': ['error', 'as-needed'],
+    'require-jsdoc': 'off',
   },
 };
