@@ -1,6 +1,6 @@
 ﻿import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import { calculateLosers, hasEveryoneChosen } from './choiceOperations';
+import { getLosers, hasEveryoneChosen } from './choiceOperations';
 
 export default functions.firestore.document('/players/{documentId}')
   .onUpdate(async (change: any, context: any) => {
@@ -10,7 +10,7 @@ export default functions.firestore.document('/players/{documentId}')
       if (!hasEveryoneChosen(playersInSameRoom)) {
         return;
       }
-      const losers = calculateLosers(playersInSameRoom);
+      const losers = getLosers(playersInSameRoom);
       if (!losers.length) {
         await Promise.all(resetAllChoices(playersInSameRoom));
         return;

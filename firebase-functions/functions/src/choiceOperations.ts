@@ -4,7 +4,7 @@ export function hasEveryoneChosen(players: Array<FirebaseFirestore.QueryDocument
   return players.every(player => (player.data() as Player).choice);
 }
 
-export function calculateLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): string[] {
+export function getLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): string[] {
   if (isDraw(players)) {
     return [];
   }
