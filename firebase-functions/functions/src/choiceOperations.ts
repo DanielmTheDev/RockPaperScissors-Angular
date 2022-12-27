@@ -5,14 +5,14 @@ export function hasEveryoneChosen(players: Array<FirebaseFirestore.QueryDocument
 }
 
 export function calculateLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): string[] {
-  if (draw(players)) {
+  if (isDraw(players)) {
     return [];
   }
   // this is just to show something. soon, all the losers will be calculated and returned here instead
   return [players[0].id];
 }
 
-function draw(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
+function isDraw(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
   return isEveryChoiceEqual(players) || isEveryChoiceDifferent(players);
 }
 

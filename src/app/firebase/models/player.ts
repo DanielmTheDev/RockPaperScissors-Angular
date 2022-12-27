@@ -6,5 +6,5 @@ export interface Player {
   room: string;
   avatar: string;
   choice: Choice;
-  active: boolean;
+  isActive: boolean;
 }

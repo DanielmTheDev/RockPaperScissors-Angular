@@ -5,7 +5,7 @@ import { calculateLosers, hasEveryoneChosen } from './choiceOperations';
 export default functions.firestore.document('/players/{documentId}')
   .onUpdate(async (change: any, context: any) => {
     try {
-      const roomId = await getCurrentRoomId(context);
+      const roomId = await getCurrentRoomId(context.params.documentId as string);
       const playersInSameRoom = (await admin.firestore().collection('players').where('room', '==', roomId).get()).docs;
       if (!hasEveryoneChosen(playersInSameRoom)) {
         return;
@@ -23,8 +23,7 @@ export default functions.firestore.document('/players/{documentId}')
     }
   });
 
-async function getCurrentRoomId(context: any): Promise<string> {
-  const playerId = context.params.documentId as string;
+async function getCurrentRoomId(playerId: string): Promise<string> {
   const currentPlayer = await admin.firestore().collection('players').doc(playerId).get();
   return currentPlayer.data()?.room;
 }
