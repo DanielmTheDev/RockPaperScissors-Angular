@@ -1,33 +1,34 @@
 ﻿import { Player } from './models/player';
+import { Choice } from './models/choice';
 
 export function hasEveryoneChosen(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
   return players.every(player => (player.data() as Player).choice);
 }
 
-export function getActiveLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>[] {
+export function getLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>[] {
   return isDraw(players)
     ? []
-    : getAllLosers(players).filter(playerDoc => !(playerDoc.data() as Player).isObserver);
+    : getLosersInner(players);
 }
 
 function isDraw(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
   return isEveryChoiceEqual(players) || isEveryChoiceDifferent(players);
 }
 
-function getAllLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>[] {
+function getLosersInner(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>[] {
   const allChoices = getDistinctChoices(players);
-  if (allChoices.includes('Rock') && allChoices.includes('Scissors')) {
+  if (allChoices.includes(Choice.Rock) && allChoices.includes(Choice.Scissors)) {
     return players.filter(player => (player.data() as Player).choice === 'Scissors');
-  } else if (allChoices.includes('Rock') && allChoices.includes('Paper')) {
+  } else if (allChoices.includes(Choice.Rock) && allChoices.includes(Choice.Paper)) {
     return players.filter(player => (player.data() as Player).choice === 'Rock');
   } else {
     return players.filter(player => (player.data() as Player).choice === 'Paper');
   }
 }
 
-function getDistinctChoices(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): ('Rock' | 'Paper' | 'Scissors' | null | undefined)[] {
+function getDistinctChoices(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): Choice[] {
   return players
-    .map(playerDoc => (playerDoc.data() as Player).choice)
+    .map(playerDoc => (playerDoc.data() as Player).choice as Choice)
     .filter((value, index, array) => array.indexOf(value) === index);
 }
 

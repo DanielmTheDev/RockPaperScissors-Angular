@@ -1,23 +1,23 @@
 ﻿import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { Player } from './models/player';
-import { getActiveLosers, hasEveryoneChosen } from './choiceOperations';
+import { getLosers, hasEveryoneChosen } from './choiceOperations';
 
 export default functions.firestore.document('/players/{documentId}')
   .onUpdate(async (change: any, context: any) => {
     try {
       const roomId = await getCurrentRoomId(context.params.documentId as string);
-      const playersInSameRoom = await getActivePlayersInSameRoom(roomId);
-      if (!hasEveryoneChosen(playersInSameRoom)) {
+      const playersInCurrentRoom = await getActivePlayersInSameRoom(roomId);
+      if (!hasEveryoneChosen(playersInCurrentRoom)) {
         return;
       }
-      await updatePlayers(playersInSameRoom, { choice: null });
-      const losers = getActiveLosers(playersInSameRoom);
+      await updatePlayers(playersInCurrentRoom, { choice: null });
+      const losers = getLosers(playersInCurrentRoom);
       if (!losers.length) {
         return;
       }
       await updatePlayers(losers, { isObserver: true });
-      await determineWinner(playersInSameRoom, losers, roomId);
+      await determineWinner(playersInCurrentRoom, losers, roomId);
     } catch (e) {
       console.log(e);
     }
