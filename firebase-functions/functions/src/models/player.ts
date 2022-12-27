@@ -1,4 +1,7 @@
-﻿export interface Player {
-  choice: 'Rock' | 'Paper' | 'Scissors',
-  isActive: boolean;
+﻿import { Choice } from './choice';
+
+export interface Player {
+  choice?: Choice | null,
+  isObserver?: boolean;
 }
+

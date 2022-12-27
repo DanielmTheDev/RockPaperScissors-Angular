@@ -1,4 +1,4 @@
  <div class="player-container">
    <div SafeInnerHtml [innerHtml]="player?.avatar" class="svg"></div>
  </div>
- <div class="player-container">{{player?.name}}</div>
+ <div [class.strike-through]="player?.isObserver" class="player-container">{{player?.name}}</div>
