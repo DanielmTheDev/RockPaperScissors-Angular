@@ -1,5 +1,6 @@
 ﻿import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { draw, hasEveryoneChosen } from './choiceOperations';
 
 export default functions.firestore.document('/players/{documentId}')
   .onUpdate(async (change: any, context: any) => {
@@ -28,10 +29,6 @@ async function getCurrentRoomId(context: any): Promise<string> {
   return currentPlayer.data()?.room;
 }
 
-function hasEveryoneChosen(playersInSameRoom: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
-  return playersInSameRoom.every(player => (player.data() as Player).choice);
-}
-
 function calculateLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): string[] {
   if (draw(players)) {
     return [];
@@ -40,26 +37,6 @@ function calculateLosers(players: Array<FirebaseFirestore.QueryDocumentSnapshot<
   return [players[0].id];
 }
 
-function draw(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
-  return isEveryChoiceEqual(players) || isEveryChoiceDifferent(players);
-}
-
-function isEveryChoiceEqual(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
-  return players.every(player => (player.data() as Player).choice === (players[0].data() as Player).choice);
-}
-
-function isEveryChoiceDifferent(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
-  return players
-    .map(playerDoc => (playerDoc.data() as Player).choice)
-    .filter((value, index, array) => array.indexOf(value) === index)
-    .length === 3;
-}
-
 function resetAllChoices(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): (Promise<FirebaseFirestore.WriteResult> | undefined)[] {
   return players.map(playerDoc => admin.firestore().collection('players').doc(playerDoc.id)?.update({ choice: null }));
-}
-
-interface Player {
-  choice: 'Rock' | 'Paper' | 'Scissors',
-  active: boolean;
 }
