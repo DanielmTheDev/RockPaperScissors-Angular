@@ -60,5 +60,6 @@ function resetAllChoices(players: Array<FirebaseFirestore.QueryDocumentSnapshot<
 }
 
 interface Player {
-  choice: 'Rock' | 'Paper' | 'Scissors'
+  choice: 'Rock' | 'Paper' | 'Scissors',
+  active: boolean;
 }
