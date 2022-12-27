@@ -23,10 +23,9 @@ export function getDistinctChoices(players: Array<FirebaseFirestore.QueryDocumen
 }
 
 function isEveryChoiceEqual(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
-  return players.every(player => (player.data() as Player).choice === (players[0].data() as Player).choice);
+  return getDistinctChoices(players).length === 1;
 }
 
 function isEveryChoiceDifferent(players: Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>): boolean {
-  return getDistinctChoices(players)
-    .length === 3;
+  return getDistinctChoices(players).length === 3;
 }
