@@ -14,7 +14,7 @@ import { rehydrationMetaReducer } from './store/rehydration';
 import { RandomNamesProvider } from './room-creation/services/random-names-provider.service';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore';
-import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/compat/functions';
+import { AngularFireFunctionsModule, USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/compat/functions';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +26,7 @@ import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/compat/fun
     BrowserAnimationsModule,
     FirebaseModule,
     MatIconModule,
+    AngularFireFunctionsModule,
     StoreModule.forRoot(reducers, { metaReducers: [rehydrationMetaReducer] }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],

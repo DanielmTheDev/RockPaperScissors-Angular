@@ -1,9 +1,14 @@
 ﻿import * as functions from 'firebase-functions';
 
-export default functions.https.onCall(async data => {
-  const url = 'https://api.multiavatar.com/';
-  const response = await fetch(`${url}${data.playerName}?apikey=8IPOBEe7WmXA26`);
+export const getAvatar = functions.https.onCall(async data => {
+  const url = `https://api.multiavatar.com/${data.playerName}?apikey=8IPOBEe7WmXA26`;
+  const response = await fetch(url);
   return await response.text();
 });
 
-// next up: same thing for random names
+export const getRandomNames = functions.https.onCall(async () => {
+  const url = 'https://names.drycodes.com/40?nameOptions=funnyWords&combine=2&separator=space';
+  const response = await fetch(url);
+  return await response.json();
+});
+
