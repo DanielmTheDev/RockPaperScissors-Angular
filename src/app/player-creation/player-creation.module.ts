@@ -8,6 +8,7 @@ import { PlayerCreationService } from './services/player-creation.service';
 import { AvatarGenerator } from './services/avatar-generator.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PlayerCreationModalComponent } from './components/player-creation-modal/player-creation-modal.component';
+import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
 
 @NgModule({
   declarations: [PlayerCreationModalComponent],
@@ -18,6 +19,7 @@ import { PlayerCreationModalComponent } from './components/player-creation-modal
     MatButtonModule,
     MatInputModule,
     MatDialogModule,
+    AngularFireFunctionsModule,
   ],
   providers: [PlayerCreationService, AvatarGenerator],
   exports: [PlayerCreationModalComponent]
