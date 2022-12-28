@@ -8,5 +8,9 @@
     room: 'room',
     playerId: 'playerId',
     roomId: 'roomId'
+  },
+  callableFunctions: {
+    getAvatar: 'getAvatar',
+    getRandomNames: 'getRandomNames'
   }
 };

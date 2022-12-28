@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, of, tap } from 'rxjs';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import firebaseConstants from '../../firebase/constants/firebase-constants';
 
 @Injectable({ providedIn: 'root' })
 export class RandomNamesProvider {
@@ -10,14 +11,14 @@ export class RandomNamesProvider {
   constructor(private httpClient: HttpClient, private functions: AngularFireFunctions) {}
 
   initialize(): void {
-    this.functions.httpsCallable('getRandomNames')({})
+    this.functions.httpsCallable(firebaseConstants.callableFunctions.getRandomNames)({})
       .subscribe(names => this.names = names);
   }
 
   provide(...excluding: string[]): Observable<string> {
     return this.names.length
       ? of(this.getRandomNameExcluding(this.names, excluding))
-      : this.functions.httpsCallable('getRandomNames')({})
+      : this.functions.httpsCallable(firebaseConstants.callableFunctions.getRandomNames)({})
         .pipe(
           tap(names => this.names = names),
           map(names => this.getRandomNameExcluding(names, excluding)));
