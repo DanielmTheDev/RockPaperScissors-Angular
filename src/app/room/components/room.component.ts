@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize, map, Observable, take } from 'rxjs';
+import { combineLatestWith, finalize, map, Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CurrentPlayer } from 'src/app/store/models/current-player';
 import { Player } from 'src/app/firebase/models/player';
@@ -42,13 +42,16 @@ export class RoomComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingStatus.isLoading = true;
-    this.currentPlayer$.pipe(take(1)).subscribe(player => {
-      if (!player.id) {
-        this.playerCreationService.createPlayer(this.route.snapshot.params[constants.routeParams.id]).subscribe(_ => this.loadingStatus.isLoading = false);
-      } else {
-        this.loadingStatus.isLoading = false;
-      }
-    });
+    this.currentPlayer$.pipe(
+      take(1),
+      combineLatestWith(this.room$),
+      map(([player, room]) => {
+        if(!player.id && room?.winner) {
+          this.createPlayer();
+        }
+      }),
+      finalize(() => this.loadingStatus.isLoading = false))
+      .subscribe();
   }
 
   leaveRoom(): void {
@@ -63,5 +66,9 @@ export class RoomComponent implements OnInit {
           this.router.navigate(['']).then();
         }
       );
+  }
+
+  private createPlayer(): void {
+    this.playerCreationService.createPlayer(this.route.snapshot.params[constants.routeParams.id]).subscribe(_ => this.loadingStatus.isLoading = false);
   }
 }
