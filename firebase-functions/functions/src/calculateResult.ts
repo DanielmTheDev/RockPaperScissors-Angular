@@ -2,11 +2,20 @@
 import * as admin from 'firebase-admin';
 import { Player } from './models/player';
 import { getLosers, hasEveryoneChosen } from './choiceOperations';
+import { Room } from './models/room';
+import { GameType } from './models/game-type';
 
-export default functions.firestore.document('/players/{documentId}')
+async function getCurrentGameType(roomId: string): Promise<GameType | undefined> {
+  const room = await admin.firestore().collection('rooms').doc(roomId).get();
+  console.log(JSON.stringify(room.data()));
+  return (room.data() as Room).typeOfGame;
+}
+
+export const calculateResult = functions.firestore.document('/players/{documentId}')
   .onUpdate(async (change: any, context: any) => {
     try {
       const roomId = await getCurrentRoomId(context.params.documentId as string);
+      await getCurrentGameType(roomId);
       const playersInCurrentRoom = await getActivePlayersInRoom(roomId);
       if (!hasEveryoneChosen(playersInCurrentRoom)) {
         return;
