@@ -46,7 +46,7 @@ export class RoomComponent implements OnInit {
       take(1),
       combineLatestWith(this.room$),
       map(([player, room]) => {
-        if(!player.id && room?.winner) {
+        if(!player.id && !room?.winner) {
           this.createPlayer();
         }
       }),
