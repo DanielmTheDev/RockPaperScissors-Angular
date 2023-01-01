@@ -5,5 +5,5 @@ export interface Room {
   numberOfPlayers: number;
   score?: number;
   typeOfGame?: GameType;
-  lastOneActive: string;
+  lastOneActive: string | null;
 }

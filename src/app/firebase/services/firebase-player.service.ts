@@ -42,4 +42,17 @@ export class FirebasePlayerService {
   getCurrentPlayerDocument(): Observable<AngularFirestoreDocument<Player>> {
     return this.player$.pipe(map(player => this.playerCollection.doc(player.id)));
   }
+
+  resetAllPlayersOfTheRoom(roomId: string): Observable<void> {
+   return this.firestore
+      .collection<Player>(FirebaseConstants.collections.players, ref => ref
+        .where(FirebaseConstants.keys.room, '==', roomId))
+     .get()
+      .pipe(
+        map(querySnapshot => querySnapshot.forEach(doc => this.updateObservationStatus(doc.id, false))));
+  }
+
+  private updateObservationStatus(playerId: string, isObserver: boolean): void {
+    this.playerCollection.doc(playerId).update({ isObserver }).then();
+  }
 }

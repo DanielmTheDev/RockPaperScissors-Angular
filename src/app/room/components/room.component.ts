@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize, map, Observable, take } from 'rxjs';
+import { combineLatestWith, finalize, map, Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CurrentPlayer } from 'src/app/store/models/current-player';
 import { Player } from 'src/app/firebase/models/player';
@@ -65,5 +65,15 @@ export class RoomComponent implements OnInit {
           this.router.navigate(['']).then();
         }
       );
+  }
+
+  startOver(): void {
+    const roomId = this.route.snapshot.params[constants.routeParams.id];
+    this.loadingStatus.isLoading = true;
+
+    this.firebaseRoomService.restRoom(roomId).pipe(
+      combineLatestWith(this.firebasePlayerService.resetAllPlayersOfTheRoom(roomId)),
+      finalize(() => this.loadingStatus.isLoading = false)
+    ).subscribe();
   }
 }

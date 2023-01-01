@@ -1,15 +1,8 @@
 <copy-link></copy-link>
 
-<ng-container *ngIf="currentPlayer$ | async as storePlayer">
-  <div>Store Player information:</div>
-  <div *ngIf="storePlayer">
-    <div>Id: {{storePlayer.id}}</div>
-  </div>
-</ng-container>
-
-<ng-container *ngIf="firebasePlayer$ | async as firebasePlayer">
+<div *ngIf="firebasePlayer$ | async as firebasePlayer" class="top-spacer">
   <player [player]="firebasePlayer"></player>
-</ng-container>
+</div>
 <choice></choice>
 
 <div class="top-spacer">
@@ -17,7 +10,10 @@
 </div>
 
 <spinner [loadingStatus]="loadingStatus">
-  <button mat-raised-button (click)="leaveRoom()" class="top-spacer">Leave the room</button>
+  <div class="top-spacer room-button-container">
+    <button mat-raised-button (click)="leaveRoom()">Leave the room</button>
+    <button mat-raised-button color="accent" (click)="startOver()">Restart the Game</button>
+  </div>
 </spinner>
 
 <ng-container *ngIf="room$ | async as room">
