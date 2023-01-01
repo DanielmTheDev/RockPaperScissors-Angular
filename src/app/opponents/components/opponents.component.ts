@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Player } from '../../firebase/models/player';
 import { FirebaseOpponentService } from '../../firebase/services/firebase-opponent.service';
 import constants from '../../constants';
@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./opponents.component.scss']
 })
 export class OpponentsComponent {
+  @Input()
+  hasCurrentPlayerChosen = false;
   opponents$: Observable<Player[]> | undefined;
   choiceEnum = Choice;
 
