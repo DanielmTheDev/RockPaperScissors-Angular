@@ -1,14 +1,14 @@
-﻿import { Player } from './models/player';
-import { Choice } from './models/choice';
+﻿import { Player } from '../models/player';
+import { Choice } from '../models/choice';
 import * as admin from 'firebase-admin';
 import { firestore } from 'firebase-admin';
-import { GameType } from './models/game-type';
-import { Room } from './models/room';
+import { GameType } from '../models/game-type';
+import { Room } from '../models/room';
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 import DocumentData = firestore.DocumentData;
 
 export function hasEveryoneChosen(players: QueryDocumentSnapshot<DocumentData>[]): boolean {
-  return players.every(player => (player.data() as Player).choice);
+  return Boolean(players.length) && players.every(player => (player.data() as Player).choice);
 }
 
 export async function getPlayersToDeactivate(players: QueryDocumentSnapshot<DocumentData>[], roomId: string): Promise<QueryDocumentSnapshot<DocumentData>[]> {
@@ -20,11 +20,7 @@ export async function getPlayersToDeactivate(players: QueryDocumentSnapshot<Docu
       : getLosers(players);
 }
 
-function isDraw(players: QueryDocumentSnapshot<DocumentData>[]): boolean {
-  return isEveryChoiceEqual(players) || isEveryChoiceDifferent(players);
-}
-
-function getLosers(players: QueryDocumentSnapshot<DocumentData>[]): QueryDocumentSnapshot<DocumentData>[] {
+export function getLosers(players: QueryDocumentSnapshot<DocumentData>[]): QueryDocumentSnapshot<DocumentData>[] {
   const allChoices = getDistinctChoices(players);
   if (allChoices.includes(Choice.Rock) && allChoices.includes(Choice.Scissors)) {
     return players.filter(player => (player.data() as Player).choice === 'Scissors');
@@ -33,6 +29,10 @@ function getLosers(players: QueryDocumentSnapshot<DocumentData>[]): QueryDocumen
   } else {
     return players.filter(player => (player.data() as Player).choice === 'Paper');
   }
+}
+
+export function isDraw(players: QueryDocumentSnapshot<DocumentData>[]): boolean {
+  return isEveryChoiceEqual(players) || isEveryChoiceDifferent(players);
 }
 
 function getWinners(players: QueryDocumentSnapshot<DocumentData>[]): QueryDocumentSnapshot<DocumentData>[] {
