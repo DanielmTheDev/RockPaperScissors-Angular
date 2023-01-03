@@ -8,7 +8,7 @@ export const getAvatar = functions.https.onCall(async data => {
 });
 
 export const getRandomNames = functions.https.onCall(async () => {
-  const url = 'https://names.drycodes.com/40?nameOptions=funnyWords&combine=2&separator=space';
+  const url = 'https://names.drycodes.com/40?nameOptions=funnyWords&combine=1';
   const response = await fetch(url);
   return await response.json();
 });
