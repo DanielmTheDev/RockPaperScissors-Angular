@@ -20,4 +20,8 @@ export class OpponentsComponent {
   constructor(private firebaseOpponentService: FirebaseOpponentService, private route: ActivatedRoute) {
     this.opponents$ = this.firebaseOpponentService.getOpponents(this.route.snapshot.params[constants.routeParams.id]);
   }
+
+  hasEveryPlayerChosen(players: Player[]): boolean {
+    return this.hasCurrentPlayerChosen && players.every(player => player.choice);
+  }
 }
