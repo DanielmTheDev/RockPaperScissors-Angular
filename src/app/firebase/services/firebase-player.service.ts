@@ -44,7 +44,7 @@ export class FirebasePlayerService {
   }
 
   resetAllPlayersOfTheRoom(roomId: string): Observable<void> {
-   return this.firestore
+    return this.firestore
       .collection<Player>(FirebaseConstants.collections.players, ref => ref
         .where(FirebaseConstants.keys.room, '==', roomId))
      .get()

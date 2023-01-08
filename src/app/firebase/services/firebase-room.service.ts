@@ -22,7 +22,7 @@ export class FirebaseRoomService {
       .then(roomReference => roomReference.id));
   }
 
-  restRoom(roomId: string): Observable<void> {
+  resetRoom(roomId: string): Observable<void> {
     return fromPromise(this.firestore
       .collection<Room>(FirebaseConstants.collections.rooms)
       .doc(roomId)
