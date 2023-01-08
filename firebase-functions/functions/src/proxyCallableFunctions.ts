@@ -1,4 +1,5 @@
-﻿import * as functions from 'firebase-functions';
+﻿import fetch from 'node-fetch';
+import * as functions from 'firebase-functions';
 
 export const getAvatar = functions.https.onCall(async data => {
   const url = `https://api.multiavatar.com/${data.playerName}?apikey=8IPOBEe7WmXA26`;

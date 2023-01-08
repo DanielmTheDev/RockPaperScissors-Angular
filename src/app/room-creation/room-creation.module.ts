@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RoomCreationModalComponent } from './components/room-creation-modal/room-creation-modal.component';
 import { SpinnerModule } from '../shared-lib/spinner/spinner.module';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [RoomCreationModalComponent],
@@ -22,7 +23,8 @@ import { SpinnerModule } from '../shared-lib/spinner/spinner.module';
     ReactiveFormsModule,
     MatRadioModule,
     HttpClientModule,
-    SpinnerModule
+    SpinnerModule,
+    MatSelectModule
   ],
   providers: [],
   exports: [RoomCreationModalComponent]

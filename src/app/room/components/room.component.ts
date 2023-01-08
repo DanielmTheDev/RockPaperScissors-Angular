@@ -13,6 +13,7 @@ import constants from 'src/app/constants';
 import { removePlayer } from 'src/app/store';
 import { Room } from '../../firebase/models/room';
 import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
+import { GameType } from '../../room-creation/models/game-type';
 
 @Component({
   selector: 'room',
@@ -24,6 +25,7 @@ export class RoomComponent implements OnInit {
   firebasePlayer$: Observable<Player | undefined> | undefined;
   room$: Observable<Room | undefined>;
   loadingStatus: LoadingStatus = { isLoading: false };
+  gameType = GameType;
 
   constructor(
     private formBuilder: FormBuilder,
