@@ -7,7 +7,8 @@
   keys: {
     room: 'room',
     playerId: 'playerId',
-    roomId: 'roomId'
+    roomId: 'roomId',
+    isObserver: 'isObserver'
   },
   callableFunctions: {
     getAvatar: 'getAvatar',
