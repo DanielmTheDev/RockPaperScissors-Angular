@@ -8,6 +8,7 @@ import { PlayerCreationService } from './services/player-creation.service';
 import { AvatarGenerator } from './services/avatar-generator.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PlayerCreationModalComponent } from './components/player-creation-modal/player-creation-modal.component';
+import { SpinnerModule } from '../shared-lib/spinner/spinner.module';
 
 @NgModule({
   declarations: [PlayerCreationModalComponent],
@@ -18,6 +19,7 @@ import { PlayerCreationModalComponent } from './components/player-creation-modal
     MatButtonModule,
     MatInputModule,
     MatDialogModule,
+    SpinnerModule,
   ],
   providers: [PlayerCreationService, AvatarGenerator],
   exports: [PlayerCreationModalComponent]

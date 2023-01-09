@@ -1,24 +1,15 @@
 <h1 mat-dialog-title>Create Room</h1>
 <div mat-dialog-content class="form-container">
-  <spinner [loadingStatus]="loadingStatus">
-    <form [formGroup]="formGroup">
-
-      <mat-form-field appearance="legacy">
-        <mat-label>Give your room a cool name</mat-label>
-        <input matInput formControlName="name">
-      </mat-form-field>
-
-      <mat-form-field appearance="legacy">
-        <mat-label>Type of game</mat-label>
-        <mat-select formControlName="typeOfGame">
-          <mat-option [value]="gameType.Winner">Winner</mat-option>
-          <mat-option [value]="gameType.Loser">Loser</mat-option>
-        </mat-select>
-        <mat-hint>Are you trying to find a winner or a loser?</mat-hint>
-      </mat-form-field>
-
-    </form>
-  </spinner>
+  <form [formGroup]="formGroup">
+    <mat-form-field appearance="legacy">
+      <mat-label>Type of game</mat-label>
+      <mat-select formControlName="typeOfGame">
+        <mat-option [value]="gameType.Loser">Loser</mat-option>
+        <mat-option [value]="gameType.Winner">Winner</mat-option>
+      </mat-select>
+      <mat-hint>Are you trying to find a winner or a loser?</mat-hint>
+    </mat-form-field>
+  </form>
 </div>
 
 <div mat-dialog-actions class="full-width">
