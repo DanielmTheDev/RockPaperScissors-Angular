@@ -6,7 +6,7 @@
 <choice></choice>
 
 <div class="top-spacer">
-  <opponents></opponents>
+  <opponents [hasCurrentPlayerChosen]="(firebasePlayer$ | async)?.choice !== undefined"></opponents>
 </div>
 
 <spinner [loadingStatus]="loadingStatus">

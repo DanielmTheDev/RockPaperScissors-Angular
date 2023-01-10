@@ -55,4 +55,12 @@ export class FirebasePlayerService {
   private updateObservationStatus(playerId: string, isObserver: boolean): void {
     this.playerCollection.doc(playerId).update({ isObserver }).then();
   }
+
+  getObserverPlayers(roomId: string): Observable<Player[]> {
+    return this.firestore
+      .collection<Player>(FirebaseConstants.collections.players, ref => ref
+        .where(FirebaseConstants.keys.room, '==', roomId)
+        .where(FirebaseConstants.keys.isObserver, '==', true))
+      .valueChanges();
+  }
 }

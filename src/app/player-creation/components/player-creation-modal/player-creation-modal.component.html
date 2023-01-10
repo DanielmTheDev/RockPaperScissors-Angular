@@ -1,13 +1,15 @@
 <h1 mat-dialog-title>Create Player</h1>
 
-<div mat-dialog-content>
-  <form [formGroup]="formGroup">
-    <mat-form-field appearance="legacy" >
-      <mat-label>What will be your name?</mat-label>
-      <input matInput formControlName="name">
-    </mat-form-field>
-  </form>
-</div>
+<spinner [loadingStatus]="loadingStatus">
+  <div mat-dialog-content>
+    <form [formGroup]="formGroup">
+      <mat-form-field appearance="legacy">
+        <mat-label>What will be your name?</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+    </form>
+  </div>
+</spinner>
 
 <div mat-dialog-actions>
   <button mat-raised-button color="primary" [disabled]="!formGroup.valid" (click)="create()">Create</button>

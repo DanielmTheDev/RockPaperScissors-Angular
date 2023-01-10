@@ -15,6 +15,7 @@ import { RandomNamesProvider } from './room-creation/services/random-names-provi
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore';
 import { AngularFireFunctionsModule, USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/compat/functions';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +29,8 @@ import { AngularFireFunctionsModule, USE_EMULATOR as USE_FUNCTIONS_EMULATOR } fr
     MatIconModule,
     AngularFireFunctionsModule,
     StoreModule.forRoot(reducers, { metaReducers: [rehydrationMetaReducer] }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    MatButtonModule
   ],
   providers: [
     {
