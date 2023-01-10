@@ -77,6 +77,16 @@ export class RoomComponent implements OnInit {
       );
   }
 
+  startOver(): void {
+    const roomId = this.route.snapshot.params[constants.routeParams.id];
+    this.loadingStatus.isLoading = true;
+
+    this.firebaseRoomService.resetRoom(roomId).pipe(
+      combineLatestWith(this.firebasePlayerService.resetAllPlayersOfTheRoom(roomId)),
+      finalize(() => this.loadingStatus.isLoading = false)
+    ).subscribe();
+  }
+
   private createPlayer(): void {
     this.playerCreationService.createPlayer(this.route.snapshot.params[constants.routeParams.id]).subscribe(_ => this.loadingStatus.isLoading = false);
   }

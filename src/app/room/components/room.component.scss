@@ -1,9 +1,12 @@
 button {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  width: 50%;
+  margin: 0.2rem;
 }
 
 .top-spacer {
   margin-top: 5rem;
+}
+
+.room-button-container {
+  display: flex;
 }

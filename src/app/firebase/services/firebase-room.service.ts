@@ -21,4 +21,11 @@ export class FirebaseRoomService {
       .add(room)
       .then(roomReference => roomReference.id));
   }
+
+  resetRoom(roomId: string): Observable<void> {
+    return fromPromise(this.firestore
+      .collection<Room>(FirebaseConstants.collections.rooms)
+      .doc(roomId)
+      .update({ lastOneActive: null }));
+  }
 }
