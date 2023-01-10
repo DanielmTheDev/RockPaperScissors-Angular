@@ -1,26 +1,26 @@
-<spinner [loadingStatus]="loadingStatus">
-  <copy-link></copy-link>
+<copy-link></copy-link>
 
-  <ng-container *ngIf="currentPlayer$ | async as storePlayer">
-    <div>Store Player information:</div>
-    <div *ngIf="storePlayer">
-      <div>Id: {{storePlayer.id}}</div>
-    </div>
-  </ng-container>
-
-  <ng-container *ngIf="firebasePlayer$ | async as firebasePlayer">
-    <player [player]="firebasePlayer"></player>
-  </ng-container>
-  <choice></choice>
-
-  <div class="top-spacer">
-    <opponents></opponents>
+<ng-container *ngIf="currentPlayer$ | async as storePlayer">
+  <div>Store Player information:</div>
+  <div *ngIf="storePlayer">
+    <div>Id: {{storePlayer.id}}</div>
   </div>
+</ng-container>
 
+<ng-container *ngIf="firebasePlayer$ | async as firebasePlayer">
+  <player [player]="firebasePlayer"></player>
+</ng-container>
+<choice></choice>
+
+<div class="top-spacer">
+  <opponents [hasCurrentPlayerChosen]="(firebasePlayer$ | async)?.choice !== undefined"></opponents>
+</div>
+
+<spinner [loadingStatus]="loadingStatus">
   <button mat-raised-button (click)="leaveRoom()" class="top-spacer">Leave the room</button>
-
-  <ng-container *ngIf="room$ | async as room">
-    <h1>{{room.typeOfGame === gameType.Loser ? 'Loser' : 'Winner'}}: {{room.lastOneActive}}</h1>
-  </ng-container>
 </spinner>
+
+<ng-container *ngIf="room$ | async as room">
+  <h1>{{room.typeOfGame === gameType.Loser ? 'Loser' : 'Winner'}}: {{room.lastOneActive}}</h1>
+</ng-container>
 
