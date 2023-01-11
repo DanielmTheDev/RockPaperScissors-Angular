@@ -2,5 +2,5 @@ import * as admin from 'firebase-admin';
 
 admin.initializeApp();
 
-export { calculateResult } from './calculateResult';
-export { getAvatar, getRandomNames } from './proxyCallableFunctions';
+export { calculateResult } from './firebase/calculateResult';
+export { getAvatar, getRandomNames } from './firebase/proxyCallableFunctions';

@@ -2,7 +2,6 @@
   collections: {
     players: 'players',
     rooms: 'rooms',
-    playersInRoom: 'playersInRoom'
   },
   keys: {
     room: 'room',
