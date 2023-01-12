@@ -21,6 +21,6 @@ export class ChoiceComponent {
   }
 
   isIconDisabled(player: Player, choice: Choice): boolean {
-    return player.isObserver || player.choice && player.choice !== choice;
+    return Boolean(player.isObserver || player.choice && player.choice !== choice);
   }
 }

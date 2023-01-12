@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { map, Observable, switchMap } from 'rxjs';
+import { from, map, Observable, switchMap } from 'rxjs';
 import { CurrentPlayer } from '../../store/models/current-player';
 import { Player } from '../models/player';
 import { Store } from '@ngrx/store';
@@ -62,5 +62,9 @@ export class FirebasePlayerService {
         .where(FirebaseConstants.keys.room, '==', roomId)
         .where(FirebaseConstants.keys.isObserver, '==', true))
       .valueChanges();
+  }
+
+  updateCurrent(updateData: Partial<Player>): Observable<void> {
+    return this.getCurrentPlayerDocument().pipe(switchMap(doc => from(doc.update(updateData))));
   }
 }
