@@ -5,6 +5,6 @@ export interface Player {
   name: string;
   room: string;
   avatar: string;
-  choice: Choice;
+  choice: Choice | null;
   isObserver: boolean;
 }

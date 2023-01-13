@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatestWith, finalize, map, Observable, take } from 'rxjs';
+import { combineLatestWith, concatMap, finalize, map, Observable, of, switchMap, take, zip } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CurrentPlayer } from 'src/app/store/models/current-player';
 import { Player } from 'src/app/firebase/models/player';
@@ -15,6 +15,7 @@ import { Room } from '../../firebase/models/room';
 import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
 import { GameType } from '../../room-creation/models/game-type';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 
 @Component({
   selector: 'room',
@@ -28,6 +29,10 @@ export class RoomComponent implements OnInit {
   loadingStatus: LoadingStatus = { isLoading: false };
   gameType = GameType;
 
+  private get roomId(): string {
+    return this.route.snapshot.params[constants.routeParams.id];
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -38,7 +43,7 @@ export class RoomComponent implements OnInit {
     private store: Store,
     private snackBar: MatSnackBar) {
     this.currentPlayer$ = store.select(selectPlayer);
-    this.room$ = this.firebaseRoomService.roomValueChanges(this.route.snapshot.params[constants.routeParams.id]);
+    this.room$ = this.firebaseRoomService.roomValueChanges(this.roomId);
     this.firebasePlayerService.getCurrentPlayerDocument().subscribe(player => {
       this.firebasePlayer$ = player.valueChanges();
     });
@@ -46,21 +51,14 @@ export class RoomComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingStatus.isLoading = true;
-    const roomId = this.route.snapshot.params[constants.routeParams.id];
-    this.currentPlayer$.pipe(
-      take(1),
-      combineLatestWith(this.firebasePlayerService.getObserverPlayers(roomId)),
-      map(([player, observers]) => {
-        const gameAlreadyStarted = observers.length > 0;
-        if (!player.id && !gameAlreadyStarted) {
-          this.createPlayer();
-        }
-        if (!player.id && gameAlreadyStarted) {
-          this.openSnackBar();
-        }
-        this.loadingStatus.isLoading = false;
-      }))
-      .subscribe();
+    zip([
+      this.currentPlayer$,
+      this.firebasePlayerService.getObserverPlayers(this.roomId),
+      this.firebasePlayerService.getCurrentPlayerDocument().pipe(switchMap(doc => doc.valueChanges()))])
+      .pipe(
+        take(1),
+        concatMap(([player, observers, currentFirebasePlayer]) => this.enterRoom(observers, player, currentFirebasePlayer)))
+      .subscribe(_ => this.loadingStatus.isLoading = false);
   }
 
   leaveRoom(): void {
@@ -78,27 +76,44 @@ export class RoomComponent implements OnInit {
   }
 
   startOver(): void {
-    const roomId = this.route.snapshot.params[constants.routeParams.id];
+    this.firebaseRoomService.resetRoom(this.roomId).pipe(
+      combineLatestWith(this.firebasePlayerService.resetAllPlayersOfTheRoom(this.roomId)))
+      .subscribe(_ => this.loadingStatus.isLoading = false);
+
     this.loadingStatus.isLoading = true;
-
-    this.firebaseRoomService.resetRoom(roomId).pipe(
-      combineLatestWith(this.firebasePlayerService.resetAllPlayersOfTheRoom(roomId)),
-      finalize(() => this.loadingStatus.isLoading = false)
-    ).subscribe();
   }
 
-  private createPlayer(): void {
-    this.playerCreationService.createPlayer(this.route.snapshot.params[constants.routeParams.id]).subscribe(_ => this.loadingStatus.isLoading = false);
+  private enterRoom(observers: Player[], player: CurrentPlayer, currentFirebasePlayer: Player | undefined): Observable<string | boolean | undefined | void> {
+    const gameAlreadyStarted = observers.length > 0;
+    if (gameAlreadyStarted) {
+      this.showLockedRoomMessage();
+      return fromPromise(this.router.navigate(['/']));
+    } else if (!player.id) {
+      return this.createPlayer(this.roomId);
+    } else if (currentFirebasePlayer?.room !== this.roomId) {
+      return this.resetExistingPlayer(this.roomId);
+    }
+    return of(undefined);
   }
 
-  private openSnackBar(): void {
-    const navigationDetails: string[] = ['/'];
-    const message = 'You can not join the current room, the game has been already started';
+  private createPlayer(roomId: string): Observable<string> {
+    return this.playerCreationService.createPlayer(roomId);
+  }
+
+  private showLockedRoomMessage(): void {
+    const message = 'You cannot join the current room, the game has been already started';
     const action = 'Dismiss';
     this.snackBar.open(message, action, {
       horizontalPosition: 'center',
       verticalPosition: 'top'
     });
-    this.router.navigate(navigationDetails);
+  }
+
+  private resetExistingPlayer(roomId: string): Observable<void> {
+    return this.firebasePlayerService.updateCurrent({
+      room: roomId,
+      isObserver: false,
+      choice: null,
+    } as Partial<Player>);
   }
 }
