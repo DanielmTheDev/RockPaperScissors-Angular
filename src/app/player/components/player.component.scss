@@ -3,10 +3,33 @@
   justify-content: center;
 }
 
+.player {
+  border-radius: 10rem;
+  padding: 0.5rem
+}
+
 .svg {
   width: 20%;
 }
 
-.strike-through {
-  text-decoration: line-through;
+.observer:not(.lastOneActive) {
+  opacity: 40%;
+}
+
+.lastOneActive {
+  outline: 3px solid green;
+  animation: outline 1s linear 0s infinite alternate;
+}
+
+.loser {
+  outline-color: red;
+}
+
+@keyframes outline {
+  from {
+    outline-width: 3px;
+  }
+  to {
+    outline-width: 8px;
+  }
 }
