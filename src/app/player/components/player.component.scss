@@ -4,7 +4,6 @@
 }
 
 .player {
-  border-radius: 10rem;
   padding: 0.5rem
 }
 
@@ -12,17 +11,20 @@
   width: 20%;
 }
 
-.observer:not(.lastOneActive) {
+.observer:not(.lastOneActive) svg {
   opacity: 40%;
 }
 
-.lastOneActive {
-  outline: 3px solid green;
-  animation: outline 1s linear 0s infinite alternate;
-}
+::ng-deep {
+  .lastOneActive svg {
+    outline: 3px solid green;
+    animation: outline 1s linear 0s infinite alternate;
+    border-radius: 10rem;
+  }
 
-.loser {
-  outline-color: red;
+  .loser svg {
+    outline-color: red;
+  }
 }
 
 @keyframes outline {
