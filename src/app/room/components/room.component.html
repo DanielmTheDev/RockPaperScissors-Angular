@@ -16,7 +16,3 @@
   </div>
 </spinner>
 
-<ng-container *ngIf="room$ | async as room">
-  <h1>{{room.typeOfGame === gameType.Loser ? 'Loser' : 'Winner'}}: {{room.lastOneActive}}</h1>
-</ng-container>
-

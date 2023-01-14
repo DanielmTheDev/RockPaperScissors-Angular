@@ -44,9 +44,7 @@ export class RoomComponent implements OnInit {
     private snackBar: MatSnackBar) {
     this.currentPlayer$ = store.select(selectPlayer);
     this.room$ = this.firebaseRoomService.roomValueChanges(this.roomId);
-    this.firebasePlayerService.getCurrentPlayerDocument().subscribe(player => {
-      this.firebasePlayer$ = player.valueChanges();
-    });
+    this.firebasePlayer$ = this.firebasePlayerService.valueChanges();
   }
 
   ngOnInit(): void {

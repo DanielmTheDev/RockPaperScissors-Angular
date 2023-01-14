@@ -21,7 +21,7 @@ export class FirebasePlayerService {
 
   valueChanges(): Observable<Player | undefined> {
     return this.getCurrentPlayerDocument()
-      .pipe(switchMap(player => player.valueChanges()));
+      .pipe(switchMap(player => player.valueChanges({ idField: 'id' })));
   }
 
   add(player: Player): Observable<string> {
