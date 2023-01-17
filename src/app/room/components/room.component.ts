@@ -88,6 +88,9 @@ export class RoomComponent implements OnInit {
       return fromPromise(this.router.navigate(['/']));
     } else if (!player.id) {
       return this.createPlayer(this.roomId);
+    } else if (!currentFirebasePlayer) {
+      this.store.dispatch(removePlayer());
+      return this.playerCreationService.createPlayer(this.roomId);
     } else if (currentFirebasePlayer?.room !== this.roomId) {
       return this.resetExistingPlayer(this.roomId);
     }
