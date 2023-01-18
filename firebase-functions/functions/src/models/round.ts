@@ -1,6 +1,6 @@
 ﻿import { PlayerChoice } from './player-choice';
 
-export interface RoundStats {
+export interface Round {
   roomId: string;
   playerChoices: PlayerChoice[];
   timeStamp: number;
