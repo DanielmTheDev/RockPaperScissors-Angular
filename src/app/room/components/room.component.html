@@ -9,9 +9,9 @@
 <spinner [loadingStatus]="loadingStatus">
   <choice></choice>
   <div class="top-spacer room-button-container">
-    <button mat-raised-button (click)="startOver()">Restart the Game</button>
     <copy-link></copy-link>
     <button mat-raised-button color="accent" (click)="leaveRoom()">Leave the room</button>
+    <button [class.invisible]="!(room$ | async)?.lastOneActive" mat-raised-button color="accent" (click)="startOver()">Another Game</button>
   </div>
 </spinner>
 
