@@ -4,9 +4,8 @@
   <player [player]="firebasePlayer"></player>
 </div>
 <choice></choice>
-
 <div class="top-spacer">
-  <opponents [hasCurrentPlayerChosen]="(firebasePlayer$ | async)?.choice !== undefined"></opponents>
+  <opponents [hasCurrentPlayerChosen]="(firebasePlayer$ | async)?.choice !== null && (firebasePlayer$ | async)?.choice !== undefined"></opponents>
 </div>
 
 <spinner [loadingStatus]="loadingStatus">
