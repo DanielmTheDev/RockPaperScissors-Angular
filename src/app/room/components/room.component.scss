@@ -24,3 +24,8 @@
 button {
   margin: 0.2rem;
 }
+
+.invisible {
+  opacity: 0;
+  pointer-events: none;
+}
