@@ -83,10 +83,14 @@ export class RoomComponent implements OnInit {
 
   private enterRoom(observers: Player[], player: CurrentPlayer, currentFirebasePlayer: Player | undefined): Observable<string | boolean | undefined | void> {
     const gameAlreadyStarted = observers.length > 0;
+    const doesPlayerExistInLocalStorage = player.id;
     if (gameAlreadyStarted) {
       this.showLockedRoomMessage();
       return fromPromise(this.router.navigate(['/']));
-    } else if (!player.id) {
+    } else if (!doesPlayerExistInLocalStorage ) {
+      return this.createPlayer(this.roomId);
+    } else if (!currentFirebasePlayer) {
+      this.store.dispatch(removePlayer());
       return this.createPlayer(this.roomId);
     } else if (currentFirebasePlayer?.room !== this.roomId) {
       return this.resetExistingPlayer(this.roomId);
