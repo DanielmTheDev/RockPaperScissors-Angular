@@ -25,6 +25,10 @@
   .loser svg {
     outline-color: red;
   }
+
+  .winner svg {
+    outline-color: green;
+  }
 }
 
 @keyframes outline {
