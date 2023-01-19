@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Rock Paper Scissors';
+
+  get currentYear(): number {
+    return (new Date()).getFullYear();
+  }
 }
