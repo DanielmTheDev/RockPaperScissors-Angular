@@ -5,19 +5,19 @@ import { PlayerChoice } from '../models/player-choice';
 import { Player } from '../models/player';
 import { Choice } from '../models/choice';
 import { Result } from '../models/result';
-import { RoundStats } from '../models/round-stats';
+import { Round } from '../models/round';
 import { collections } from '../constants/collections';
 import DocumentData = firestore.DocumentData;
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 import DocumentReference = firestore.DocumentReference;
 
-export function persistStatistics(roomId: string, players: QueryDocumentSnapshot<DocumentData>[]): Promise<DocumentReference<DocumentData>> {
+export function persistRound(roomId: string, players: QueryDocumentSnapshot<DocumentData>[]): Promise<DocumentReference<DocumentData>> {
   const stats = {
     roomId: roomId,
     playerChoices: getPlayerChoices(players),
     timeStamp: Date.now(),
-  } as RoundStats;
-  return admin.firestore().collection(collections.roundStatistics).add(stats);
+  } as Round;
+  return admin.firestore().collection(collections.rounds).add(stats);
 }
 
 function getPlayerChoices(players: QueryDocumentSnapshot<DocumentData>[]): PlayerChoice[] {
