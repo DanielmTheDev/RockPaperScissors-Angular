@@ -1,10 +1,16 @@
-button {
-  width: 50%;
-  margin: 0.2rem;
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3rem;
+}
+
+.player-container {
+  margin-top: auto;
 }
 
 .top-spacer {
-  margin-top: 5rem;
+  margin-top: 3rem;
 }
 
 .room-button-container {
@@ -19,14 +25,14 @@ button {
   margin: 0.2rem;
 }
 
+.invisible {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .text-container {
   display: flex;
   justify-content: center;
   font-family: emoji;
   font-size: medium;
-}
-
-.invisible {
-  opacity: 0;
-  pointer-events: none;
 }
