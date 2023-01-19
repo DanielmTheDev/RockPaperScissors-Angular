@@ -1,5 +1,5 @@
 <div class="top-spacer">
-  <opponents [hasCurrentPlayerChosen]="(firebasePlayer$ | async)?.choice !== undefined"></opponents>
+  <opponents [hasCurrentPlayerChosen]="!!(firebasePlayer$ | async)?.choice"></opponents>
 </div>
 
 <div *ngIf="firebasePlayer$ | async as firebasePlayer" class="player-container">
