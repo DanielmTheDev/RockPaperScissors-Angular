@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin';
 import { firestore } from 'firebase-admin';
 import { Player } from '../models/player';
 import { hasEveryoneChosen } from '../operations/choiceOperations';
-import { persistStatistics } from '../operations/statisticOperations';
+import { persistRound } from '../operations/RoundOperations';
 import { collections } from '../constants/collections';
 import { deactivatePlayers, resetPlayerChoices } from '../operations/playerOperations';
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
@@ -17,7 +17,7 @@ export const calculateResult = functions.firestore.document('/players/{documentI
       if (!hasEveryoneChosen(initiallyActivePlayers)) {
         return;
       }
-      await persistStatistics(roomId, initiallyActivePlayers);
+      await persistRound(roomId, initiallyActivePlayers);
       await resetPlayerChoices(initiallyActivePlayers);
       await deactivatePlayers(roomId, initiallyActivePlayers);
     } catch (e) {

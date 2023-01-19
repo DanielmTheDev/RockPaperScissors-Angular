@@ -1,6 +1,14 @@
+:host {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap-reverse;
+}
+
 .mat-icon {
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: red;
+  width: auto;
+  height: auto;
 }
 
 .choice-container {
@@ -8,3 +16,14 @@
   justify-content: center;
 }
 
+.opponent-container {
+  width: 50%;
+
+  &:only-child {
+    width: 100%;
+
+    .mat-icon {
+      font-size: 1.5rem;
+    }
+  }
+}

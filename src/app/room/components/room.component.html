@@ -1,17 +1,17 @@
-<copy-link></copy-link>
-
-<div *ngIf="firebasePlayer$ | async as firebasePlayer" class="top-spacer">
-  <player [player]="firebasePlayer"></player>
-</div>
-<choice></choice>
 <div class="top-spacer">
   <opponents [hasCurrentPlayerChosen]="!!(firebasePlayer$ | async)?.choice"></opponents>
 </div>
 
+<div *ngIf="firebasePlayer$ | async as firebasePlayer" class="player-container">
+  <player [player]="firebasePlayer"></player>
+</div>
+
 <spinner [loadingStatus]="loadingStatus">
+  <choice></choice>
   <div class="top-spacer room-button-container">
-    <button mat-raised-button (click)="leaveRoom()">Leave the room</button>
-    <button mat-raised-button color="accent" (click)="startOver()">Restart the Game</button>
+    <copy-link></copy-link>
+    <button mat-raised-button color="accent" (click)="leaveRoom()">Leave the room</button>
+    <button [class.invisible]="!(room$ | async)?.lastOneActive" mat-raised-button color="accent" (click)="startOver()">Another Game</button>
   </div>
 </spinner>
 

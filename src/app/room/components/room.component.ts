@@ -13,7 +13,6 @@ import constants from 'src/app/constants';
 import { removePlayer } from 'src/app/store';
 import { Room } from '../../firebase/models/room';
 import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
-import { GameType } from '../../room-creation/models/game-type';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 
@@ -27,7 +26,6 @@ export class RoomComponent implements OnInit {
   firebasePlayer$: Observable<Player | undefined> | undefined;
   room$: Observable<Room | undefined>;
   loadingStatus: LoadingStatus = { isLoading: false };
-  gameType = GameType;
 
   private get roomId(): string {
     return this.route.snapshot.params[constants.routeParams.id];
@@ -83,10 +81,14 @@ export class RoomComponent implements OnInit {
 
   private enterRoom(observers: Player[], player: CurrentPlayer, currentFirebasePlayer: Player | undefined): Observable<string | boolean | undefined | void> {
     const gameAlreadyStarted = observers.length > 0;
+    const doesPlayerExistInLocalStorage = player.id;
     if (gameAlreadyStarted) {
       this.showLockedRoomMessage();
       return fromPromise(this.router.navigate(['/']));
-    } else if (!player.id) {
+    } else if (!doesPlayerExistInLocalStorage ) {
+      return this.createPlayer(this.roomId);
+    } else if (!currentFirebasePlayer) {
+      this.store.dispatch(removePlayer());
       return this.createPlayer(this.roomId);
     } else if (currentFirebasePlayer?.room !== this.roomId) {
       return this.resetExistingPlayer(this.roomId);
