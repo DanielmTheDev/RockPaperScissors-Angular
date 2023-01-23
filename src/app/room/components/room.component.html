@@ -1,3 +1,8 @@
+<div class="text-container" *ngIf="room$ | async as room">
+  <p *ngIf="room.typeOfGame === gameType.Winner">The last one will be the glorious winner 😀!</p>
+  <p *ngIf="room.typeOfGame === gameType.Loser">The last one will be the loser and never life out their shame 😀!</p>
+</div>
+
 <div class="top-spacer">
   <opponents [hasCurrentPlayerChosen]="!!(firebasePlayer$ | async)?.choice"></opponents>
 </div>

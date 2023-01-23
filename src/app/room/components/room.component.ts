@@ -15,6 +15,7 @@ import { Room } from '../../firebase/models/room';
 import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
+import { GameType } from '../../room-creation/models/game-type';
 
 @Component({
   selector: 'room',
@@ -26,6 +27,7 @@ export class RoomComponent implements OnInit {
   firebasePlayer$: Observable<Player | undefined> | undefined;
   room$: Observable<Room | undefined>;
   loadingStatus: LoadingStatus = { isLoading: false };
+  gameType = GameType;
 
   private get roomId(): string {
     return this.route.snapshot.params[constants.routeParams.id];
