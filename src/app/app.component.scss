@@ -1,13 +1,8 @@
 :host {
-  font-family: emoji;
-  font-size: medium;
   margin-bottom: 10px;
-  color: #333;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  flex-direction: column;
   height: 100%;
 }
 
@@ -24,11 +19,6 @@ h1 {
   flex-direction: column;
   align-items: center;
   height: 100%;
-}
-
-a {
-  font-family: emoji;
-  color: bisque !important;
 }
 
 footer {
