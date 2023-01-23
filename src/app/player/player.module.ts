@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [PlayerComponent, SafeInnerHtmlDirective],
   imports: [
-      CommonModule
+    CommonModule
   ],
   exports: [PlayerComponent]
 })
