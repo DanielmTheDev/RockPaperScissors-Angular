@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlayerComponent } from './components/player.component';
 import { SafeInnerHtmlDirective } from './directives/safe-inner-html.directive';
-import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [PlayerComponent, SafeInnerHtmlDirective],
