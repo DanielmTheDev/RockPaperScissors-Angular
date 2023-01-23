@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Rock Paper Scissors';
+  title = 'Roshambo!';
 
   get currentYear(): number {
     return (new Date()).getFullYear();

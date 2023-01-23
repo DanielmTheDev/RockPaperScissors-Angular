@@ -17,4 +17,8 @@ export class HomeComponent {
       width: constants.dialogWidth
     });
   }
+
+  playAgainstTheBot(): void {
+    // will be defined later
+  }
 }
