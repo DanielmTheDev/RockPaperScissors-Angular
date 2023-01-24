@@ -8,6 +8,8 @@ import { Result } from '../models/result';
 import { Round } from '../models/round';
 import { Game } from '../models/game';
 import { collections } from '../constants/collections';
+import { Room } from "../models/room";
+import { GameType } from "../models/game-type";
 import DocumentData = firestore.DocumentData;
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 
@@ -17,17 +19,16 @@ export async function persistRound(roomId: string, players: QueryDocumentSnapsho
     timeStamp: Date.now(),
   } as Round;
 
-  const currentGame = await getGame(roomId);
-  if (currentGame) {
-    const rounds = currentGame.data().rounds.concat(round);
-    await admin.firestore().collection(collections.games).doc(currentGame.id)?.update({ rounds })
+  const room = await getRoom(roomId);
+  const games = room.games ?? [];
+  const currentGameIndex = games?.findIndex(game => !game.lastOneActive);
+
+  if (currentGameIndex > -1) {
+    games[currentGameIndex].rounds.push(round);
   } else {
-    const game = {
-      roomId: roomId,
-      rounds: [round]
-    } as Game
-    await admin.firestore().collection(collections.games).add(game);
+    games.push(createNewGame(round, room.typeOfGame));
   }
+  await admin.firestore().collection(collections.rooms).doc(roomId).update({ games })
 }
 
 function getPlayerChoices(players: QueryDocumentSnapshot<DocumentData>[]): PlayerChoice[] {
@@ -46,7 +47,23 @@ function getResult(player: QueryDocumentSnapshot<DocumentData>, allPlayers: Quer
       : Result.Won;
 }
 
-async function getGame(roomId: string): Promise<QueryDocumentSnapshot<DocumentData> | undefined> {
-  const gameDocs = (await admin.firestore().collection(collections.games).where('roomId', '==', roomId).get()).docs;
-  return gameDocs && gameDocs.length > 0 ? gameDocs[0] : undefined;
+async function getRoom(roomId: string): Promise<Room> {
+  const roomDoc = await admin.firestore().collection(collections.rooms).doc(roomId).get();
+  return roomDoc.data() as Room;
+}
+
+function defineLastOneActive(playerChoices: PlayerChoice[], typeOfGame?: GameType): string | undefined {
+  return playerChoices.find(player => player.result === Result.Draw)
+    ? undefined
+    : typeOfGame === GameType.Loser
+      ? playerChoices.find(player => player.result === Result.Lost)?.playerId
+      : playerChoices.find(player => player.result === Result.Won)?.playerId;
+}
+
+function createNewGame(round: Round, typeOfGame?: GameType): Game {
+  const lastOneActive = defineLastOneActive(round.playerChoices, typeOfGame);
+  return {
+    rounds: [round],
+    lastOneActive: lastOneActive
+  } as Game
 }

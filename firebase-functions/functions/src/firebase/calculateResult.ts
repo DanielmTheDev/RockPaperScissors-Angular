@@ -8,6 +8,7 @@ import { collections } from '../constants/collections';
 import { deactivatePlayers, resetPlayerChoices } from '../operations/playerOperations';
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 import DocumentData = firestore.DocumentData;
+admin.firestore().settings({ ignoreUndefinedProperties:true });
 
 export const calculateResult = functions.firestore.document('/players/{documentId}')
   .onUpdate(async (change: any, context: any) => {
