@@ -19,6 +19,11 @@ export async function resetPlayerChoices(players: QueryDocumentSnapshot<Document
   await updatePlayers(players, { choice: null });
 }
 
+export async function walkoverAPlayer(players: QueryDocumentSnapshot<DocumentData>[], roomId: string): Promise<void> {
+  await updatePlayers(players, { isObserver: true });
+  await admin.firestore().collection(collections.rooms).doc(roomId).update({ lastOneActive: players[0].id });
+}
+
 async function determineLastOneActive(initiallyActivePlayers: QueryDocumentSnapshot<DocumentData>[], playersToDeactivate: QueryDocumentSnapshot<DocumentData>[], roomId: string): Promise<void> {
   const stillActivePlayers = initiallyActivePlayers.filter(player => !playersToDeactivate.includes(player));
   if (stillActivePlayers.length === 1) {

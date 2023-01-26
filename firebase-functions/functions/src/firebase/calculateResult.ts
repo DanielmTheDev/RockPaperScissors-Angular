@@ -5,7 +5,7 @@ import { Player } from '../models/player';
 import { hasEveryoneChosen } from '../operations/choiceOperations';
 import { persistRound } from '../operations/RoundOperations';
 import { collections } from '../constants/collections';
-import { deactivatePlayers, resetPlayerChoices } from '../operations/playerOperations';
+import { deactivatePlayers, resetPlayerChoices, walkoverAPlayer } from '../operations/playerOperations';
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 import DocumentData = firestore.DocumentData;
 
@@ -14,7 +14,16 @@ export const calculateResult = functions.firestore.document('/players/{documentI
     try {
       const roomId = await getCurrentRoomId(context.params.documentId as string);
       const initiallyActivePlayers = await getActivePlayersInRoom(roomId);
-      if (!hasEveryoneChosen(initiallyActivePlayers)) {
+      const numberOfPlayersInTheRoom = await getNumberOfPlayers(roomId);
+      const isThereOnlyOnePlayerInTheRoom = numberOfPlayersInTheRoom < 2;
+      if (isThereOnlyOnePlayerInTheRoom)
+      if (isThereOnlyOnePlayerInTheRoom && !hasEveryoneChosen(initiallyActivePlayers)) {
+        return;
+      }
+      const isThereAForfeitPlayer = numberOfPlayersInTheRoom >  1 && initiallyActivePlayers.length === 1;
+      if (isThereAForfeitPlayer) {
+        await walkoverAPlayer(initiallyActivePlayers, roomId);
+        await persistRound(roomId, initiallyActivePlayers);
         return;
       }
       await persistRound(roomId, initiallyActivePlayers);
@@ -33,4 +42,9 @@ async function getActivePlayersInRoom(roomId: string): Promise<QueryDocumentSnap
 async function getCurrentRoomId(playerId: string): Promise<string> {
   const currentPlayer = await admin.firestore().collection(collections.players).doc(playerId).get();
   return currentPlayer.data()?.room;
+}
+
+async function getNumberOfPlayers(roomId: string): Promise<number> {
+  return (await admin.firestore().collection(collections.players).where('room', '==', roomId).get())
+    .docs.length;
 }
