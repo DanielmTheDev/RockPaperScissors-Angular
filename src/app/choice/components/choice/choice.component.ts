@@ -1,8 +1,8 @@
 ﻿import { Component } from '@angular/core';
-import { Choice } from '../../models/choice';
 import { FirebasePlayerService } from '../../../firebase/services/firebase-player.service';
 import { Observable } from 'rxjs';
 import { Player } from '../../../firebase/models/player';
+import { Choice } from 'src/app/firebase/models/choice';
 
 @Component({
   selector: 'choice',

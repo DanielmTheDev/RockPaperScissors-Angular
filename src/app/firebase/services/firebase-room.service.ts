@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import FirebaseConstants from '../constants/firebase-constants';
 import { Room } from '../models/room';
 
@@ -27,5 +27,12 @@ export class FirebaseRoomService {
       .collection<Room>(FirebaseConstants.collections.rooms)
       .doc(roomId)
       .update({ lastOneActive: null }));
+  }
+
+  getNumberOfVictories(roomId: string, playerId?: string): Observable<number> {
+    return this.firestore.collection<Room>(FirebaseConstants.collections.rooms).doc(roomId).get()
+      .pipe(map(room =>
+        room.data()?.games.filter(game => game.lastOneActive === playerId).length ?? 0
+      ));
   }
 }

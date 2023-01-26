@@ -16,10 +16,13 @@ export class PlayerComponent {
   @Input()
   player: Player | undefined;
   room$: Observable<Room | undefined>;
+  numberOfVictories$: Observable<number>;
   gameType = GameType;
 
   constructor(private firebaseRoomService: FirebaseRoomService, private route: ActivatedRoute) {
-    this.room$ = this.firebaseRoomService.roomValueChanges(this.route.snapshot.params[constants.routeParams.id]);
+    const roomId = this.route.snapshot.params[constants.routeParams.id];
+    this.room$ = this.firebaseRoomService.roomValueChanges(roomId);
+    this.numberOfVictories$ = this.firebaseRoomService.getNumberOfVictories(roomId, this.player?.id);
   }
 
   isLastOneActive(lastOneActiveId: string | null): boolean {

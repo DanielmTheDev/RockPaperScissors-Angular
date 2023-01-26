@@ -3,8 +3,8 @@ import { Player } from '../../firebase/models/player';
 import { FirebaseOpponentService } from '../../firebase/services/firebase-opponent.service';
 import constants from '../../constants';
 import { ActivatedRoute } from '@angular/router';
-import { Choice } from 'src/app/choice/models/choice';
 import { Observable } from 'rxjs';
+import { Choice } from 'src/app/firebase/models/choice';
 
 @Component({
   selector: 'opponents',
