@@ -3,11 +3,12 @@ import * as admin from 'firebase-admin';
 import { firestore } from 'firebase-admin';
 import { Player } from '../models/player';
 import { hasEveryoneChosen } from '../operations/choiceOperations';
-import { persistRound } from '../operations/RoundOperations';
+import { addRoundToGame } from '../operations/GameOperations';
 import { collections } from '../constants/collections';
 import { deactivatePlayers, resetPlayerChoices } from '../operations/playerOperations';
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 import DocumentData = firestore.DocumentData;
+admin.firestore().settings({ ignoreUndefinedProperties: true });
 
 export const calculateResult = functions.firestore.document('/players/{documentId}')
   .onUpdate(async (change: any, context: any) => {
@@ -17,7 +18,7 @@ export const calculateResult = functions.firestore.document('/players/{documentI
       if (!hasEveryoneChosen(initiallyActivePlayers)) {
         return;
       }
-      await persistRound(roomId, initiallyActivePlayers);
+      await addRoundToGame(roomId, initiallyActivePlayers);
       await resetPlayerChoices(initiallyActivePlayers);
       await deactivatePlayers(roomId, initiallyActivePlayers);
     } catch (e) {
