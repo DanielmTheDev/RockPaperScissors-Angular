@@ -13,7 +13,7 @@ import { GameType } from '../models/game-type';
 import DocumentData = firestore.DocumentData;
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 
-export async function persistRound(roomId: string, players: QueryDocumentSnapshot<DocumentData>[]): Promise<void> {
+export async function addRoundToGame(roomId: string, players: QueryDocumentSnapshot<DocumentData>[]): Promise<void> {
   const round = {
     playerChoices: getPlayerChoices(players),
     timeStamp: Date.now(),
@@ -52,7 +52,7 @@ async function getRoom(roomId: string): Promise<Room> {
   return roomDoc.data() as Room;
 }
 
-function defineLastOneActive(playerChoices: PlayerChoice[], typeOfGame?: GameType): string | undefined {
+function findLastOneActive(playerChoices: PlayerChoice[], typeOfGame?: GameType): string | undefined {
   return playerChoices.find(player => player.result === Result.Draw)
     ? undefined
     : typeOfGame === GameType.Loser
@@ -61,7 +61,7 @@ function defineLastOneActive(playerChoices: PlayerChoice[], typeOfGame?: GameTyp
 }
 
 function createNewGame(round: Round, typeOfGame?: GameType): Game {
-  const lastOneActive = defineLastOneActive(round.playerChoices, typeOfGame);
+  const lastOneActive = findLastOneActive(round.playerChoices, typeOfGame);
   return {
     rounds: [round],
     lastOneActive: lastOneActive,
