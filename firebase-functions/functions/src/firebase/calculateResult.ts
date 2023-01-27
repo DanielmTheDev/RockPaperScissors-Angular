@@ -5,6 +5,7 @@ import { Player } from '../models/player';
 import { hasEveryoneChosen } from '../operations/choiceOperations';
 import { persistRound } from '../operations/RoundOperations';
 import { collections } from '../constants/collections';
+import { keys } from '../constants/keys';
 import { deactivatePlayers, resetPlayerChoices, walkoverAPlayer } from '../operations/playerOperations';
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 import DocumentData = firestore.DocumentData;
@@ -13,14 +14,13 @@ export const calculateResult = functions.firestore.document('/players/{documentI
   .onUpdate(async (change: any, context: any) => {
     try {
       const roomId = await getCurrentRoomId(context.params.documentId as string);
-      const initiallyActivePlayers = await getActivePlayersInRoom(roomId);
-      const numberOfPlayersInTheRoom = await getNumberOfPlayers(roomId);
-      const isThereOnlyOnePlayerInTheRoom = numberOfPlayersInTheRoom < 2;
-      if (isThereOnlyOnePlayerInTheRoom)
-      if (isThereOnlyOnePlayerInTheRoom && !hasEveryoneChosen(initiallyActivePlayers)) {
+      const roomPlayers = await getRoomPlayers(roomId);
+      const initiallyActivePlayers = await getActivePlayersInRoom(roomId, roomPlayers);
+      const numberOfPlayersInTheRoom = roomPlayers.length;
+      if (!hasEveryoneChosen(initiallyActivePlayers)) {
         return;
       }
-      const isThereAForfeitPlayer = numberOfPlayersInTheRoom >  1 && initiallyActivePlayers.length === 1;
+      const isThereAForfeitPlayer = numberOfPlayersInTheRoom > 1 && initiallyActivePlayers.length === 1;
       if (isThereAForfeitPlayer) {
         await walkoverAPlayer(initiallyActivePlayers, roomId);
         await persistRound(roomId, initiallyActivePlayers);
@@ -34,9 +34,8 @@ export const calculateResult = functions.firestore.document('/players/{documentI
     }
   });
 
-async function getActivePlayersInRoom(roomId: string): Promise<QueryDocumentSnapshot<DocumentData>[]> {
-  return (await admin.firestore().collection(collections.players).where('room', '==', roomId).get())
-    .docs.filter(playerDoc => !(playerDoc.data() as Player).isObserver);
+async function getActivePlayersInRoom(roomId: string, roomPlayers: QueryDocumentSnapshot<DocumentData>[]): Promise<QueryDocumentSnapshot<DocumentData>[]> {
+  return roomPlayers.filter(playerDoc => !(playerDoc.data() as Player).isObserver);
 }
 
 async function getCurrentRoomId(playerId: string): Promise<string> {
@@ -44,7 +43,7 @@ async function getCurrentRoomId(playerId: string): Promise<string> {
   return currentPlayer.data()?.room;
 }
 
-async function getNumberOfPlayers(roomId: string): Promise<number> {
-  return (await admin.firestore().collection(collections.players).where('room', '==', roomId).get())
-    .docs.length;
+async function getRoomPlayers(roomId: string): Promise<QueryDocumentSnapshot<DocumentData>[]> {
+  return (await admin.firestore().collection(collections.players).where(keys.room, '==', roomId).get())
+    .docs;
 }
