@@ -1,4 +1,4 @@
-﻿import { Choice } from '../../choice/models/choice';
+﻿import { Choice } from './choice';
 
 export interface Player {
   id: string;
