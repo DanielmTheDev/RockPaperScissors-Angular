@@ -6,7 +6,7 @@ import { GameType } from '../models/game-type';
 import { Room } from '../models/room';
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 import DocumentData = firestore.DocumentData;
-import { collections } from "../constants/collections";
+import { collections } from '../constants/collections';
 
 export function hasEveryoneChosen(players: QueryDocumentSnapshot<DocumentData>[]): boolean {
   return Boolean(players.length) && players.every(player => (player.data() as Player).choice);

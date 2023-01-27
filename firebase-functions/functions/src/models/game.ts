@@ -1,4 +1,4 @@
-import { Round } from "./round";
+import { Round } from './round';
 
 export interface Game {
   rounds: Round[];

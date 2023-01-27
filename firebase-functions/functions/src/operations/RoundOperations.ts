@@ -8,8 +8,8 @@ import { Result } from '../models/result';
 import { Round } from '../models/round';
 import { Game } from '../models/game';
 import { collections } from '../constants/collections';
-import { Room } from "../models/room";
-import { GameType } from "../models/game-type";
+import { Room } from '../models/room';
+import { GameType } from '../models/game-type';
 import DocumentData = firestore.DocumentData;
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 
@@ -28,7 +28,7 @@ export async function persistRound(roomId: string, players: QueryDocumentSnapsho
   } else {
     games.push(createNewGame(round, room.typeOfGame));
   }
-  await admin.firestore().collection(collections.rooms).doc(roomId).update({ games })
+  await admin.firestore().collection(collections.rooms).doc(roomId).update({ games });
 }
 
 function getPlayerChoices(players: QueryDocumentSnapshot<DocumentData>[]): PlayerChoice[] {
@@ -64,6 +64,6 @@ function createNewGame(round: Round, typeOfGame?: GameType): Game {
   const lastOneActive = defineLastOneActive(round.playerChoices, typeOfGame);
   return {
     rounds: [round],
-    lastOneActive: lastOneActive
-  } as Game
+    lastOneActive: lastOneActive,
+  } as Game;
 }
