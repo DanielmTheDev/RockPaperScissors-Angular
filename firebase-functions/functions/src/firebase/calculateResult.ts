@@ -1,13 +1,10 @@
 ﻿import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import { firestore } from 'firebase-admin';
-import { Player } from '../models/player';
 import { hasEveryoneChosen } from '../operations/choiceOperations';
-import { addRoundToGame } from '../operations/GameOperations';
-import { collections } from '../constants/collections';
-import { deactivatePlayers, resetPlayerChoices } from '../operations/playerOperations';
-import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
-import DocumentData = firestore.DocumentData;
+import { deactivatePlayers, getActivePlayersInRoom, resetPlayerChoices } from '../operations/playerOperations';
+import { getCurrentRoomId } from '../operations/roomOperations';
+import { getCurrentGame } from '../operations/GameOperations';
+
 admin.firestore().settings({ ignoreUndefinedProperties: true });
 
 export const calculateResult = functions.firestore.document('/players/{documentId}')
@@ -18,20 +15,10 @@ export const calculateResult = functions.firestore.document('/players/{documentI
       if (!hasEveryoneChosen(initiallyActivePlayers)) {
         return;
       }
-      await addRoundToGame(roomId, initiallyActivePlayers);
+      const currentGame = await getCurrentGame(roomId, initiallyActivePlayers);
       await resetPlayerChoices(initiallyActivePlayers);
-      await deactivatePlayers(roomId, initiallyActivePlayers);
+      await deactivatePlayers(roomId, currentGame, initiallyActivePlayers);
     } catch (e) {
       console.log(e);
     }
   });
-
-async function getActivePlayersInRoom(roomId: string): Promise<QueryDocumentSnapshot<DocumentData>[]> {
-  return (await admin.firestore().collection(collections.players).where('room', '==', roomId).get())
-    .docs.filter(playerDoc => !(playerDoc.data() as Player).isObserver);
-}
-
-async function getCurrentRoomId(playerId: string): Promise<string> {
-  const currentPlayer = await admin.firestore().collection(collections.players).doc(playerId).get();
-  return currentPlayer.data()?.room;
-}
