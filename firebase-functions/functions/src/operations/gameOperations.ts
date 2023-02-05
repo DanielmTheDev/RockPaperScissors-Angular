@@ -8,30 +8,38 @@ import { Result } from '../models/result';
 import { Round } from '../models/round';
 import { Game } from '../models/game';
 import { collections } from '../constants/collections';
-import { Room } from '../models/room';
-import { GameType } from '../models/game-type';
 import DocumentData = firestore.DocumentData;
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
+import { getRoom } from './roomOperations';
 
-export async function addRoundToGame(roomId: string, players: QueryDocumentSnapshot<DocumentData>[]): Promise<void> {
+export async function addRoundToGame(roomId: string, players: QueryDocumentSnapshot<DocumentData>[]): Promise<Game> {
   const round = {
-    playerChoices: getPlayerChoices(players),
+    playersChoices: getPlayersChoices(players),
     timeStamp: Date.now(),
   } as Round;
 
   const room = await getRoom(roomId);
   const games = room.games ?? [];
-  const currentGameIndex = games?.findIndex(game => !game.lastOneActive);
+  const isItANewGame = !games[games.length - 1]?.lastOneActive;
 
-  if (currentGameIndex > -1) {
-    games[currentGameIndex].rounds.push(round);
+  if (isItANewGame) {
+    games.push(createNewGame(round));
   } else {
-    games.push(createNewGame(round, room.typeOfGame));
+    games[games.length - 1].rounds.push(round);
   }
   await admin.firestore().collection(collections.rooms).doc(roomId).update({ games });
+  return games[games.length - 1];
 }
 
-function getPlayerChoices(players: QueryDocumentSnapshot<DocumentData>[]): PlayerChoice[] {
+export async function setLastOneActiveInGame(lastOneActive: string | undefined, roomId: string): Promise<void> {
+  const games = (await getRoom(roomId)).games;
+  if (games) {
+    games[games.length - 1].lastOneActive = lastOneActive;
+    await admin.firestore().collection(collections.rooms).doc(roomId).update({ games });
+  }
+}
+
+function getPlayersChoices(players: QueryDocumentSnapshot<DocumentData>[]): PlayerChoice[] {
   return players.map(player => ({
     playerId: player.id,
     choice: (player.data() as Player).choice as Choice,
@@ -47,23 +55,8 @@ function getResult(player: QueryDocumentSnapshot<DocumentData>, allPlayers: Quer
       : Result.Won;
 }
 
-async function getRoom(roomId: string): Promise<Room> {
-  const roomDoc = await admin.firestore().collection(collections.rooms).doc(roomId).get();
-  return roomDoc.data() as Room;
-}
-
-function findLastOneActive(playerChoices: PlayerChoice[], typeOfGame?: GameType): string | undefined {
-  return playerChoices.find(player => player.result === Result.Draw)
-    ? undefined
-    : typeOfGame === GameType.Loser
-      ? playerChoices.find(player => player.result === Result.Lost)?.playerId
-      : playerChoices.find(player => player.result === Result.Won)?.playerId;
-}
-
-function createNewGame(round: Round, typeOfGame?: GameType): Game {
-  const lastOneActive = findLastOneActive(round.playerChoices, typeOfGame);
+function createNewGame(round: Round): Game {
   return {
     rounds: [round],
-    lastOneActive: lastOneActive,
   } as Game;
 }
