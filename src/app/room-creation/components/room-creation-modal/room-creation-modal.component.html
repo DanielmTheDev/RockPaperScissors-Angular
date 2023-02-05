@@ -1,18 +1,5 @@
-<h1 mat-dialog-title>Create Room</h1>
-<div mat-dialog-content class="form-container">
-  <form [formGroup]="formGroup">
-    <mat-form-field appearance="legacy">
-      <mat-label>Type of game</mat-label>
-      <mat-select formControlName="typeOfGame">
-        <mat-option [value]="gameType.Loser">Loser</mat-option>
-        <mat-option [value]="gameType.Winner">Winner</mat-option>
-      </mat-select>
-      <mat-hint>Are you trying to find a winner or a loser?</mat-hint>
-    </mat-form-field>
-  </form>
-</div>
-
+<p>Are you trying to find a winner or a loser?</p>
 <div mat-dialog-actions class="full-width">
-  <button mat-raised-button class="half-width" color="accent" (click)="cancel()">Cancel</button>
-  <button mat-raised-button class="half-width" color="primary" [disabled]="!formGroup.valid" (click)="create()">Create</button>
+  <button mat-raised-button class="half-width" color="accent" (click)="create(gameType.Loser)">Loser</button>
+  <button mat-raised-button class="half-width" color="primary" (click)="create(gameType.Winner)">Winner</button>
 </div>
