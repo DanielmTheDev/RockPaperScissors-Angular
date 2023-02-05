@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin';
 import { hasEveryoneChosen } from '../operations/choiceOperations';
 import { deactivatePlayers, getActivePlayersInRoom, resetPlayerChoices } from '../operations/playerOperations';
 import { getCurrentRoomId } from '../operations/roomOperations';
-import { getCurrentGame } from '../operations/GameOperations';
+import { addRoundToGame } from '../operations/gameOperations';
 
 admin.firestore().settings({ ignoreUndefinedProperties: true });
 
@@ -15,7 +15,7 @@ export const calculateResult = functions.firestore.document('/players/{documentI
       if (!hasEveryoneChosen(initiallyActivePlayers)) {
         return;
       }
-      const currentGame = await getCurrentGame(roomId, initiallyActivePlayers);
+      const currentGame = await addRoundToGame(roomId, initiallyActivePlayers);
       await resetPlayerChoices(initiallyActivePlayers);
       await deactivatePlayers(roomId, currentGame, initiallyActivePlayers);
     } catch (e) {

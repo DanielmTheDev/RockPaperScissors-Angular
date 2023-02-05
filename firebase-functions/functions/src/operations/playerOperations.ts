@@ -8,15 +8,15 @@ import { Game } from '../models/game';
 import { GameType } from '../models/game-type';
 import { Result } from '../models/result';
 import { getCurrentGameType } from './roomOperations';
-import { addLastOneActiveToGame } from './GameOperations';
+import { setLastOneActiveInGame } from './gameOperations';
 
 export async function deactivatePlayers(roomId: string, game: Game, initiallyActivePlayers: QueryDocumentSnapshot<DocumentData>[]): Promise<void> {
-  const playersToDeactivate = await getPlayersToDeactivate(game, roomId);
-  if (!playersToDeactivate.length) {
+  const playerIdsToDeactivate = await getPlayerIdsToDeactivate(game, roomId);
+  if (!playerIdsToDeactivate.length) {
     return;
   }
-  await updatePlayers(playersToDeactivate, { isObserver: true });
-  await determineLastOneActive(initiallyActivePlayers, playersToDeactivate, roomId);
+  await updatePlayers(playerIdsToDeactivate, { isObserver: true });
+  await determineLastOneActive(initiallyActivePlayers, playerIdsToDeactivate, roomId);
 }
 
 export async function getActivePlayersInRoom(roomId: string): Promise<QueryDocumentSnapshot<DocumentData>[]> {
@@ -28,17 +28,16 @@ export async function resetPlayerChoices(players: QueryDocumentSnapshot<Document
   await updatePlayersDoc(players, { choice: null });
 }
 
-async function determineLastOneActive(initiallyActivePlayers: QueryDocumentSnapshot<DocumentData>[], playersToDeactivate: string[], roomId: string): Promise<void> {
-  if (initiallyActivePlayers.length === playersToDeactivate.length + 1) {
-    const lastOneActive = initiallyActivePlayers.find(player => !playersToDeactivate.includes(player.id));
-    if (lastOneActive) {
-      await addLastOneActiveToGame(lastOneActive.id, roomId);
-      await updatePlayers([lastOneActive?.id], { isObserver: true });
-    }
+async function determineLastOneActive(initiallyActivePlayers: QueryDocumentSnapshot<DocumentData>[], playerIdsToDeactivate: string[], roomId: string): Promise<void> {
+  const isOnlyOneActivePlayerLeft = initiallyActivePlayers.length === playerIdsToDeactivate.length + 1;
+  if (isOnlyOneActivePlayerLeft) {
+    const lastOneActive = initiallyActivePlayers.find(player => !playerIdsToDeactivate.includes(player.id));
+    await setLastOneActiveInGame(lastOneActive?.id, roomId);
+    await updatePlayers([lastOneActive?.id], { isObserver: true });
   }
 }
 
-export async function getPlayersToDeactivate(game: Game, roomId: string): Promise<string[]> {
+export async function getPlayerIdsToDeactivate(game: Game, roomId: string): Promise<string[]> {
   const gameType = await getCurrentGameType(roomId);
   const playersChoicesInLastRound = game.rounds[game.rounds.length - 1].playersChoices;
   return playersChoicesInLastRound.find(player => player.result === Result.Draw)
@@ -48,8 +47,9 @@ export async function getPlayersToDeactivate(game: Game, roomId: string): Promis
       : playersChoicesInLastRound.filter(player => player.result === Result.Lost).map(player => player.playerId);
 }
 
-function updatePlayers(players: string[], updateData: Player): Promise<Awaited<FirebaseFirestore.WriteResult | undefined>[]> {
-  return Promise.all(players.map(playerId => admin.firestore().collection(collections.players).doc(playerId)?.update(updateData)));
+function updatePlayers(playerIds: (string | undefined)[], updateData: Player): Promise<Awaited<FirebaseFirestore.WriteResult | undefined>[]> {
+  return Promise.all(playerIds
+    .map(playerId => playerId ? admin.firestore().collection(collections.players).doc(playerId)?.update(updateData) : undefined));
 }
 
 function updatePlayersDoc(players: QueryDocumentSnapshot<DocumentData>[], updateData: Player): Promise<Awaited<FirebaseFirestore.WriteResult | undefined>[]> {

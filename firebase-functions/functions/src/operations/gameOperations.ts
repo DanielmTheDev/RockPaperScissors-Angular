@@ -12,7 +12,7 @@ import DocumentData = firestore.DocumentData;
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 import { getRoom } from './roomOperations';
 
-export async function getCurrentGame(roomId: string, players: QueryDocumentSnapshot<DocumentData>[]): Promise<Game> {
+export async function addRoundToGame(roomId: string, players: QueryDocumentSnapshot<DocumentData>[]): Promise<Game> {
   const round = {
     playersChoices: getPlayersChoices(players),
     timeStamp: Date.now(),
@@ -31,7 +31,7 @@ export async function getCurrentGame(roomId: string, players: QueryDocumentSnaps
   return games[games.length - 1];
 }
 
-export async function addLastOneActiveToGame(lastOneActive: string, roomId: string): Promise<void> {
+export async function setLastOneActiveInGame(lastOneActive: string | undefined, roomId: string): Promise<void> {
   const games = (await getRoom(roomId)).games;
   if (games) {
     games[games.length - 1].lastOneActive = lastOneActive;

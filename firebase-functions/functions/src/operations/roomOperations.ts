@@ -4,8 +4,7 @@ import { collections } from '../constants/collections';
 import { Room } from '../models/room';
 
 export async function getCurrentGameType(roomId: string): Promise<GameType | undefined> {
-  const room = await admin.firestore().collection(collections.rooms).doc(roomId).get();
-  return (room.data() as Room).typeOfGame;
+  return (await getRoom(roomId)).typeOfGame;
 }
 
 export async function getRoom(roomId: string): Promise<Room> {
