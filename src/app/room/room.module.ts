@@ -11,6 +11,7 @@ import { PlayerModule } from '../player/player.module';
 import { RoomComponent } from './components/room.component';
 import { SpinnerModule } from '../shared-lib/spinner/spinner.module';
 import { CopyLinkModule } from '../shared-lib/copy-link/copy-link.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [RoomComponent],
@@ -24,7 +25,8 @@ import { CopyLinkModule } from '../shared-lib/copy-link/copy-link.module';
         MatButtonModule,
         PlayerModule,
         SpinnerModule,
-        CopyLinkModule
+        CopyLinkModule,
+        MatIconModule
     ],
   providers: [MatSnackBar],
   exports: [RoomComponent]
