@@ -15,8 +15,12 @@
   <choice></choice>
   <div class="top-spacer room-button-container">
     <copy-link></copy-link>
-    <button mat-raised-button color="accent" (click)="leaveRoom()">Leave the room</button>
-    <button [class.invisible]="!(room$ | async)?.lastOneActive" mat-raised-button color="accent" (click)="startOver()">Another Game</button>
+    <button mat-raised-button (click)="leaveRoom()">
+      <mat-icon fontSet="fontawesome" fontIcon="fa-sign-out"></mat-icon>
+    </button>
+    <button mat-raised-button (click)="startOver()" [disabled]="!(room$ | async)?.lastOneActive">
+      <mat-icon fontSet="fontawesome" fontIcon="fa-repeat"></mat-icon>
+    </button>
   </div>
 </spinner>
 

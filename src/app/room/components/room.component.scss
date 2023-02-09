@@ -25,9 +25,14 @@ button {
   margin: 0.2rem;
 }
 
-.invisible {
-  opacity: 0;
-  pointer-events: none;
+.mat-raised-button.mat-button-disabled {
+  background-color: #b5afaf;
+  color: #eee4e4;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0px rgb(0 0 0 / 14%), 0 1px 5px 0px rgb(0 0 0 / 12%);
+}
+
+.mat-icon {
+  font-size: 1.5rem;
 }
 
 .text-container {
