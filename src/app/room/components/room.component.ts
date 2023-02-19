@@ -73,8 +73,8 @@ export class RoomComponent implements OnInit {
       );
   }
 
-  startOver(): void {
-    this.firebaseRoomService.resetRoom(this.roomId).pipe(
+  startNewGame(): void {
+    this.firebaseRoomService.startNewGame(this.roomId).pipe(
       combineLatestWith(this.firebasePlayerService.resetAllPlayersOfTheRoom(this.roomId)))
       .subscribe(_ => this.loadingStatus.isLoading = false);
 

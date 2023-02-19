@@ -1,11 +1,11 @@
-<div class="player-container" *ngIf="numberOfVictories$ | async as numberOfVictories">>
+<div class="player-container" *ngIf="numberOfVictories$ | async as numberOfVictories">
   <ng-container *ngIf="numberOfVictories">
     👑<ng-container *ngIf="numberOfVictories > 1">x {{numberOfVictories}}</ng-container>
   </ng-container>
 </div>
 <div class="player-container" *ngIf="room$ | async as room">
   <div *ngIf="player?.avatar" SafeInnerHtml [innerHtml]="player?.avatar" class="svg"
-       [class]="{ player: true, observer: player?.isObserver, lastOneActive: isLastOneActive(room.lastOneActive), loser: room.typeOfGame === gameType.Loser }">
+       [class]="{ player: true, observer: player?.isObserver, lastOneActive: isLastOneActive(room.games?.slice(-1)?.[0]?.lastOneActive), loser: room.typeOfGame === gameType.Loser }">
   </div>
 </div>
 <div class="player-container">{{player?.name}}</div>
