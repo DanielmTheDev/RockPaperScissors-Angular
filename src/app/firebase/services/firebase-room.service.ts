@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
-import { map, Observable } from 'rxjs';
+import { map, Observable, switchMap, take } from 'rxjs';
 import FirebaseConstants from '../constants/firebase-constants';
 import { Room } from '../models/room';
+import { Game } from '../models/game';
 
 @Injectable()
 export class FirebaseRoomService {
@@ -22,17 +23,22 @@ export class FirebaseRoomService {
       .then(roomReference => roomReference.id));
   }
 
-  resetRoom(roomId: string): Observable<void> {
-    return fromPromise(this.firestore
+  startNewGame(roomId: string): Observable<void> {
+    const roomDoc = this.firestore
       .collection<Room>(FirebaseConstants.collections.rooms)
-      .doc(roomId)
-      .update({ lastOneActive: null }));
+      .doc(roomId);
+    return roomDoc.get().pipe(
+      take(1),
+      switchMap(room => {
+        const games = (room.data()?.games || []).concat({} as Game);
+        return fromPromise(roomDoc.update({ games }));
+      }));
   }
 
   getNumberOfVictories(roomId: string, playerId?: string): Observable<number> {
     return this.firestore.collection<Room>(FirebaseConstants.collections.rooms).doc(roomId).get()
       .pipe(map(room =>
-        room.data()?.games.filter(game => game.lastOneActive === playerId).length ?? 0
+        room.data()?.games?.filter(game => game.lastOneActive === playerId).length ?? 0
       ));
   }
 }

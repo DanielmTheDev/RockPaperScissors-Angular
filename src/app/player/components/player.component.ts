@@ -25,7 +25,7 @@ export class PlayerComponent {
     this.numberOfVictories$ = this.firebaseRoomService.getNumberOfVictories(roomId, this.player?.id);
   }
 
-  isLastOneActive(lastOneActiveId: string | null): boolean {
+  isLastOneActive(lastOneActiveId: string | undefined): boolean {
     return Boolean(lastOneActiveId && this.player?.id && lastOneActiveId === this.player?.id);
   }
 }

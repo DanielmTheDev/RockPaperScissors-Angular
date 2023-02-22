@@ -18,7 +18,7 @@
     <button mat-raised-button (click)="leaveRoom()">
       <mat-icon fontSet="fontawesome" fontIcon="fa-sign-out"></mat-icon>
     </button>
-    <button mat-raised-button (click)="startOver()" [disabled]="!(room$ | async)?.lastOneActive">
+    <button mat-raised-button (click)="startNewGame()" [disabled]="!(room$ | async)?.games?.slice(-1)?.[0]?.lastOneActive">
       <mat-icon fontSet="fontawesome" fontIcon="fa-repeat"></mat-icon>
     </button>
   </div>
