@@ -107,7 +107,8 @@ export class RoomComponent implements OnInit {
     const action = 'Dismiss';
     this.snackBar.open(message, action, {
       horizontalPosition: 'center',
-      verticalPosition: 'top'
+      verticalPosition: 'top',
+      duration: 3000
     });
   }
 

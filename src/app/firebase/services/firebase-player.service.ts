@@ -47,7 +47,7 @@ export class FirebasePlayerService {
     return this.firestore
       .collection<Player>(FirebaseConstants.collections.players, ref => ref
         .where(FirebaseConstants.keys.room, '==', roomId))
-     .get()
+      .get()
       .pipe(
         map(querySnapshot => querySnapshot.forEach(doc => this.updateObservationStatus(doc.id, false))));
   }

@@ -36,9 +36,7 @@ export class FirebaseRoomService {
   }
 
   getNumberOfVictories(roomId: string, playerId?: string): Observable<number> {
-    return this.firestore.collection<Room>(FirebaseConstants.collections.rooms).doc(roomId).get()
-      .pipe(map(room =>
-        room.data()?.games?.filter(game => game.lastOneActive === playerId).length ?? 0
-      ));
+    return this.firestore.collection<Room>(FirebaseConstants.collections.rooms).doc(roomId).valueChanges()
+      .pipe(map(room => room?.games?.filter(game => game.lastOneActive === playerId).length ?? 0));
   }
 }
