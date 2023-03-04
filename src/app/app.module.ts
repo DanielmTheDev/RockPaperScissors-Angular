@@ -49,7 +49,7 @@ import { MatButtonModule } from '@angular/material/button';
       provide: USE_FUNCTIONS_EMULATOR,
       useValue: environment.production ? undefined : ['localhost', 5001],
     },
-    ],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
