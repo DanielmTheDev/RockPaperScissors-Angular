@@ -31,3 +31,17 @@ jobs:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Install function dependencies
+        working-directory: ./firebase-functions/functions
+        run: npm ci
+      - name: Build functions
+        working-directory: ./firebase-functions/functions
+        run: npm run build
+      - name: Deploy functions
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_PATH: firebase-functions/
