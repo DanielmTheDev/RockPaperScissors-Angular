@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: DamianReeves/write-file-action@master
         with:
-          path: ./src/environments/environment.ts
+          path: ./src/environments/environment.prod.ts
           contents: |
             ${{ secrets.FIREBASE_CONFIG }}
           write-mode: overwrite
@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run build
+      - run: npm run build-prod
       - uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
