@@ -1,0 +1,6 @@
+<div *ngIf="roomAndVictories$ | async as roomAndVictories">
+  <ng-container *ngIf="roomAndVictories[1]">
+    {{roomAndVictories[0]?.typeOfGame === gameType.Winner ? '👑' : '❌'}}
+    <ng-container *ngIf="roomAndVictories[1] > 1">x {{roomAndVictories[1]}}</ng-container>
+  </ng-container>
+</div>
