@@ -1,0 +1,37 @@
+.player-container {
+  display: flex;
+  justify-content: center;
+}
+
+.player {
+  padding: 0.5rem
+}
+
+.svg {
+  width: 20%;
+}
+
+.observer:not(.lastOneActive) svg {
+  opacity: 40%;
+}
+
+::ng-deep {
+  .lastOneActive svg {
+    outline: 3px solid green;
+    animation: outline 1s linear 0s infinite alternate;
+    border-radius: 10rem;
+  }
+
+  .loser svg {
+    outline-color: red;
+  }
+}
+
+@keyframes outline {
+  from {
+    outline-width: 3px;
+  }
+  to {
+    outline-width: 8px;
+  }
+}

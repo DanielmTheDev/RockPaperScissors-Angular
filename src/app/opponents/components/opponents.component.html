@@ -1,6 +1,6 @@
 <ng-container *ngIf="opponents$ | async as opponents">
   <div class="opponent-container" *ngFor="let player of opponents">
-    <player [player]="player"></player>
+    <opponent [player]="player"></opponent>
     <div class="choice-container" *ngIf="hasEveryPlayerChosen(opponents)">
       <mat-icon fontSet="fontawesome" fontIcon="fa-hand-rock-o" *ngIf="player.choice === choiceEnum.Rock"></mat-icon>
       <mat-icon fontSet="fontawesome" fontIcon="fa-hand-paper-o" *ngIf="player.choice === choiceEnum.Paper"></mat-icon>
