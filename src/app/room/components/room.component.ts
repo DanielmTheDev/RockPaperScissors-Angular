@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatestWith, concatMap, finalize, map, Observable, of, take, zip } from 'rxjs';
@@ -96,6 +96,12 @@ export class RoomComponent implements OnInit {
       return this.resetExistingPlayer(this.roomId);
     }
     return of(undefined);
+  }
+
+  @HostListener('document:keydown.n', ['$event'])
+  startNewGameEvent(event: KeyboardEvent): void {
+    this.startNewGame();
+    event.preventDefault();
   }
 
   private createPlayer(roomId: string): Observable<string> {
