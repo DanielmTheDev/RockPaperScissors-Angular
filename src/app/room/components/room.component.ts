@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatestWith, concatMap, finalize, map, Observable, of, switchMap, take, zip } from 'rxjs';
+import { combineLatestWith, concatMap, finalize, map, Observable, of, take, zip } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CurrentPlayer } from 'src/app/store/models/current-player';
 import { Player } from 'src/app/firebase/models/player';
@@ -24,7 +24,7 @@ import { GameType } from '../../room-creation/models/game-type';
 })
 export class RoomComponent implements OnInit {
   currentPlayer$: Observable<CurrentPlayer>;
-  firebasePlayer$: Observable<Player | undefined> | undefined;
+  firebasePlayer$: Observable<Player | undefined>;
   room$: Observable<Room | undefined>;
   loadingStatus: LoadingStatus = { isLoading: false };
   gameType = GameType;
@@ -52,7 +52,7 @@ export class RoomComponent implements OnInit {
     zip([
       this.currentPlayer$,
       this.firebasePlayerService.getObserverPlayers(this.roomId),
-      this.firebasePlayerService.getCurrentPlayerDocument().pipe(switchMap(doc => doc.valueChanges()))])
+      this.firebasePlayer$])
       .pipe(
         take(1),
         concatMap(([player, observers, currentFirebasePlayer]) => this.enterRoom(observers, player, currentFirebasePlayer)))
@@ -87,7 +87,7 @@ export class RoomComponent implements OnInit {
     if (gameAlreadyStarted) {
       this.showLockedRoomMessage();
       return fromPromise(this.router.navigate(['/']));
-    } else if (!doesPlayerExistInLocalStorage ) {
+    } else if (!doesPlayerExistInLocalStorage) {
       return this.createPlayer(this.roomId);
     } else if (!currentFirebasePlayer) {
       this.store.dispatch(removePlayer());

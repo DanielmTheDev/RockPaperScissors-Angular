@@ -19,7 +19,7 @@ export const calculateResult = functions.firestore.document('/players/{documentI
         const currentGame = await addRoundToGame(roomId, initiallyActivePlayers);
         await resetPlayerChoices(initiallyActivePlayers);
         await deactivatePlayers(roomId, currentGame, initiallyActivePlayers);
-      }, 3000);
+      }, 1000);
     } catch (e) {
       console.log(e);
     }
