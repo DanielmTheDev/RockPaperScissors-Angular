@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RoomCreationModule } from '../room-creation/room-creation.module';
 import { MatButtonModule } from '@angular/material/button';
 import { HomeComponent } from './components/home.component';
+import { NgOptimizedImage } from '@angular/common';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -10,7 +11,8 @@ import { HomeComponent } from './components/home.component';
     imports: [
         BrowserModule,
         RoomCreationModule,
-        MatButtonModule
+        MatButtonModule,
+        NgOptimizedImage
     ]
 })
 export class HomeModule {}

@@ -1,0 +1,83 @@
+$animation-time: 1s;
+
+.centered {
+  display: flex;
+  justify-content: center;
+}
+
+.player {
+  padding: 0.5rem
+}
+
+.svg {
+  width: 20%;
+}
+
+.observer:not(.lastOneActive) svg {
+  opacity: 40%;
+}
+
+::ng-deep {
+  .lastOneActive svg {
+    outline: 3px solid green;
+    animation: outline 1s linear 0s infinite alternate;
+    border-radius: 10rem;
+  }
+
+  .loser svg {
+    outline-color: red;
+  }
+}
+
+@keyframes outline {
+  from {
+    outline-width: 3px;
+  }
+  to {
+    outline-width: 8px;
+  }
+}
+
+@keyframes move-choice {
+  from {
+    transform: translateY(10em) scale(3);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-away {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes move-down {
+  to {
+    transform: translateY(1em);
+  }
+}
+
+.move-down {
+  animation: move-down $animation-time ease-out;
+  animation-fill-mode: forwards;
+}
+
+.fade-away {
+  animation: fade-away $animation-time linear;
+  animation-fill-mode: forwards;
+}
+
+.choice-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+
+  .choice {
+    animation: move-choice $animation-time ease-out;
+    transform: scale(3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

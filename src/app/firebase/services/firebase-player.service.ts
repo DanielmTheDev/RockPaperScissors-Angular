@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { from, map, Observable, switchMap } from 'rxjs';
+import { from, map, Observable, of, switchMap } from 'rxjs';
 import { CurrentPlayer } from '../../store/models/current-player';
 import { Player } from '../models/player';
 import { Store } from '@ngrx/store';
@@ -21,7 +21,7 @@ export class FirebasePlayerService {
 
   valueChanges(): Observable<Player | undefined> {
     return this.getCurrentPlayerDocument()
-      .pipe(switchMap(player => player.valueChanges({ idField: 'id' })));
+      .pipe(switchMap(player => player ? player.valueChanges({ idField: 'id' }) : of(undefined)));
   }
 
   add(player: Player): Observable<string> {
@@ -36,11 +36,11 @@ export class FirebasePlayerService {
 
   addChoice(choice: Choice): Observable<void> {
     return this.getCurrentPlayerDocument().pipe(
-      switchMap(document => fromPromise(document.update({ choice }))));
+      switchMap(document => document ? fromPromise(document.update({ choice })) : Promise.resolve()));
   }
 
-  getCurrentPlayerDocument(): Observable<AngularFirestoreDocument<Player>> {
-    return this.player$.pipe(map(player => this.playerCollection.doc(player.id)));
+  getCurrentPlayerDocument(): Observable<AngularFirestoreDocument<Player> | undefined> {
+    return this.player$.pipe(map(player => player.id ? this.playerCollection.doc(player.id) : undefined));
   }
 
   resetAllPlayersOfTheRoom(roomId: string): Observable<void> {
@@ -52,10 +52,6 @@ export class FirebasePlayerService {
         map(querySnapshot => querySnapshot.forEach(doc => this.updateObservationStatus(doc.id, false))));
   }
 
-  private updateObservationStatus(playerId: string, isObserver: boolean): void {
-    this.playerCollection.doc(playerId).update({ isObserver }).then();
-  }
-
   getObserverPlayers(roomId: string): Observable<Player[]> {
     return this.firestore
       .collection<Player>(FirebaseConstants.collections.players, ref => ref
@@ -65,6 +61,10 @@ export class FirebasePlayerService {
   }
 
   updateCurrent(updateData: Partial<Player>): Observable<void> {
-    return this.getCurrentPlayerDocument().pipe(switchMap(doc => from(doc.update(updateData))));
+    return this.getCurrentPlayerDocument().pipe(switchMap(doc => from(doc ? doc.update(updateData) : of(undefined))));
+  }
+
+  private updateObservationStatus(playerId: string, isObserver: boolean): void {
+    this.playerCollection.doc(playerId).update({ isObserver }).then();
   }
 }

@@ -7,7 +7,6 @@ import { OpponentsModule } from '../opponents/opponents.module';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
-import { PlayerModule } from '../player/player.module';
 import { RoomComponent } from './components/room.component';
 import { SpinnerModule } from '../shared-lib/spinner/spinner.module';
 import { CopyLinkModule } from '../shared-lib/copy-link/copy-link.module';
@@ -23,7 +22,6 @@ import { MatIconModule } from '@angular/material/icon';
         ChoiceModule,
         ClipboardModule,
         MatButtonModule,
-        PlayerModule,
         SpinnerModule,
         CopyLinkModule,
         MatIconModule

@@ -3,7 +3,9 @@
   "ignorePatterns": [
     "*.scss",
     "*.ico",
-    "*.svg"
+    "*.svg",
+    "*.jpg",
+    "*.png"
   ],
   "overrides": [
     {

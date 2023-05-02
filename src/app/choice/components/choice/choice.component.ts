@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, HostListener } from '@angular/core';
 import { FirebasePlayerService } from '../../../firebase/services/firebase-player.service';
 import { Observable } from 'rxjs';
 import { Player } from '../../../firebase/models/player';
@@ -18,6 +18,24 @@ export class ChoiceComponent {
 
   choose(choice: Choice): void {
     this.playerService.addChoice(choice).subscribe();
+  }
+
+  @HostListener('document:keydown.s', ['$event'])
+  chooseScissors(event: KeyboardEvent): void {
+    this.choose(Choice.Scissors);
+    event.preventDefault();
+  }
+
+  @HostListener('document:keydown.r', ['$event'])
+  chooseRock(event: KeyboardEvent): void {
+    this.choose(Choice.Rock);
+    event.preventDefault();
+  }
+
+  @HostListener('document:keydown.p', ['$event'])
+  choosePaper(event: KeyboardEvent): void {
+    this.choose(Choice.Paper);
+    event.preventDefault();
   }
 
   isIconDisabled(player: Player, choice: Choice): boolean {

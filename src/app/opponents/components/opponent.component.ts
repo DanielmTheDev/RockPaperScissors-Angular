@@ -16,7 +16,6 @@ export class OpponentComponent implements OnInit {
   @Input()
   player: Player | undefined;
   room$: Observable<Room | undefined> | undefined;
-  numberOfVictories$: Observable<number> | undefined;
   gameType = GameType;
 
   constructor(private firebaseRoomService: FirebaseRoomService, private route: ActivatedRoute) {}
@@ -24,7 +23,6 @@ export class OpponentComponent implements OnInit {
   ngOnInit(): void {
     const roomId = this.route.snapshot.params[constants.routeParams.id];
     this.room$ = this.firebaseRoomService.roomValueChanges(roomId);
-    this.numberOfVictories$ = this.firebaseRoomService.getNumberOfVictories(roomId, this.player?.id);
   }
 
   isLastOneActive(lastOneActiveId: string | undefined): boolean {
