@@ -1,7 +1,8 @@
 :host {
   display: flex;
   justify-content: space-evenly;
-  flex-wrap: wrap-reverse;
+  flex-wrap: wrap;
+  align-items: flex-end;
 }
 
 .mat-icon {

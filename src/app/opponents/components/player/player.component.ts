@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Player } from 'src/app/firebase/models/player';
-import { Room } from '../../firebase/models/room';
+import { Room } from '../../../firebase/models/room';
 import { Observable } from 'rxjs';
-import { FirebaseRoomService } from '../../firebase/services/firebase-room.service';
+import { FirebaseRoomService } from '../../../firebase/services/firebase-room.service';
 import { ActivatedRoute } from '@angular/router';
-import constants from '../../constants';
-import { GameType } from '../../room-creation/models/game-type';
+import constants from '../../../constants';
+import { GameType } from '../../../room-creation/models/game-type';
 
 @Component({
   selector: 'player',
@@ -25,7 +25,7 @@ export class PlayerComponent implements OnInit {
     this.room$ = this.firebaseRoomService.roomValueChanges(roomId);
   }
 
-  isLastOneActive(lastOneActiveId: string | undefined): boolean {
-    return Boolean(lastOneActiveId && this.player?.id && lastOneActiveId === this.player?.id);
+  isLastOneActive(room: Room): boolean {
+    return this.firebaseRoomService.isLastOneActive(room, this.player?.id);
   }
 }

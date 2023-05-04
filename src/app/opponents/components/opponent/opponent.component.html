@@ -1,8 +1,10 @@
 <ng-container *ngIf="room$ | async as room">
   <result-count class="centered" [player]="player"></result-count>
   <div class="centered">
+    <choice-made-component *ngIf="player?.choice"></choice-made-component>
+    <cross-out *ngIf="player?.isObserver && !isLastOneActive(room)"></cross-out>
     <div *ngIf="player?.avatar" SafeInnerHtml [innerHtml]="player?.avatar" class="svg"
-         [class]="{ player: true, observer: player?.isObserver, lastOneActive: isLastOneActive(room.games?.slice(-1)?.[0]?.lastOneActive), loser: room.typeOfGame === gameType.Loser }">
+         [class]="{ player: true, observer: player?.isObserver, lastOneActive: isLastOneActive(room), loser: room.typeOfGame === gameType.Loser }">
     </div>
   </div>
   <div class="centered">{{player?.name}}</div>
