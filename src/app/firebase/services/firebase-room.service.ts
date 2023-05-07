@@ -41,7 +41,11 @@ export class FirebaseRoomService {
   }
 
   isLastOneActive(room: Room, playerId: string | undefined): boolean {
-    const lastOneActiveId = room.games?.slice(-1)?.[0]?.lastOneActive;
+    const lastOneActiveId = this.getLastOneActiveId(room);
     return Boolean(lastOneActiveId && playerId && lastOneActiveId === playerId);
+  }
+
+  getLastOneActiveId(room: Room): string | undefined {
+    return room.games?.slice(-1)?.[0]?.lastOneActive;
   }
 }

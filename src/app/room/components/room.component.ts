@@ -98,9 +98,17 @@ export class RoomComponent implements OnInit {
     return of(undefined);
   }
 
+  isStartNewGameEnabled(room: Room | undefined): boolean {
+    return Boolean(room && this.firebaseRoomService.getLastOneActiveId(room));
+  }
+
   @HostListener('document:keydown.n', ['$event'])
   startNewGameEvent(event: KeyboardEvent): void {
-    this.startNewGame();
+    this.room$.pipe(take(1)).subscribe(room => {
+      if (this.isStartNewGameEnabled(room)) {
+        this.startNewGame();
+      }
+    });
     event.preventDefault();
   }
 
