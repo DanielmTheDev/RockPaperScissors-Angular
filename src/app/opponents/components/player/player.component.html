@@ -7,8 +7,9 @@
   </div>
   <div [class.move-down]="player?.choice">
     <div class="centered">
+      <cross-out *ngIf="player?.isObserver && !isLastOneActive(room)"></cross-out>
       <div *ngIf="player?.avatar" SafeInnerHtml [innerHtml]="player?.avatar" class="svg"
-           [class]="{ player: true, observer: player?.isObserver, lastOneActive: isLastOneActive(room.games?.slice(-1)?.[0]?.lastOneActive), loser: room.typeOfGame === gameType.Loser }">
+           [class]="{ player: true, observer: player?.isObserver, lastOneActive: isLastOneActive(room), loser: room.typeOfGame === gameType.Loser }">
       </div>
     </div>
     <div class="centered">{{player?.name}}</div>

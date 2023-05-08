@@ -39,4 +39,13 @@ export class FirebaseRoomService {
     return this.firestore.collection<Room>(FirebaseConstants.collections.rooms).doc(roomId).valueChanges()
       .pipe(map(room => room?.games?.filter(game => game.lastOneActive === playerId).length ?? 0));
   }
+
+  isLastOneActive(room: Room, playerId: string | undefined): boolean {
+    const lastOneActiveId = this.getLastOneActiveId(room);
+    return Boolean(lastOneActiveId && playerId && lastOneActiveId === playerId);
+  }
+
+  getLastOneActiveId(room: Room): string | undefined {
+    return room.games?.slice(-1)?.[0]?.lastOneActive;
+  }
 }

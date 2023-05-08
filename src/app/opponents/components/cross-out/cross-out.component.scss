@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
+
+.cross {
+  font-size: 100px;
+  width: 100px;
+  height: auto;
+  color: red;
+}
