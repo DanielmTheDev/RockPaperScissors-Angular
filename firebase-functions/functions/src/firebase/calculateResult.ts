@@ -15,11 +15,9 @@ export const calculateResult = functions.firestore.document('/players/{documentI
       if (!hasEveryoneChosen(initiallyActivePlayers)) {
         return;
       }
-      setTimeout(async () => {
-        const currentGame = await addRoundToGame(roomId, initiallyActivePlayers);
-        await resetPlayerChoices(initiallyActivePlayers);
-        await deactivatePlayers(roomId, currentGame, initiallyActivePlayers);
-      }, 1000);
+      const currentGame = await addRoundToGame(roomId, initiallyActivePlayers);
+      await resetPlayerChoices(initiallyActivePlayers);
+      await deactivatePlayers(roomId, currentGame, initiallyActivePlayers);
     } catch (e) {
       console.log(e);
     }
