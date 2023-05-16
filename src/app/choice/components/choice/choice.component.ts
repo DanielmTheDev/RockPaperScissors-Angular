@@ -4,6 +4,8 @@ import { Observable, take } from 'rxjs';
 import { Player } from '../../../firebase/models/player';
 import { Choice } from 'src/app/firebase/models/choice';
 
+const choiceDelayInMs = 1000;
+
 @Component({
   selector: 'choice',
   templateUrl: './choice.component.html',
@@ -18,7 +20,7 @@ export class ChoiceComponent {
   }
 
   choose(choice: Choice): void {
-    this.playerService.addChoice(choice).subscribe();
+    setTimeout(() => this.playerService.addChoice(choice).subscribe(), choiceDelayInMs);
   }
 
   @HostListener('document:keydown.s', ['$event'])
