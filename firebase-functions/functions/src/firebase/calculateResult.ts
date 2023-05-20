@@ -7,7 +7,7 @@ import { addRoundToGame } from '../operations/gameOperations';
 
 admin.firestore().settings({ ignoreUndefinedProperties: true });
 
-export const calculateResult = functions.firestore.document('/players/{documentId}')
+export const calculateResult = functions.region('europe-west1').firestore.document('/players/{documentId}')
   .onUpdate(async (change: any, context: any) => {
     try {
       const roomId = await getCurrentRoomId(context.params.documentId as string);

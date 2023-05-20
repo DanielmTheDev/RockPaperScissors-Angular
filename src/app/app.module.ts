@@ -14,7 +14,11 @@ import { rehydrationMetaReducer } from './store/rehydration';
 import { RandomNamesProvider } from './room-creation/services/random-names-provider.service';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore';
-import { AngularFireFunctionsModule, USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/compat/functions';
+import {
+  AngularFireFunctionsModule,
+  REGION,
+  USE_EMULATOR as USE_FUNCTIONS_EMULATOR
+} from '@angular/fire/compat/functions';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
@@ -39,6 +43,7 @@ import { MatButtonModule } from '@angular/material/button';
       deps: [RandomNamesProvider],
       multi: true
     },
+    { provide: REGION, useValue: 'europe-west1' },
     // These EMULATOR InjectionTokens configure the app to use the local emulator suite when not in production.
     // Remove them if you want to test against the real project FireStore
     {
