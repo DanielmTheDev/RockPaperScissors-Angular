@@ -1,6 +1,7 @@
 :host {
   text-align: center;
   padding: 0.2rem;
+  height: 100%;
 }
 
 .top-spacer {
@@ -8,11 +9,23 @@
 }
 
 .logo {
-  width: auto;
-  height: 15%;
+  width: 60%;
+  height: auto;
 }
 
 .container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.start-button-container {
+  margin-top: auto;
+  margin-bottom: 3rem;
+}
+
+.start-button {
+  width: 60%;
+  height: 3rem
 }

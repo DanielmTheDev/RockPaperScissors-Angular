@@ -1,16 +1,14 @@
-<img ngSrc="assets/Logo_small.jpg" alt="Logo" class="logo" height="948" width="948" priority>
+<div class="container">
+  <div class="img-container">
+    <img ngSrc="assets/Logo_small.jpg" alt="Logo" class="logo" height="948" width="948" priority>
+  </div>
 
-<div class="top-spacer">
-  <p>Rock Paper Scissors</p>
-  <p>Let's solve your conflicts in a civilized way</p>
-</div>
+  <div class="top-spacer">
+    <p>Let's solve your conflicts in a civilized way!</p>
+    <p>Create a new game and invite your friends:</p>
+  </div>
 
-<div class="top-spacer">
-  <p>Create a new game and invite your friends, huhu!</p>
-  <button mat-raised-button (click)="openDialog()">Get Started!</button>
-</div>
-
-<div class="top-spacer">
-  <p>If you want to learn more about the ancient art of the game check out this</p><a
-  href="https://en.wikipedia.org/wiki/Rock_paper_scissors">link</a>
+  <div class="start-button-container">
+    <button class="start-button" mat-raised-button (click)="openDialog()">Get Started!</button>
+  </div>
 </div>

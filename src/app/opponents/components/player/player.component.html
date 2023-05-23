@@ -5,14 +5,14 @@
   <div class="centered">
     <result-count class="centered" [player]="player"></result-count>
   </div>
-  <div [class.move-down]="player?.choice">
+  <div [class.move-down]="player?.choice" class="avatar-container">
     <div class="centered">
       <cross-out *ngIf="player?.isObserver && !isLastOneActive(room)"></cross-out>
       <div *ngIf="player?.avatar" SafeInnerHtml [innerHtml]="player?.avatar" class="svg"
            [class]="{ player: true, observer: player?.isObserver, lastOneActive: isLastOneActive(room), loser: room.typeOfGame === gameType.Loser }">
       </div>
     </div>
-    <div class="centered">{{player?.name}}</div>
+    <div class="centered">{{ player?.name }}</div>
   </div>
   <choice [class.fade-away]="player?.choice"></choice>
 </ng-container>
