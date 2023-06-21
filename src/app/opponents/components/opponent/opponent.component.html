@@ -1,11 +1,13 @@
-<ng-container *ngIf="room$ | async as room">
-  <result-count class="centered" [player]="player"></result-count>
-  <div class="centered">
-    <choice-made-component *ngIf="player?.choice"></choice-made-component>
-    <cross-out *ngIf="player?.isObserver && !isLastOneActive(room)"></cross-out>
-    <div *ngIf="player?.avatar" SafeInnerHtml [innerHtml]="player?.avatar" class="svg"
-         [class]="{ player: true, observer: player?.isObserver, lastOneActive: isLastOneActive(room), loser: room.typeOfGame === gameType.Loser }">
+<ng-container *ngIf="roomAndOpponents$ | async as roomAndOpponents">
+  <div class="avatar-container" [class]="{ lastOneActive: isLastOneActive(roomAndOpponents.room), moreThanOneOpponent: roomAndOpponents.opponents.length > 1}">
+    <result-count class="centered" [player]="player"></result-count>
+    <div class="centered">
+      <choice-made-component *ngIf="player?.choice"></choice-made-component>
+      <cross-out *ngIf="player?.isObserver && !isLastOneActive(roomAndOpponents.room)"></cross-out>
+      <div *ngIf="player?.avatar" SafeInnerHtml [innerHtml]="player?.avatar" class="svg"
+           [class]="{ player: true, observer: player?.isObserver, lastOneActive: isLastOneActive(roomAndOpponents.room), loser: roomAndOpponents.room?.typeOfGame === gameType.Loser }">
+      </div>
     </div>
+    <div class="centered">{{ player?.name }}</div>
   </div>
-  <div class="centered">{{player?.name}}</div>
 </ng-container>

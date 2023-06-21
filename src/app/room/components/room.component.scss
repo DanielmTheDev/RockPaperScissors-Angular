@@ -1,8 +1,9 @@
 :host {
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .player-container {
@@ -10,7 +11,7 @@
 }
 
 .top-spacer {
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
 .room-button-container {
@@ -33,9 +34,7 @@ button {
 
 .mat-icon {
   font-size: 1.5rem;
-}
-
-.text-container {
-  text-align: center;
-  padding: 0.2rem;
+  line-height: inherit;
+  width: inherit;
+  height: inherit;
 }
